@@ -2,6 +2,7 @@
 #define _HUMANPLAYER_
 
 #include <vector>
+#include <string>
 
 class HumanPlayer: public Player {
 public:
