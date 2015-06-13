@@ -1,0 +1,3 @@
+#!/bin/bash
+
+for branch in Card Command ComputerPlayer Deck Game Hand HumanPlayer Player Table; do git rebase master $branch; git push -u origin master $branch -f;done
