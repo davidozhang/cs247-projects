@@ -9,7 +9,7 @@ public:
 	virtual void play(Card*);
 	virtual void discard(Card*);
 	void quit();
-	
+	void ragequit();
 };
 
 std::ostream &operator<<(std::ostream &, const Player &);
