@@ -2,7 +2,7 @@
 #define _PLAYER_
 
 #include <vector>
-#include <string>
+#include <iostream>
 
 class Player {
 private:
