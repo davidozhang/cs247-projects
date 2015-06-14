@@ -10,10 +10,10 @@ Deck::Deck(int seed_num) {
 	seed=seed_num;
 	string suits = "CDHS", ranks = "A234567891JQK";
 	int counter=0;
-	for (int i=0; i<ranks.length();i++) {
-		for (int j=0; j<suits.length();j++) {
-			Rank rank = (Rank)ranks.find(ranks[i]);
-			Suit suit = (Suit)suits.find(suits[j]);
+	for (int i=0; i<suits.length();i++) {
+		for (int j=0; j<ranks.length();j++) {
+			Suit suit = (Suit)suits.find(suits[i]);
+			Rank rank = (Rank)ranks.find(ranks[j]);
 			cards_.push_back(new Card(suit, rank));
 		}
 	}
