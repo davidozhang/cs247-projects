@@ -4,12 +4,13 @@
 #include <set>
 
 class Game {
+public:
+	Game();
+	Deck* getDeck();
 private:
 	Player players_[4];
 	Deck deck_;
 	set<Card*> legalCards_;
-public:
-	Game();
 };
 
 
