@@ -9,6 +9,7 @@ using namespace std;
 class Game {
 public:
 	Game(int);
+	~Game();
 	Deck* getDeck();
 private:
 	//Player players_[4];
@@ -18,6 +19,10 @@ private:
 
 Game::Game(int seed) {
 	deck_=new Deck(seed);
+}
+
+Game::~Game() {
+	delete deck_;
 }
 
 Deck* Game::getDeck() {

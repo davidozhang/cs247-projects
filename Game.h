@@ -6,11 +6,12 @@
 class Game {
 public:
 	Game();
+	~Game();
 	Deck* getDeck();
 private:
-	Player players_[4];
+	//Player players_[4];
 	Deck deck_;
-	set<Card*> legalCards_;
+	//set<Card*> legalCards_;
 };
 
 
