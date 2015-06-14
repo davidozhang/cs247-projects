@@ -27,19 +27,22 @@ int main(int argc, char* argv[]) {
 	}
 	Game* g = new Game(seed);
 	Command c;
-	cin>>c;
-	if (c.type==PLAY) {
-		//PLAY
-	} else if (c.type==DISCARD) {
-		//DISCARD
-	} else if (c.type==DECK) {
-		cout<<*(g->getDeck());
-	} else if (c.type==QUIT) {
-		//QUIT
-	} else if (c.type==RAGEQUIT) {
-		//RAGEQUIT
-	} else if (c.type==BAD_COMMAND) {
-		//BAD_COMMAND
+	cout<<">";
+	while (cin>>c) {
+		if (c.type==PLAY) {
+			//PLAY
+		} else if (c.type==DISCARD) {
+			//DISCARD
+		} else if (c.type==DECK) {
+			cout<<*(g->getDeck());
+		} else if (c.type==QUIT) {
+			break;
+		} else if (c.type==RAGEQUIT) {
+			//RAGEQUIT
+		} else if (c.type==BAD_COMMAND) {
+			//BAD_COMMAND
+		}
+		cout<<">";
 	}
 	return 0;
 }
