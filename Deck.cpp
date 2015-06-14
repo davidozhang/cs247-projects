@@ -1,23 +1,10 @@
+#include "Deck.h"
 #include "Card.h"
 #include <random>
 #include <iostream>
 #include <vector>
 
 using namespace std;
-
-class Deck {
-public:
-	Deck(int);
-	~Deck();
-	int getCardCount() const;
-	vector<Card*> getCards();
-	friend ostream &operator<<(std::ostream& sout, const Deck& d);
-private:
-	void shuffle();
-	int seed;
-	static const int CARD_COUNT=52;
-	vector<Card*> cards_;
-};
 
 Deck::Deck(int seed_num) {
 	seed=seed_num;

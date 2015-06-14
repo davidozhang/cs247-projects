@@ -9,12 +9,12 @@ public:
 	Deck(int);
 	~Deck();
 	int getCardCount() const;
+	friend std::ostream &operator<<(std::ostream &, const Deck&);
 private:
 	void shuffle();
+	int seed;
 	static const int CARD_COUNT=52;
 	std::vector<Card*> cards_;
 };
-
-std::ostream &operator<<(std::ostream &, const Deck&);
 
 #endif

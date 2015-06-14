@@ -1,21 +1,10 @@
+#include "Game.h"
 #include "Command.h"
-#include "Card.h"
 #include "Deck.h"
 #include <set>
 #include <iostream>
 
 using namespace std;
-
-class Game {
-public:
-	Game(int);
-	~Game();
-	Deck* getDeck();
-private:
-	//Player players_[4];
-	Deck* deck_;
-	//set<Card*> legalCards_;
-};
 
 Game::Game(int seed) {
 	deck_=new Deck(seed);
