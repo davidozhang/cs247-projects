@@ -8,6 +8,7 @@ using namespace std;
 class Deck {
 public:
 	Deck(int);
+	~Deck();
 	int getCardCount() const;
 	vector<Card*> getCards();
 	friend ostream &operator<<(std::ostream& sout, const Deck& d);
@@ -30,6 +31,13 @@ Deck::Deck(int seed_num) {
 		}
 	}
 	shuffle();
+}
+
+Deck::~Deck() {
+	vector<Card*>::iterator it;
+	for (it=cards_.begin();it!=cards_.end();it++) {
+		delete *it;
+	}
 }
 
 int Deck::getCardCount() const{
