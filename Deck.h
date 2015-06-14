@@ -7,6 +7,7 @@
 class Deck {
 public:
 	Deck(int);
+	~Deck();
 	int getCardCount() const;
 private:
 	void shuffle();
