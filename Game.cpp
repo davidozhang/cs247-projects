@@ -17,7 +17,7 @@ private:
 };
 
 Game::Game(int seed) {
-	Deck* deck_=new Deck(seed);
+	deck_=new Deck(seed);
 }
 
 Deck* Game::getDeck() {
@@ -26,8 +26,8 @@ Deck* Game::getDeck() {
 
 int main(int argc, char* argv[]) {
 	int seed;
-	if (argc<2) {
-		seed=(int)*argv[0];
+	if (argc==2) {
+		seed=atoi(argv[1]);
 	} else {
 		seed=0;
 	}
