@@ -9,11 +9,10 @@ using namespace std;
 Deck::Deck(int seed_num) {
 	seed=seed_num;
 	string suits = "CDHS", ranks = "A234567891JQK";
-	int counter=0;
-	for (int i=0; i<ranks.length();i++) {
-		for (int j=0; j<suits.length();j++) {
-			Rank rank = (Rank)ranks.find(ranks[i]);
-			Suit suit = (Suit)suits.find(suits[j]);
+	for (int i=0; i<suits.length();i++) {
+		for (int j=0; j<ranks.length();j++) {
+			Suit suit = (Suit)suits.find(suits[i]);
+			Rank rank = (Rank)ranks.find(ranks[j]);
 			cards_.push_back(new Card(suit, rank));
 		}
 	}
@@ -25,10 +24,6 @@ Deck::~Deck() {
 	for (it=cards_.begin();it!=cards_.end();it++) {
 		delete *it;
 	}
-}
-
-int Deck::getCardCount() const{
-	return CARD_COUNT;
 }
 
 void Deck::shuffle() {
@@ -46,8 +41,8 @@ void Deck::shuffle() {
 }
 
 ostream &operator<<(std::ostream& sout, const Deck& d) {
-	for (int i=0; i<d.getCardCount(); i++) {
-		if (i!=0 && i!=d.getCardCount()-1 && i%13==0) {
+	for (int i=0; i<d.CARD_COUNT; i++) {
+		if (i!=0 && i!=d.CARD_COUNT-1 && i%13==0) {
 			sout<<endl;
 		}
 		else if (i!=0) {
