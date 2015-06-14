@@ -50,5 +50,6 @@ ostream &operator<<(std::ostream& sout, const Deck& d) {
 		}
 		sout<<*(d.cards_[i]);
 	}
+	sout<<endl;
 	return sout;
 }
