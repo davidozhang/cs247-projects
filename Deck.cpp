@@ -26,6 +26,11 @@ Deck::~Deck() {
 	}
 }
 
+vector<Card*> Deck::getHand(int player_num) {
+	vector<Card*> sub_vector(cards_.begin()+13*(player_num-1), cards_.begin()+13*player_num);
+	return sub_vector;
+}
+
 void Deck::shuffle() {
 	static mt19937 rng(seed);
 
