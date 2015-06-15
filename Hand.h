@@ -1,14 +1,15 @@
 #ifndef _HAND_
 #define _HAND_
 
+#include "Card.h"
+#include "Deck.h"
 #include <vector>
 
 class Hand {
-private:
-	vector<Card*> cards_;
 public:
-	Hand();
+	Hand(Deck&, int);
+private:
+	std::vector<Card*> cards_;
 };
-
 
 #endif
