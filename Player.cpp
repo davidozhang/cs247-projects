@@ -12,6 +12,10 @@ void Player::setHand(const Hand *hand): hand_(hand) {}
 
 int Player::getScore() const { return score_; }
 
+bool Player::isHuman() const { return isHuman_; }
+
+
+
 void Player::setLegalMoves(const set<Card*> &legalSet) {
 	legalMoves_.clear();
 

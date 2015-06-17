@@ -25,6 +25,14 @@ Table* Game::getTable() {
 	return table_;
 }
 
+
+
+
+
+// ****************************************************************
+//		main
+// ****************************************************************
+
 int main(int argc, char* argv[]) {
 	int seed;
 	string input;
@@ -44,9 +52,6 @@ int main(int argc, char* argv[]) {
 		else
 			players_[i] = new ComputerPlayer(i+1, 0);
 	}
-	while ()
-
-
 
 	Command c;
 	cout<<">";
@@ -69,5 +74,6 @@ int main(int argc, char* argv[]) {
 		}
 		cout<<">";
 	}
+
 	return 0;
 }
