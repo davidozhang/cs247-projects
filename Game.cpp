@@ -21,6 +21,16 @@ Deck* Game::getDeck() {
 	return deck_;
 }
 
+Game
+
+
+
+
+
+// ****************************************************************
+//		main
+// ****************************************************************
+
 int main(int argc, char* argv[]) {
 	int seed;
 	string input;
@@ -35,32 +45,34 @@ int main(int argc, char* argv[]) {
 	for (int i=0; i<4; ++i) {
 		cout << "Is player " << i+1 << " a human(h) or a computer(c)?" << endl << ">";
 		cin >> input;
-		if (input == "h")
-			players_[i] = new HumanPlayer(i+1, 0);
-		else
-			players_[i] = new ComputerPlayer(i+1, 0);
+		g->newPlayer(i+1, input)
 	}
-	while ()
+
+
+	while (!g->hasWinner())
+		g->startRound();
+
+	cout << g->getWinners() << endl;
 
 
 
-	Command c;
-	cout<<">";
-	while (cin>>c) {
-		if (c.type==PLAY) {
-			//PLAY
-		} else if (c.type==DISCARD) {
-			//DISCARD
-		} else if (c.type==DECK) {
-			cout<<*(g->getDeck());
-		} else if (c.type==QUIT) {
-			break;
-		} else if (c.type==RAGEQUIT) {
-			//RAGEQUIT
-		} else if (c.type==BAD_COMMAND) {
-			//BAD_COMMAND
-		}
-		cout<<">";
-	}
+	// Command c;
+	// cout<<">";
+	// while (cin>>c) {
+	// 	if (c.type==PLAY) {
+	// 		//PLAY
+	// 	} else if (c.type==DISCARD) {
+	// 		//DISCARD
+	// 	} else if (c.type==DECK) {
+	// 		cout<<*(g->getDeck());
+	// 	} else if (c.type==QUIT) {
+	// 		break;
+	// 	} else if (c.type==RAGEQUIT) {
+	// 		//RAGEQUIT
+	// 	} else if (c.type==BAD_COMMAND) {
+	// 		//BAD_COMMAND
+	// 	}
+	// 	cout<<">";
+	// }
 	return 0;
 }

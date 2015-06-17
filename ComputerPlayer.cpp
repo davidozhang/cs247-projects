@@ -8,7 +8,7 @@ using namespace std;
 
 
 
-ComputerPlayer::ComputerPlayer(int number, int score): Player(number, score) {}
+ComputerPlayer::ComputerPlayer(int number, int score): Player(number, score), Player::isHuman_(false) {}
 
 void ComputerPlayer::play(Card &dummy) {
 	if (legalMoves_.size() != 0) {

@@ -7,7 +7,7 @@
 using namespace std;
 
 
-HumanPlayer::HumanPlayer(int number, int score): Player(number, score) {}
+HumanPlayer::HumanPlayer(int number, int score): Player(number, score), Player::isHuman_(true) {}
 
 void HumanPlayer::play(Card &card) {
 	hand_->remove(card);
@@ -15,7 +15,7 @@ void HumanPlayer::play(Card &card) {
 
 	
 	//	g.notify(card);
-	
+
 	
 }
 
