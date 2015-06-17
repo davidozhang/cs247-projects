@@ -14,10 +14,14 @@ void ComputerPlayer::play(Card &dummy) {
 	if (legalMoves_.size() != 0) {
 		Card* card = hand_->removeFirst();
 		cout << "Player " << number_ << " plays " << *card << "." << endl;
+
+		//	g.notify(card);
 	} else {
 		Card* card = hand_->removeFirst();
 		cout << "Player " << number_ << " discards " << *card << "." << endl;
 		score_ += (card.getRank() + 1);
+
+		//	add to discards vector
 	}
 }
 

@@ -2,6 +2,7 @@
 #define _GAME_
 
 #include "Deck.h"
+#include "Player.h"
 #include <set>
 
 class Game {
