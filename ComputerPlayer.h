@@ -2,13 +2,14 @@
 #define _COMPUTERPLAYER_
 
 #include "Player.h"
+#include "Card.h"
 #include <vector>
 
 class ComputerPlayer: public Player {
 public:
 	ComputerPlayer(int);
-	virtual void play(Card*);
-	virtual void discard(Card*);
+	virtual void play(Card&);
+	virtual void discard(Card&);
 };
 
 
