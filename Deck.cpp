@@ -16,7 +16,6 @@ Deck::Deck(int seed_num) {
 			cards_.push_back(new Card(suit, rank));
 		}
 	}
-	shuffle();
 }
 
 Deck::~Deck() {

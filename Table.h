@@ -1,19 +1,20 @@
 #ifndef _TABLE_
 #define _TABLE_
 
-#include <set>
+#include "Card.h"
+#include <vector>
+#include <string>
 
 class Table {
-private:
-	set<Card*> diamonds_;
-	set<Card*> hearts_;
-	set<Card*> spades_;
-	set<Card*> clubs_;
 public:
-	Table();
+	void addCard(Card&);
+	friend std::ostream &operator<<(std::ostream &, const Table &);
+private:
+	std::string listCards(const std::vector<Card>&) const;
+	std::vector<Card> clubs_;
+	std::vector<Card> diamonds_;
+	std::vector<Card> hearts_;
+	std::vector<Card> spades_;
 };
-
-std::ostream &operator<<(std::ostream &, const Table &);
-
 
 #endif
