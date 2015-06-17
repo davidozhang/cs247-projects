@@ -1,6 +1,9 @@
 #include "Game.h"
 #include "Command.h"
 #include "Deck.h"
+#include "Player.h"
+#include "HumanPlayer.h"
+#include "ComputerPlayer.h"
 #include <set>
 #include <iostream>
 
@@ -20,12 +23,27 @@ Deck* Game::getDeck() {
 
 int main(int argc, char* argv[]) {
 	int seed;
+	string input;
+
 	if (argc==2) {
 		seed=atoi(argv[1]);
 	} else {
 		seed=0;
 	}
 	Game* g = new Game(seed);
+
+	for (int i=0; i<4; ++i) {
+		cout << "Is player " << i+1 << " a human(h) or a computer(c)?" << endl << ">";
+		cin >> input;
+		if (input == "h")
+			players_[i] = new HumanPlayer(i+1, 0);
+		else
+			players_[i] = new ComputerPlayer(i+1, 0);
+	}
+	while ()
+
+
+
 	Command c;
 	cout<<">";
 	while (cin>>c) {

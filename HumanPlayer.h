@@ -7,7 +7,7 @@
 
 class HumanPlayer: public Player {
 public:
-	HumanPlayer(int);
+	HumanPlayer(int, int);
 	virtual void play(Card&);
 	virtual void discard(Card&);
 };

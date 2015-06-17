@@ -10,6 +10,8 @@ Player::Player(int number, int score): number_(number), score_(score) {}
 
 void Player::setHand(const Hand *hand): hand_(hand) {}
 
+int Player::getScore() const { return score_; }
+
 void Player::setLegalMoves(const set<Card*> &legalSet) {
 	legalMoves_.clear();
 
