@@ -3,6 +3,9 @@
 #include "Command.h"
 #include "Deck.h"
 #include "Table.h"
+#include "Player.h"
+#include "HumanPlayer.h"
+#include "ComputerPlayer.h"
 #include <set>
 #include <iostream>
 

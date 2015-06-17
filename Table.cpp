@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "Table.h"
 #include "Card.h"
 #include <iostream>

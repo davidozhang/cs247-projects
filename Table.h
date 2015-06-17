@@ -2,6 +2,7 @@
 #define _TABLE_
 
 #include "Card.h"
+<<<<<<< HEAD
 #include <vector>
 #include <string>
 
