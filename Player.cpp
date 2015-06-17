@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <set>
 #include "Hand.h"
 #include "Card.h"
 #include "Player.h"
@@ -7,18 +8,30 @@ using namespace std;
 
 Player::Player(int number, int score): number_(number), score_(score) {}
 
-Player::setHand(Hand *hand): hand_(hand) {}
+void Player::setHand(const Hand *hand): hand_(hand) {}
 
-Hand* Player::getHand() const { return hand_; }
+void Player::setLegalMoves(const set<Card*> &legalSet) {
+	legalMoves_.clear();
 
-vector<Card*> Player::getLegalMoves() const { return legalMoves; }
+	vector<Card*> handCards = hand_.getCards();
+	int handSize = handCards.size();
+	set<Card*>::iterator iter;
+
+	for (int i=0; i<handSize; ++i) {
+		for (iter = legalSet.begin(); iter != legalSet.end(); ++iter) {
+			if (*handCards[i] == **iter) {
+				legalMoves_.push_back(handCards[i]); break;
+			}
+		}
+	}
+}
 
 ostream &operator<<(ostream & sout, const Player &player) {
-	sout << "Your hand: " << *player.getHand() << endl;
+	sout << "Your hand: " << *(player.hand_) << endl;
 	sout << "Legal plays: ";
 
-	vector<Card*> temp = player.getLegalMoves();
-	for (int i=0; i<temp.size(); ++i)
-		cout << *temp[i] << " ";
+	int size = player.legalMoves_.size();
+	for (int i=0; i<size; ++i)
+		cout << *(player.legalMoves_[i]) << " ";
 	cout << endl;
 }

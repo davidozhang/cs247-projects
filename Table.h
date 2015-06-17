@@ -1,16 +1,19 @@
 #ifndef _TABLE_
 #define _TABLE_
 
+#include "Card.h"
 #include <set>
 
 class Table {
 private:
-	set<Card*> diamonds_;
-	set<Card*> hearts_;
-	set<Card*> spades_;
-	set<Card*> clubs_;
+	std::set<Card*> diamonds_;
+	std::set<Card*> hearts_;
+	std::set<Card*> spades_;
+	std::set<Card*> clubs_;
 public:
 	Table();
+
+	std::set<Card*> getLegalCards() const;
 };
 
 std::ostream &operator<<(std::ostream &, const Table &);
