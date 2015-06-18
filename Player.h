@@ -16,7 +16,6 @@ class Player {
 
 public:
 
-
 	// do validation before the play
 	// card has to be in legalMoves
 	// essentially, call isLegalMoves(card)
@@ -31,18 +30,10 @@ public:
 
 	void setHand(Hand&);
 	void setLegalMoves(const std::vector<Card>&); // used to update the set of legal moves everytime someone make a play
-	void clearListOfDiscards(); // used to clear the list of discards at the e nd of each round
-	void removeFromHand(Card&); // used to remove a specific card from my hand
-	Card removeFirstFromHand(); // used to remove the first card from my hand
-	Card removeFirstFromLegalMove(); // used to remove the first card from my legal moves
+	void clearListOfDiscards(); // used to clear the list of discards at the e nd of each roun
 
-
-	Hand getHand() const;
-	Game* getGame() const;
 	int getTotalScore() const;
 	int getNumber() const;
-	std::vector<Card> getLegalMoves() const;
-	std::vector<Card> getListOfDiscards() const;
 	void outputRoundEndResult() const;
 	void updateScore();
 
@@ -54,6 +45,12 @@ public:
 
 protected:
 	Player(int, int, int, Game*, bool);
+
+	void removeFromHand(Card&); // used to remove a specific card from my hand
+	Card removeFirstFromHand(); // used to remove the first card from my hand
+	Card removeFirstFromLegalMove(); // used to remove the first card from my legal moves
+
+	Game* getGame() const;
 	int getScore() const;
 	void setScore(int);
 	void addListOfDiscards(Card&);

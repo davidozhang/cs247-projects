@@ -58,11 +58,6 @@ Card Player::removeFirstFromLegalMove() {
 	return legalMoves_[0];
 }
 
-
-Hand Player::getHand() const {
-	return hand_;
-}
-
 int Player::getScore() const {
 	return score_;
 }
@@ -77,14 +72,6 @@ int Player::getNumber() const {
 
 Game* Player::getGame() const {
 	return game_;
-}
-
-vector<Card> Player::getLegalMoves() const {
-	return legalMoves_;
-}
-
-vector<Card> Player::getListOfDiscards() const {
-	return listOfDiscards_;
 }
 
 void Player::outputRoundEndResult() const {
