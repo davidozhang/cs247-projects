@@ -7,7 +7,10 @@
 
 class Table {
 public:
+	Table();
 	void addCard(Card&);
+	void refreshLegalCards();
+	std::vector<Card*> getLegalCards();
 	friend std::ostream &operator<<(std::ostream &, const Table &);
 private:
 	std::string listCards(const std::vector<Card>&) const;
@@ -15,6 +18,8 @@ private:
 	std::vector<Card> diamonds_;
 	std::vector<Card> hearts_;
 	std::vector<Card> spades_;
+
+	std::vector<Card*> legalCards_;
 };
 
 #endif

@@ -5,6 +5,13 @@
 
 using namespace std;
 
+Table::Table() {
+	legalCards_.push_back(new Card(SPADE, SEVEN));
+	legalCards_.push_back(new Card(CLUB, SEVEN));
+	legalCards_.push_back(new Card(DIAMOND, SEVEN));
+	legalCards_.push_back(new Card(HEART, SEVEN));
+}
+
 void Table::addCard(Card& card) {
 	if (card.getSuit()==CLUB) {
 		clubs_.push_back(card);
@@ -27,7 +34,7 @@ string Table::listCards(const vector<Card>& v) const {
 		for (it=temp.begin();it!=temp.cend();it++) {
 			if ((*it).getRank()==i) {
 				output+=" "+str_rank[(*it).getRank()];
-			}	
+			}
 		}
 	}
 	return output;
