@@ -13,9 +13,9 @@ Table::Table() {
 }
 
 void Table::getLegalCardsHelper(vector<Card>& result, vector<Card>& traverse, Suit suit) {
-	if (traverse[0].getRank()>0) {
+	if (!traverse.empty() && traverse[0].getRank()>0) {
 		result.push_back(Card(suit, (Rank)(traverse[0].getRank()-1)));
-	} else if (traverse[traverse.size()-1].getRank()<12) {
+	} else if (!traverse.empty() && traverse[traverse.size()-1].getRank()<12) {
 		result.push_back(Card(suit, (Rank)(traverse[traverse.size()-1].getRank()+1)));
 	}
 }
