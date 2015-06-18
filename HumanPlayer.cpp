@@ -4,10 +4,11 @@
 #include "Card.h"
 #include "Player.h"
 #include "HumanPlayer.h"
+#include "Game.h"
 using namespace std;
 
 
-HumanPlayer::HumanPlayer(int number, int score): Player(number, score, true) {}
+HumanPlayer::HumanPlayer(int number, int score, Game* game): Player(number, score, game, true) {}
 
 void HumanPlayer::play(Card *card) {
 

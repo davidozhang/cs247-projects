@@ -86,6 +86,8 @@ void Game::round() {
 			} else if (c.type==BAD_COMMAND) {
 				//BAD_COMMAND
 			}
+		} else {
+			cout << players_[curPlayer]->getNumber() << endl;
 		}
 		
 	}
