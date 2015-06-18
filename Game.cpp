@@ -141,9 +141,14 @@ void Game::round() {
 					cout<<"Player "<<players_[curPlayer]->getNumber()<<" ragequits. A computer will now take over."<<endl;
 					int score=players_[curPlayer]->getScore();
 					int totalScore=players_[curPlayer]->getTotalScore();
-					Player* temp=players_[curPlayer];
-					players_[curPlayer] = new ComputerPlayer(curPlayer, score, totalScore, this);
-					delete temp;
+					Hand hand=players_[curPlayer]->getHand();
+
+					delete players_[curPlayer];
+					players_[curPlayer] = new ComputerPlayer(curPlayer+1, score, totalScore, this);
+					players_[curPlayer]->setHand(hand);
+
+					Card dummy(SPADE,SEVEN);
+					players_[curPlayer]->play(dummy);
 					isLegal = true;
 
 				} else if (c.type==BAD_COMMAND) {

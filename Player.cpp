@@ -13,6 +13,10 @@ Player::~Player() {
 	game_=NULL;
 }
 
+Hand Player::getHand() const {
+	return hand_;
+}
+
 void Player::setHand(Hand &hand) {
 	 hand_ = hand;
 }
