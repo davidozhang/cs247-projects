@@ -11,18 +11,17 @@ using namespace std;
 
 ComputerPlayer::ComputerPlayer(int number, int score, Game* game): Player(number, score, game, false) {}
 
-void ComputerPlayer::play(Card *dummy) {
+void ComputerPlayer::play(Card &dummy) {
 	if (hasLegalMoves()) {
-		Card* card = removeFirstFromLegalMove();
-		cout << "Player " << getNumber() << " plays " << *card << "." << endl;
-		getGame()->notify(*card);
+		Card card = removeFirstFromLegalMove();
+		cout << "Player " << getNumber() << " plays " << card << "." << endl;
+		getGame()->notify(card);
 	} else {
-		Card* card = removeFirstFromHand();
-		cout << "Player " << getNumber() << " discards " << *card << "." << endl;
-		setScore(getScore() + card->getRank() + 1);
+		Card card = removeFirstFromHand();
+		cout << "Player " << getNumber() << " discards " << card << "." << endl;
+		setScore(getScore() + card.getRank() + 1);
 		addListOfDiscards(card);
-		//	add to discards vector
 	}
 }
 
-void ComputerPlayer::discard(Card *dummy) {}
+void ComputerPlayer::discard(Card &dummy) {}

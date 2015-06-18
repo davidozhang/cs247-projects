@@ -9,8 +9,8 @@
 class HumanPlayer: public Player {
 public:
 	HumanPlayer(int, int, Game*);
-	virtual void play(Card*);
-	virtual void discard(Card*);
+	virtual void play(Card&);
+	virtual void discard(Card&);
 };
 
 

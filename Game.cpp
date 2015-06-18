@@ -74,7 +74,7 @@ void Game::round() {
 			cin>>c;
 
 			if (c.type==PLAY) {
-				players_[curPlayer]->play(&(c.card));
+				players_[curPlayer]->play(c.card);
 				// cout<<c.card.getSuit()<<" "<<c.card.getRank()<<endl;
 				// Card* card = new Card(c.card.getSuit(), c.card.getRank());
 				// g->getTable()->addCard(*card);
