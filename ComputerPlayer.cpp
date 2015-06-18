@@ -9,7 +9,7 @@ using namespace std;
 
 
 
-ComputerPlayer::ComputerPlayer(int number, int score, int preScore, Game* game): Player(number, score, preScore, game, false) {}
+ComputerPlayer::ComputerPlayer(int number, int score, int totalScore, Game* game): Player(number, score, totalScore, game, false) {}
 
 void ComputerPlayer::play(Card &dummy) {
 	if (hasLegalMoves()) {
