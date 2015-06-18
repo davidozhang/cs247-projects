@@ -5,17 +5,13 @@
 
 using namespace std;
 
-Table::Table() {
-	legalCards_.push_back(Card(SPADE, SEVEN));
-	legalCards_.push_back(Card(CLUB, SEVEN));
-	legalCards_.push_back(Card(DIAMOND, SEVEN));
-	legalCards_.push_back(Card(HEART, SEVEN));
-}
+Table::Table() {}
 
 void Table::getLegalCardsHelper(vector<Card>& result, vector<Card>& traverse, Suit suit) {
 	if (!traverse.empty() && traverse[0].getRank()>0) {
 		result.push_back(Card(suit, (Rank)(traverse[0].getRank()-1)));
-	} else if (!traverse.empty() && traverse[traverse.size()-1].getRank()<12) {
+	}
+	if (!traverse.empty() && traverse[traverse.size()-1].getRank()<12) {
 		result.push_back(Card(suit, (Rank)(traverse[traverse.size()-1].getRank()+1)));
 	}
 }
@@ -26,6 +22,10 @@ vector<Card> Table::getLegalCards() {
 	getLegalCardsHelper(result, diamonds_, DIAMOND);
 	getLegalCardsHelper(result, hearts_, HEART);
 	getLegalCardsHelper(result, spades_, SPADE);
+	result.push_back(Card(SPADE, SEVEN));
+	result.push_back(Card(CLUB, SEVEN));
+	result.push_back(Card(DIAMOND, SEVEN));
+	result.push_back(Card(HEART, SEVEN));
 	return result;
 }
 
