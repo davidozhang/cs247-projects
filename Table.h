@@ -9,17 +9,17 @@ class Table {
 public:
 	Table();
 	void addCard(Card&);
-	void refreshLegalCards();
-	std::vector<Card*> getLegalCards();
+	std::vector<Card> getLegalCards();
 	friend std::ostream &operator<<(std::ostream &, const Table &);
 private:
+	void getLegalCardsHelper(std::vector<Card>&, std::vector<Card>&, Suit);
 	std::string listCards(const std::vector<Card>&) const;
 	std::vector<Card> clubs_;
 	std::vector<Card> diamonds_;
 	std::vector<Card> hearts_;
 	std::vector<Card> spades_;
 
-	std::vector<Card*> legalCards_;
+	std::vector<Card> legalCards_;
 };
 
 #endif
