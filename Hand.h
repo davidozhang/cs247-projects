@@ -8,6 +8,7 @@
 class Hand {
 	friend std::ostream &operator<<(std::ostream &sout, const Hand &hand);
 public:
+	Hand();
 	Hand(Deck&, int);
 	void remove(Card&);
 	Card removeFirst();

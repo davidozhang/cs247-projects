@@ -3,6 +3,8 @@
 #include "Deck.h"
 using namespace std;
 
+Hand::Hand() {}
+
 Hand::Hand(Deck& deck, int player_num) {
 	cards_ = deck.getHand(player_num);
 }
