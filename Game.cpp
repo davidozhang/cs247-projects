@@ -76,7 +76,7 @@ void Game::notify(Card& card) {
 
 void Game::round() {
 	int startPlayer;
-
+	table_->clear();
 	deck_->shuffle();
 
 	for (int i=0; i<4; ++i) {

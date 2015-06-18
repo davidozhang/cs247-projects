@@ -45,6 +45,13 @@ void Table::addCard(Card& card) {
 	}
 }
 
+void Table::clear() {
+	clubs_.clear();
+	diamonds_.clear();
+	hearts_.clear();
+	spades_.clear();
+}
+
 string Table::listCards(const vector<Card>& v) const {
 	string output="";
 	string str_rank[] = {"A", "2", "3", "4", "5", "6",

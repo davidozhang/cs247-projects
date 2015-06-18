@@ -10,6 +10,7 @@ public:
 	Table();
 	void addCard(Card&);
 	std::vector<Card> getLegalCards();
+	void clear();
 	friend std::ostream &operator<<(std::ostream &, const Table &);
 private:
 	void getLegalCardsHelper(std::vector<Card>&, std::vector<Card>&, Suit);
