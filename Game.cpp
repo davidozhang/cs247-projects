@@ -23,6 +23,7 @@ Game::~Game() {
 	for (int i=0; i<4; i++) {
 		delete players_[i];
 	}
+	delete[] players_;
 }
 
 Deck* Game::getDeck() {
