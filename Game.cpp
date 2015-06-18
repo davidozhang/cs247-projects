@@ -20,9 +20,9 @@ Game::Game(int seed) {
 Game::~Game() {
 	delete deck_;
 	delete table_;
-	/**for (int i=0; i<players_; i++) {
+	for (int i=0; i<4; i++) {
 		delete players_[i];
-	}**/
+	}
 }
 
 Deck* Game::getDeck() {
@@ -178,5 +178,6 @@ int main(int argc, char* argv[]) {
 		g->round();
 	}
 	g->declareWinner();
+	delete g;
 	return 0;
 }

@@ -9,6 +9,10 @@ using namespace std;
 Player::Player(int number, int score, int totalScore, Game* game, bool isHuman): 
 	number_(number), score_(score), totalScore_(totalScore), game_(game), isHuman_(isHuman) {}
 
+Player::~Player() {
+	game_=NULL;
+}
+
 void Player::setHand(Hand &hand) {
 	 hand_ = hand;
 }

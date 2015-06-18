@@ -27,6 +27,8 @@ public:
 	// essentially, call hasLegalMoves()
 	virtual void discard(Card&) =0;
 
+	virtual ~Player();
+
 	void setHand(Hand&);
 	void setLegalMoves(const std::vector<Card>&); // used to update the set of legal moves everytime someone make a play
 	void clearListOfDiscards(); // used to clear the list of discards at the e nd of each round
