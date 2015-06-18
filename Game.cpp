@@ -14,6 +14,7 @@ using namespace std;
 Game::Game(int seed) {
 	deck_=new Deck(seed);
 	table_=new Table();
+	players_ = new Player*[4];
 }
 
 Game::~Game() {
@@ -31,15 +32,12 @@ Table* Game::getTable() {
 void Game::createPlayers() {
 	string input;
 	for (int i=0; i<4; ++i) {
-		Player *temp;
 		cout << "Is player " << i+1 << " a human(h) or a computer(c)?" << endl << ">";
 		cin >> input;
 		if (input == "h")
-			temp = new HumanPlayer(i+1, 0);
+			players_[i] = new HumanPlayer(i+1, 0, this);
 		else
-			temp = new ComputerPlayer(i+1, 0);
-
-		players_.push_back(temp);
+			players_[i] =new ComputerPlayer(i+1, 0, this);
 	}
 }
 
@@ -59,7 +57,7 @@ void Game::round() {
 
 	for (int i=0; i<52; ++i) {
 		if (i != 0) {
-			
+
 		}
 		int curPlayer = (startPlayer+i)%4;
 

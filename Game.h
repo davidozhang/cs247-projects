@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+class Player;
+
 class Game {
 public:
 	Game(int);
@@ -22,7 +24,7 @@ public:
 	void createPlayers();
 	void round();
 private:
-	std::vector<Player*> players_;
+	Player** players_;
 	Deck* deck_;
 	Table* table_;
 };
