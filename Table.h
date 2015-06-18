@@ -18,8 +18,6 @@ private:
 	std::vector<Card> diamonds_;
 	std::vector<Card> hearts_;
 	std::vector<Card> spades_;
-
-	std::vector<Card> legalCards_;
 };
 
 #endif

@@ -13,20 +13,13 @@ Deck::Deck(int seed_num) {
 		for (int j=0; j<ranks.length();j++) {
 			Suit suit = (Suit)suits.find(suits[i]);
 			Rank rank = (Rank)ranks.find(ranks[j]);
-			cards_.push_back(new Card(suit, rank));
+			cards_.push_back(Card(suit, rank));
 		}
 	}
 }
 
-Deck::~Deck() {
-	vector<Card*>::iterator it;
-	for (it=cards_.begin();it!=cards_.end();it++) {
-		delete *it;
-	}
-}
-
-vector<Card*> Deck::getHand(int player_num) {
-	vector<Card*> sub_vector(cards_.begin()+13*(player_num-1), cards_.begin()+13*player_num);
+vector<Card> Deck::getHand(int player_num) {
+	vector<Card> sub_vector(cards_.begin()+13*(player_num-1), cards_.begin()+13*player_num);
 	return sub_vector;
 }
 
@@ -38,7 +31,7 @@ void Deck::shuffle() {
 	while ( n > 1 ) {
 		int k = (int) (rng() % n);
 		--n;
-		Card *c = cards_[n];
+		Card c = cards_[n];
 		cards_[n] = cards_[k];
 		cards_[k] = c;
 	}
@@ -52,7 +45,7 @@ ostream &operator<<(std::ostream& sout, const Deck& d) {
 		else if (i!=0) {
 			sout<<" ";
 		}
-		sout<<*(d.cards_[i]);
+		sout<<d.cards_[i];
 	}
 	sout<<endl;
 	return sout;

@@ -8,17 +8,17 @@
 using namespace std;
 
 
-HumanPlayer::HumanPlayer(int number, int score, Game* game): Player(number, score, game, true) {}
+HumanPlayer::HumanPlayer(int number, int score, int prevScore, Game* game): Player(number, score, prevScore, game, true) {}
 
-void HumanPlayer::play(Card *card) {
+void HumanPlayer::play(Card &card) {
 	removeFromHand(card);
-	cout << "Player " << getNumber() << " plays " << *card << "." << endl;
-	getGame()->notify(*card);
+	cout << "Player " << getNumber() << " plays " << card << "." << endl;
+	getGame()->notify(card);
 }
 
-void HumanPlayer::discard(Card *card) {
+void HumanPlayer::discard(Card &card) {
 	removeFromHand(card);
-	cout << "Player " << getNumber() << " discards " << *card << "." << endl;
-	setScore(getScore() + card->getRank() + 1);
+	cout << "Player " << getNumber() << " discards " << card << "." << endl;
+	setScore(getScore() + card.getRank() + 1);
 	addListOfDiscards(card);
 }

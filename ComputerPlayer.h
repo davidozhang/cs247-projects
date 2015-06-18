@@ -8,9 +8,9 @@
 
 class ComputerPlayer: public Player {
 public:
-	ComputerPlayer(int,int, Game*);
-	virtual void play(Card*);
-	virtual void discard(Card*);
+	ComputerPlayer(int, int, int, Game*);
+	virtual void play(Card&);
+	virtual void discard(Card&);
 };
 
 
