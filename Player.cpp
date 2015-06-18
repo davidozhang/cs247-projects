@@ -66,6 +66,10 @@ int Player::getNumber() const {
 	return number_;
 }
 
+Game* Player::getGame() const {
+	return game_;
+}
+
 vector<Card*> Player::getLegalMoves() const {
 	return legalMoves_;
 }

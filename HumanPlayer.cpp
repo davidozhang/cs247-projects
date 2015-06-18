@@ -11,14 +11,9 @@ using namespace std;
 HumanPlayer::HumanPlayer(int number, int score, Game* game): Player(number, score, game, true) {}
 
 void HumanPlayer::play(Card *card) {
-
 	removeFromHand(card);
 	cout << "Player " << getNumber() << " plays " << *card << "." << endl;
-
-	
-	//	g.notify(card);
-
-	
+	getGame()->notify(*card);
 }
 
 void HumanPlayer::discard(Card *card) {

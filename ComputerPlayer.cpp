@@ -15,8 +15,7 @@ void ComputerPlayer::play(Card *dummy) {
 	if (hasLegalMoves()) {
 		Card* card = removeFirstFromLegalMove();
 		cout << "Player " << getNumber() << " plays " << *card << "." << endl;
-
-		//	g.notify(card);
+		getGame()->notify(*card);
 	} else {
 		Card* card = removeFirstFromHand();
 		cout << "Player " << getNumber() << " discards " << *card << "." << endl;

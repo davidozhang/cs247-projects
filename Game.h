@@ -19,10 +19,9 @@ public:
 	bool hasPlayer() const;
 	std::string getWinners() const;
 	Table* getTable();
-
-
 	void createPlayers();
 	void round();
+	void notify(Card&);
 private:
 	Player** players_;
 	Deck* deck_;

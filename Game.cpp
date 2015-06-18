@@ -41,6 +41,10 @@ void Game::createPlayers() {
 	}
 }
 
+void Game::notify(Card& card) {
+	getTable()->addCard(card);
+}
+
 void Game::round() {
 	int startPlayer;
 
@@ -70,6 +74,7 @@ void Game::round() {
 			cin>>c;
 
 			if (c.type==PLAY) {
+				players_[curPlayer]->play(&(c.card));
 				// cout<<c.card.getSuit()<<" "<<c.card.getRank()<<endl;
 				// Card* card = new Card(c.card.getSuit(), c.card.getRank());
 				// g->getTable()->addCard(*card);
