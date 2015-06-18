@@ -8,7 +8,7 @@
 using namespace std;
 
 
-HumanPlayer::HumanPlayer(int number, int score, Game* game): Player(number, score, game, true) {}
+HumanPlayer::HumanPlayer(int number, int score, int prevScore, Game* game): Player(number, score, prevScore, game, true) {}
 
 void HumanPlayer::play(Card &card) {
 	removeFromHand(card);

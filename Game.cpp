@@ -35,9 +35,9 @@ void Game::createPlayers() {
 		cout << "Is player " << i+1 << " a human(h) or a computer(c)?" << endl << ">";
 		cin >> input;
 		if (input == "h")
-			players_[i] = new HumanPlayer(i+1, 0, this);
+			players_[i] = new HumanPlayer(i+1, 0, 0, this);
 		else
-			players_[i] =new ComputerPlayer(i+1, 0, this);
+			players_[i] =new ComputerPlayer(i+1, 0, 0, this);
 	}
 }
 
@@ -59,12 +59,11 @@ void Game::round() {
 
 	cout << "A new round begins. It's player " << startPlayer+1 << "'s turn to play." << endl;
 
+
+	/* round begin */
 	for (int i=0; i<52; ++i) {
-		if (i != 0) {
 
-		}
 		int curPlayer = (startPlayer+i)%4;
-
 
 		vector<Card> legals = table_->getLegalCards();
 		if (i != 0) {
@@ -114,9 +113,15 @@ void Game::round() {
 			}
 			
 		} else {
-			cout << players_[curPlayer]->getNumber() << endl;
+			Card dummy(SPADE,SEVEN);
+			players_[curPlayer]->play(dummy); // the parameter is dummy
 		}
-		
+	} /* round end */
+
+
+	for (int i=0; i<4; ++i) {
+		players_[i]->outputRoundEndResult();
+		players_[i]->updateScore();
 	}
 }
 

@@ -18,13 +18,6 @@ Deck::Deck(int seed_num) {
 	}
 }
 
-// Deck::~Deck() {
-// 	vector<Card>::iterator it;
-// 	for (it=cards_.begin();it!=cards_.end();it++) {
-// 		delete *it;
-// 	}
-// }
-
 vector<Card> Deck::getHand(int player_num) {
 	vector<Card> sub_vector(cards_.begin()+13*(player_num-1), cards_.begin()+13*player_num);
 	return sub_vector;

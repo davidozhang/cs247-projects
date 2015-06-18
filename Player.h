@@ -41,6 +41,8 @@ public:
 	int getNumber() const;
 	std::vector<Card> getLegalMoves() const;
 	std::vector<Card> getListOfDiscards() const;
+	void outputRoundEndResult() const;
+	void updateScore();
 
 	bool isHuman() const;
 	bool has7S() const;
@@ -49,7 +51,7 @@ public:
 	bool hasLegalMoves() const;
 
 protected:
-	Player(int, int, Game*, bool);
+	Player(int, int, int, Game*, bool);
 	void setScore(int);
 	void addListOfDiscards(Card&);
 
@@ -58,6 +60,7 @@ private:
 	Hand* hand_;
 	int number_;
 	int score_;
+	int prevScore_;
 	bool isHuman_;
 	std::vector<Card> legalMoves_;
 	std::vector<Card> listOfDiscards_;

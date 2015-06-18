@@ -6,7 +6,8 @@
 #include "Game.h"
 using namespace std;
 
-Player::Player(int number, int score, Game* game, bool isHuman): number_(number), score_(score), game_(game), isHuman_(isHuman) {}
+Player::Player(int number, int score, int prevScore, Game* game, bool isHuman): 
+	number_(number), score_(score), prevScore_(prevScore), game_(game), isHuman_(isHuman) {}
 
 void Player::setHand(Hand *hand) {
 	 hand_ = hand;
@@ -78,6 +79,23 @@ vector<Card> Player::getListOfDiscards() const {
 	return listOfDiscards_;
 }
 
+void Player::outputRoundEndResult() const {
+	int size = listOfDiscards_.size();
+
+	cout << "Player " << number_ << "'s discards: "; 
+	for (int i=0; i<size; ++i)
+		cout << listOfDiscards_[i] << " ";
+	cout << endl;
+
+	cout << "Player " << number_ << "'s score: "; 
+	cout << prevScore_ << " + " << score_ << " = " << prevScore_+score_ << endl;
+}
+
+
+void Player::updateScore() {
+	prevScore_ += score_;
+	score_ = 0;
+}
 
 bool Player::isHuman() const { return isHuman_; }
 

@@ -14,9 +14,7 @@ public:
 	Game(int);
 	~Game();
 	Deck* getDeck();
-	void newPlayer(int, std::string);
 	void startRound();
-	bool hasPlayer() const;
 	std::string getWinners() const;
 	Table* getTable();
 	void createPlayers();
