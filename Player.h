@@ -4,9 +4,12 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include "Game.h"
 #include "Hand.h"
 #include "Card.h"
 
+
+class Game;
 
 class Player {
 	friend std::ostream &operator<<(std::ostream &, const Player &);
@@ -33,6 +36,7 @@ public:
 
 
 	Hand* getHand() const;
+	Game* getGame() const;
 	int getScore() const;
 	int getNumber() const;
 	std::vector<Card*> getLegalMoves() const;
@@ -45,11 +49,12 @@ public:
 	bool hasLegalMoves() const;
 
 protected:
-	Player(int, int, bool);
+	Player(int, int, Game*, bool);
 	void setScore(int);
 	void addListOfDiscards(Card*);
 
 private:
+	Game* game_;
 	Hand *hand_;
 	int number_;
 	int score_;

@@ -3,12 +3,13 @@
 #include "Hand.h"
 #include "Card.h"
 #include "Player.h"
+#include "Game.h"
 #include "ComputerPlayer.h"
 using namespace std;
 
 
 
-ComputerPlayer::ComputerPlayer(int number, int score): Player(number, score, false) {}
+ComputerPlayer::ComputerPlayer(int number, int score, Game* game): Player(number, score, game, false) {}
 
 void ComputerPlayer::play(Card *dummy) {
 	if (hasLegalMoves()) {

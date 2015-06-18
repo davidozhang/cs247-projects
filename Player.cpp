@@ -3,9 +3,10 @@
 #include "Hand.h"
 #include "Card.h"
 #include "Player.h"
+#include "Game.h"
 using namespace std;
 
-Player::Player(int number, int score, bool isHuman): number_(number), score_(score), isHuman_(isHuman) {}
+Player::Player(int number, int score, Game* game, bool isHuman): number_(number), score_(score), game_(game), isHuman_(isHuman) {}
 
 void Player::setHand(Hand *hand) {
 	 hand_ = hand;
