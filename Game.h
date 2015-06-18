@@ -4,8 +4,8 @@
 #include "Deck.h"
 #include "Player.h"
 #include "Table.h"
-#include <set>
 #include <string>
+#include <vector>
 
 class Game {
 public:
@@ -16,11 +16,15 @@ public:
 	void startRound();
 	bool hasPlayer() const;
 	std::string getWinners() const;
+	Table* getTable();
+
+
+	void createPlayers();
+	void round();
 private:
-	Player players_[4];
+	std::vector<Player*> players_;
 	Deck* deck_;
 	Table* table_;
-	// vector<Card*> legalCards_;
 };
 
 

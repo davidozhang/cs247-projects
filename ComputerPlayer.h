@@ -8,8 +8,8 @@
 class ComputerPlayer: public Player {
 public:
 	ComputerPlayer(int,int);
-	virtual void play(Card&);
-	virtual void discard(Card&);
+	virtual void play(Card*);
+	virtual void discard(Card*);
 };
 
 

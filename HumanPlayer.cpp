@@ -7,11 +7,12 @@
 using namespace std;
 
 
-HumanPlayer::HumanPlayer(int number, int score): Player(number, score), Player::isHuman_(true) {}
+HumanPlayer::HumanPlayer(int number, int score): Player(number, score, true) {}
 
-void HumanPlayer::play(Card &card) {
-	hand_->remove(card);
-	cout << "Player " << number_ << " plays " << card << "." << endl;
+void HumanPlayer::play(Card *card) {
+
+	removeFromHand(card);
+	cout << "Player " << getNumber() << " plays " << *card << "." << endl;
 
 	
 	//	g.notify(card);
@@ -19,10 +20,9 @@ void HumanPlayer::play(Card &card) {
 	
 }
 
-void HumanPlayer::discard(Card &card) {
-	hand_->remove(card);
-	cout << "Player " << number_ << " discards " << card << "." << endl;
-	score_ += (card.getRank() + 1);
-
-	//	add to discards vector
+void HumanPlayer::discard(Card *card) {
+	removeFromHand(card);
+	cout << "Player " << getNumber() << " discards " << *card << "." << endl;
+	setScore(getScore() + card->getRank() + 1);
+	addListOfDiscards(card);
 }

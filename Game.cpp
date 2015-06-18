@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "HumanPlayer.h"
 #include "ComputerPlayer.h"
-#include <set>
+#include <vector>
 #include <iostream>
 
 using namespace std;
@@ -28,7 +28,70 @@ Table* Game::getTable() {
 	return table_;
 }
 
+void Game::createPlayers() {
+	string input;
+	for (int i=0; i<4; ++i) {
+		Player *temp;
+		cout << "Is player " << i+1 << " a human(h) or a computer(c)?" << endl << ">";
+		cin >> input;
+		if (input == "h")
+			temp = new HumanPlayer(i+1, 0);
+		else
+			temp = new ComputerPlayer(i+1, 0);
 
+		players_.push_back(temp);
+	}
+}
+
+void Game::round() {
+	int startPlayer;
+
+	deck_->shuffle();
+
+	for (int i=0; i<4; ++i) {
+		Hand *hand = new Hand(*deck_, i+1);
+		players_[i]->setHand(hand);
+		if (players_[i]->has7S())
+			startPlayer = i;
+	}
+
+	cout << "A new round begins. It's player " << startPlayer+1 << "'s turn to play." << endl;
+
+	for (int i=0; i<52; ++i) {
+		if (i != 0) {
+			
+		}
+		int curPlayer = (startPlayer+i)%4;
+
+		if (players_[curPlayer]->isHuman()) {
+			cout << *table_;
+			cout << *players_[curPlayer];
+
+			Command c;
+			cout << ">";
+			cin>>c;
+
+			if (c.type==PLAY) {
+				// cout<<c.card.getSuit()<<" "<<c.card.getRank()<<endl;
+				// Card* card = new Card(c.card.getSuit(), c.card.getRank());
+				// g->getTable()->addCard(*card);
+				// cout<<*(g->getTable());
+
+			} else if (c.type==DISCARD) {
+				//DISCARD
+			} else if (c.type==DECK) {
+				cout<<*deck_;
+			} else if (c.type==QUIT) {
+				break;
+			} else if (c.type==RAGEQUIT) {
+				//RAGEQUIT
+			} else if (c.type==BAD_COMMAND) {
+				//BAD_COMMAND
+			}
+		}
+		
+	}
+}
 
 
 
@@ -45,38 +108,10 @@ int main(int argc, char* argv[]) {
 	} else {
 		seed=0;
 	}
+
 	Game* g = new Game(seed);
-
-	for (int i=0; i<4; ++i) {
-		cout << "Is player " << i+1 << " a human(h) or a computer(c)?" << endl << ">";
-		cin >> input;
-		if (input == "h")
-			players_[i] = new HumanPlayer(i+1, 0);
-		else
-			players_[i] = new ComputerPlayer(i+1, 0);
-	}
-
-	Command c;
-	cout<<">";
-	while (cin>>c) {
-		if (c.type==PLAY) {
-			cout<<c.card.getSuit()<<" "<<c.card.getRank()<<endl;
-			Card* card = new Card(c.card.getSuit(), c.card.getRank());
-			g->getTable()->addCard(*card);
-			cout<<*(g->getTable());
-		} else if (c.type==DISCARD) {
-			//DISCARD
-		} else if (c.type==DECK) {
-			cout<<*(g->getDeck());
-		} else if (c.type==QUIT) {
-			break;
-		} else if (c.type==RAGEQUIT) {
-			//RAGEQUIT
-		} else if (c.type==BAD_COMMAND) {
-			//BAD_COMMAND
-		}
-		cout<<">";
-	}
+	g->createPlayers();
+	g->round();
 
 	return 0;
 }
