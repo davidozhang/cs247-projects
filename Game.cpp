@@ -82,6 +82,7 @@ void Game::round() {
 	for (int i=0; i<4; ++i) {
 		Hand hand(*deck_, i+1);
 		players_[i]->setHand(hand);
+		players_[i]->clearListOfDiscards();
 		if (players_[i]->has7S())
 			startPlayer = i;
 	}
