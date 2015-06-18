@@ -80,7 +80,7 @@ void Game::round() {
 	deck_->shuffle();
 
 	for (int i=0; i<4; ++i) {
-		Hand *hand = new Hand(*deck_, i+1);
+		Hand hand(*deck_, i+1);
 		players_[i]->setHand(hand);
 		if (players_[i]->has7S())
 			startPlayer = i;
