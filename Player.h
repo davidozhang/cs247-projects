@@ -33,6 +33,7 @@ public:
 	void clearListOfDiscards(); // used to clear the list of discards at the e nd of each roun
 
 	int getTotalScore() const;
+	int getScore() const;
 	int getNumber() const;
 	void outputRoundEndResult() const;
 	void updateScore();
@@ -51,7 +52,6 @@ protected:
 	Card removeFirstFromLegalMove(); // used to remove the first card from my legal moves
 
 	Game* getGame() const;
-	int getScore() const;
 	void setScore(int);
 	void addListOfDiscards(Card&);
 

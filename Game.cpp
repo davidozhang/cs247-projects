@@ -138,7 +138,14 @@ void Game::round() {
 					delete this;
 					exit(0);
 				} else if (c.type==RAGEQUIT) {
-					//RAGEQUIT
+					cout<<"Player "<<players_[curPlayer]->getNumber()<<" ragequits. A computer will now take over."<<endl;
+					int score=players_[curPlayer]->getScore();
+					int totalScore=players_[curPlayer]->getTotalScore();
+					Player* temp=players_[curPlayer];
+					players_[curPlayer] = new ComputerPlayer(curPlayer, score, totalScore, this);
+					delete temp;
+					isLegal = true;
+
 				} else if (c.type==BAD_COMMAND) {
 					//BAD_COMMAND
 				}
