@@ -15,9 +15,11 @@ public:
 	~Game();
 	Deck* getDeck();
 	void startRound();
+	bool hasWinner() const;
 	std::string getWinners() const;
 	Table* getTable();
 	void createPlayers();
+	void declareWinner();
 	void round();
 	void notify(Card&);
 private:

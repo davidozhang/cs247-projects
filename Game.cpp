@@ -19,6 +19,10 @@ Game::Game(int seed) {
 
 Game::~Game() {
 	delete deck_;
+	delete table_;
+	/**for (int i=0; i<players_; i++) {
+		delete players_[i];
+	}**/
 }
 
 Deck* Game::getDeck() {
@@ -29,15 +33,40 @@ Table* Game::getTable() {
 	return table_;
 }
 
+bool Game::hasWinner() const {
+	for (int i=0; i<4; i++) {
+		if (players_[i]->getScore()>=80) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void Game::createPlayers() {
 	string input;
 	for (int i=0; i<4; ++i) {
 		cout << "Is player " << i+1 << " a human(h) or a computer(c)?" << endl << ">";
 		cin >> input;
-		if (input == "h")
+		if (input == "h") {
 			players_[i] = new HumanPlayer(i+1, 0, 0, this);
-		else
+		}
+		else {
 			players_[i] =new ComputerPlayer(i+1, 0, 0, this);
+		}
+	}
+}
+
+void Game::declareWinner() {
+	int min = players_[0]->getScore();
+	for (int i=0; i<4; i++) {
+		if (players_[i]->getScore()<min) {
+			min=players_[i]->getScore();
+		}
+	}
+	for (int i=0; i<4; i++) {
+		if (players_[i]->getScore()==min) {
+			cout<<"Player "<<players_[i]->getNumber()<<" wins!"<<endl;
+		}
 	}
 }
 
@@ -104,7 +133,8 @@ void Game::round() {
 				} else if (c.type==DECK) {
 					cout<<*deck_;
 				} else if (c.type==QUIT) {
-					break;
+					delete this;
+					exit(0);
 				} else if (c.type==RAGEQUIT) {
 					//RAGEQUIT
 				} else if (c.type==BAD_COMMAND) {
@@ -143,7 +173,9 @@ int main(int argc, char* argv[]) {
 
 	Game* g = new Game(seed);
 	g->createPlayers();
-	g->round();
-
+	while (!g->hasWinner()) {
+		g->round();
+	}
+	g->declareWinner();
 	return 0;
 }
