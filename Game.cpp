@@ -65,6 +65,12 @@ void Game::round() {
 		}
 		int curPlayer = (startPlayer+i)%4;
 
+		cout << "1" << endl;
+		vector<Card> legals = table_->getLegalCards();
+		cout << "2" << endl;
+		for (int j=0; j<4; ++j)
+			players_[j]->setLegalMoves(legals);
+
 		if (players_[curPlayer]->isHuman()) {
 			cout << *table_;
 			cout << *players_[curPlayer];
