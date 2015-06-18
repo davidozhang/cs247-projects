@@ -35,7 +35,7 @@ Table* Game::getTable() {
 
 bool Game::hasWinner() const {
 	for (int i=0; i<4; i++) {
-		if (players_[i]->getScore()>=80) {
+		if (players_[i]->getTotalScore()>=80) {
 			return true;
 		}
 	}
@@ -57,14 +57,14 @@ void Game::createPlayers() {
 }
 
 void Game::declareWinner() {
-	int min = players_[0]->getScore();
+	int min = players_[0]->getTotalScore();
 	for (int i=0; i<4; i++) {
-		if (players_[i]->getScore()<min) {
-			min=players_[i]->getScore();
+		if (players_[i]->getTotalScore()<min) {
+			min=players_[i]->getTotalScore();
 		}
 	}
 	for (int i=0; i<4; i++) {
-		if (players_[i]->getScore()==min) {
+		if (players_[i]->getTotalScore()==min) {
 			cout<<"Player "<<players_[i]->getNumber()<<" wins!"<<endl;
 		}
 	}
@@ -80,7 +80,7 @@ void Game::round() {
 	deck_->shuffle();
 
 	for (int i=0; i<4; ++i) {
-		Hand *hand = new Hand(*deck_, i+1);
+		Hand hand(*deck_, i+1);
 		players_[i]->setHand(hand);
 		if (players_[i]->has7S())
 			startPlayer = i;

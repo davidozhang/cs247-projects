@@ -6,10 +6,10 @@
 #include "Game.h"
 using namespace std;
 
-Player::Player(int number, int score, int prevScore, Game* game, bool isHuman): 
-	number_(number), score_(score), prevScore_(prevScore), game_(game), isHuman_(isHuman) {}
+Player::Player(int number, int score, int totalScore, Game* game, bool isHuman): 
+	number_(number), score_(score), totalScore_(totalScore), game_(game), isHuman_(isHuman) {}
 
-void Player::setHand(Hand *hand) {
+void Player::setHand(Hand &hand) {
 	 hand_ = hand;
 }
 
@@ -20,7 +20,7 @@ void Player::setScore(int score) {
 void Player::setLegalMoves(const vector<Card> &legalSet) {
 	legalMoves_.clear();
 
-	vector<Card> handCards = hand_->getCards();
+	vector<Card> handCards = hand_.getCards();
 	int handSize = handCards.size();
 	vector<Card>::const_iterator iter;
 
@@ -42,25 +42,29 @@ void Player::clearListOfDiscards() {
 }
 
 void Player::removeFromHand(Card &card) {
-	hand_->remove(card);
+	hand_.remove(card);
 }
 
 Card Player::removeFirstFromHand() {
-	return hand_->removeFirst();
+	return hand_.removeFirst();
 }
 
 Card Player::removeFirstFromLegalMove() {
-	hand_->remove(legalMoves_[0]);
+	hand_.remove(legalMoves_[0]);
 	return legalMoves_[0];
 }
 
 
-Hand* Player::getHand() const {
+Hand Player::getHand() const {
 	return hand_;
 }
 
 int Player::getScore() const {
 	return score_;
+}
+
+int Player::getTotalScore() const {
+	return totalScore_;
 }
 
 int Player::getNumber() const {
@@ -88,12 +92,12 @@ void Player::outputRoundEndResult() const {
 	cout << endl;
 
 	cout << "Player " << number_ << "'s score: "; 
-	cout << prevScore_ << " + " << score_ << " = " << prevScore_+score_ << endl;
+	cout << totalScore_ << " + " << score_ << " = " << totalScore_+score_ << endl;
 }
 
 
 void Player::updateScore() {
-	prevScore_ += score_;
+	totalScore_ += score_;
 	score_ = 0;
 }
 
@@ -101,7 +105,7 @@ bool Player::isHuman() const { return isHuman_; }
 
 bool Player::has7S() const {
 	Card temp(SPADE,SEVEN);
-	return hand_->hasCard(temp);
+	return hand_.hasCard(temp);
 }
 
 bool Player::isLegalMoves(const Card &card) const {
@@ -119,7 +123,7 @@ bool Player::hasLegalMoves() const {
 
 
 ostream &operator<<(ostream & sout, const Player &player) {
-	sout << "Your hand: " << *player.hand_ << endl;
+	sout << "Your hand: " << player.hand_ << endl;
 	sout << "Legal plays: ";
 
 	int size = player.legalMoves_.size();
