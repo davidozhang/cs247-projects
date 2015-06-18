@@ -16,23 +16,23 @@ void Player::setScore(int score) {
 	score_ = score;
 }
 
-void Player::setLegalMoves(const vector<Card*> &legalSet) {
+void Player::setLegalMoves(const vector<Card> &legalSet) {
 	legalMoves_.clear();
 
-	vector<Card*> handCards = hand_->getCards();
+	vector<Card> handCards = hand_->getCards();
 	int handSize = handCards.size();
-	vector<Card*>::const_iterator iter;
+	vector<Card>::const_iterator iter;
 
 	for (int i=0; i<handSize; ++i) {
 		for (iter = legalSet.cbegin(); iter != legalSet.cend(); ++iter) {
-			if (*handCards[i] == **iter) {
+			if (handCards[i] == *iter) {
 				legalMoves_.push_back(handCards[i]); break;
 			}
 		}
 	}
 }
 
-void Player::addListOfDiscards(Card* card) {
+void Player::addListOfDiscards(Card &card) {
 	listOfDiscards_.push_back(card);
 }
 
@@ -40,15 +40,15 @@ void Player::clearListOfDiscards() {
 	listOfDiscards_.clear();
 }
 
-void Player::removeFromHand(Card* card) {
+void Player::removeFromHand(Card &card) {
 	hand_->remove(card);
 }
 
-Card* Player::removeFirstFromHand() {
+Card Player::removeFirstFromHand() {
 	return hand_->removeFirst();
 }
 
-Card* Player::removeFirstFromLegalMove() {
+Card Player::removeFirstFromLegalMove() {
 	hand_->remove(legalMoves_[0]);
 	return legalMoves_[0];
 }
@@ -70,11 +70,11 @@ Game* Player::getGame() const {
 	return game_;
 }
 
-vector<Card*> Player::getLegalMoves() const {
+vector<Card> Player::getLegalMoves() const {
 	return legalMoves_;
 }
 
-vector<Card*> Player::getListOfDiscards() const {
+vector<Card> Player::getListOfDiscards() const {
 	return listOfDiscards_;
 }
 
@@ -82,14 +82,14 @@ vector<Card*> Player::getListOfDiscards() const {
 bool Player::isHuman() const { return isHuman_; }
 
 bool Player::has7S() const {
-	Card *temp = new Card(Suit(SPADE), Rank(SEVEN));
+	Card temp(SPADE,SEVEN);
 	return hand_->hasCard(temp);
 }
 
-bool Player::isLegalMoves(const Card *card) const {
+bool Player::isLegalMoves(const Card &card) const {
 	int size = legalMoves_.size();
 	for (int i=0; i<size; ++i) {
-		if (*legalMoves_[i] == *card)
+		if (legalMoves_[i] == card)
 			return true;
 	}
 	return false;
@@ -101,12 +101,12 @@ bool Player::hasLegalMoves() const {
 
 
 ostream &operator<<(ostream & sout, const Player &player) {
-	sout << "Your hand: " << *(player.hand_) << endl;
+	sout << "Your hand: " << *player.hand_ << endl;
 	sout << "Legal plays: ";
 
 	int size = player.legalMoves_.size();
 	for (int i=0; i<size; ++i)
-		sout << *(player.legalMoves_[i]) << " ";
+		sout << player.legalMoves_[i] << " ";
 	sout << endl;
 	return sout;
 }
