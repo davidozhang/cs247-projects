@@ -65,38 +65,54 @@ void Game::round() {
 		}
 		int curPlayer = (startPlayer+i)%4;
 
-		cout << "1" << endl;
+
 		vector<Card> legals = table_->getLegalCards();
-		cout << "2" << endl;
-		for (int j=0; j<4; ++j)
-			players_[j]->setLegalMoves(legals);
+		if (i != 0) {
+			players_[curPlayer]->setLegalMoves(legals);
+		} else {
+			vector<Card> sevenS;
+			sevenS.push_back(Card(SPADE, SEVEN));
+			players_[curPlayer]->setLegalMoves(sevenS);
+		}
 
 		if (players_[curPlayer]->isHuman()) {
 			cout << *table_;
 			cout << *players_[curPlayer];
 
 			Command c;
-			cout << ">";
-			cin>>c;
 
-			if (c.type==PLAY) {
-				players_[curPlayer]->play(c.card);
-				// cout<<c.card.getSuit()<<" "<<c.card.getRank()<<endl;
-				// Card* card = new Card(c.card.getSuit(), c.card.getRank());
-				// g->getTable()->addCard(*card);
-				// cout<<*(g->getTable());
+			bool isLegal = false;
 
-			} else if (c.type==DISCARD) {
-				//DISCARD
-			} else if (c.type==DECK) {
-				cout<<*deck_;
-			} else if (c.type==QUIT) {
-				break;
-			} else if (c.type==RAGEQUIT) {
-				//RAGEQUIT
-			} else if (c.type==BAD_COMMAND) {
-				//BAD_COMMAND
+			while (!isLegal) {
+				cout << ">";
+				cin>>c;
+				if (c.type==PLAY) {
+
+					if ( players_[curPlayer]->isLegalMoves(c.card)) {
+						players_[curPlayer]->play(c.card);
+						isLegal = true;
+					} else {
+						cout << "This is not a legal play." << endl;
+					}
+
+				} else if (c.type==DISCARD) {
+					if ( !players_[curPlayer]->hasLegalMoves() ) {
+						players_[curPlayer]->discard(c.card);
+						isLegal = true;
+					} else {
+						cout << "You have a legal play. You may not discard." << endl;
+					}
+				} else if (c.type==DECK) {
+					cout<<*deck_;
+				} else if (c.type==QUIT) {
+					break;
+				} else if (c.type==RAGEQUIT) {
+					//RAGEQUIT
+				} else if (c.type==BAD_COMMAND) {
+					//BAD_COMMAND
+				}
 			}
+			
 		} else {
 			cout << players_[curPlayer]->getNumber() << endl;
 		}
