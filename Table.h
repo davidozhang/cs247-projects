@@ -6,12 +6,12 @@
 #include <string>
 
 class Table {
+	friend std::ostream &operator<<(std::ostream &, const Table &);
 public:
 	Table();
-	void addCard(Card&);
-	std::vector<Card> getLegalCards();
-	void clear();
-	friend std::ostream &operator<<(std::ostream &, const Table &);
+	void addCard(Card&);				// add card to the table
+	std::vector<Card> getLegalCards();	// get legal cards set based on the cards on the table
+	void clear();						// clear the table
 private:
 	void getLegalCardsHelper(std::vector<Card>&, std::vector<Card>&, Suit);
 	std::string listCards(const std::vector<Card>&) const;

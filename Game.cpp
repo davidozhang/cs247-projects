@@ -176,7 +176,10 @@ void Game::round() {
 
 					// computer should play this round
 					Card dummy(SPADE,SEVEN);
-					players_[curPlayer]->play(dummy);
+					if (players_[curPlayer]->hasLegalMoves())
+						players_[curPlayer]->play(dummy);
+					else
+						players_[curPlayer]->discard(dummy);
 					isLegal = true;
 
 				} else if (c.type==BAD_COMMAND) {
