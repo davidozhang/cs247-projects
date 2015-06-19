@@ -10,10 +10,10 @@ class Hand {
 public:
 	Hand();
 	Hand(Deck&, int);
-	void remove(Card&);
-	Card removeFirst();
-	bool hasCard(Card&) const;
-	std::vector<Card> getCards() const;
+	void remove(Card&);						// remove card from hand
+	Card removeFirst();						// remove the first card from hand
+	bool hasCard(Card&) const;				// return true if my hand has this card
+	std::vector<Card> getCards() const;		// return the list of cards in my hand
 private:
 	std::vector<Card> cards_;
 };
