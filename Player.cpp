@@ -41,6 +41,10 @@ void Player::setLegalMoves(const vector<Card> &legalSet) {
 	}
 }
 
+void Player::setListOfDiscards(const vector<Card> &discards) {
+	listOfDiscards_ = discards;
+}
+
 void Player::addListOfDiscards(Card &card) {
 	listOfDiscards_.push_back(card);
 }
@@ -76,6 +80,10 @@ int Player::getNumber() const {
 
 Game* Player::getGame() const {
 	return game_;
+}
+
+vector<Card> Player::getListOfDiscards() const {
+	return listOfDiscards_;
 }
 
 void Player::outputRoundEndResult() const {

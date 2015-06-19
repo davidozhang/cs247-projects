@@ -142,10 +142,13 @@ void Game::round() {
 					int score=players_[curPlayer]->getScore();
 					int totalScore=players_[curPlayer]->getTotalScore();
 					Hand hand=players_[curPlayer]->getHand();
+					vector<Card> listOfDiscards = players_[curPlayer]->getListOfDiscards();
 
 					delete players_[curPlayer];
 					players_[curPlayer] = new ComputerPlayer(curPlayer+1, score, totalScore, this);
 					players_[curPlayer]->setHand(hand);
+					players_[curPlayer]->setLegalMoves(legals);
+					players_[curPlayer]->setListOfDiscards(listOfDiscards);
 
 					Card dummy(SPADE,SEVEN);
 					players_[curPlayer]->play(dummy);
