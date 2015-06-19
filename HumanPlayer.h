@@ -1,17 +1,16 @@
 #ifndef _HUMANPLAYER_
 #define _HUMANPLAYER_
 
+#include "Player.h"
+#include "Card.h"
+#include "Game.h"
 #include <vector>
 
 class HumanPlayer: public Player {
 public:
-	HumanPlayer();
-	virtual void play(Card*);
-	virtual void discard(Card*);
-	void quit();
-	void ragequit();
+	HumanPlayer(int, int, int, Game*);
+	virtual void play(Card&);
+	virtual void discard(Card&);
 };
-
-std::ostream &operator<<(std::ostream &, const Player &);
 
 #endif

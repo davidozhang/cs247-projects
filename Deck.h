@@ -7,14 +7,13 @@
 class Deck {
 public:
 	Deck(int);
-	~Deck();
-	std::vector<Card*> getHand(int player_num);
+	std::vector<Card> getHand(int player_num);						// return a vector of card based on player number
 	friend std::ostream &operator<<(std::ostream &, const Deck&);
-private:
 	void shuffle();
+private:
 	int seed;
 	static const int CARD_COUNT=52;
-	std::vector<Card*> cards_;
+	std::vector<Card> cards_;
 };
 
 #endif
