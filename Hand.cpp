@@ -39,7 +39,7 @@ vector<Card> Hand::getCards() const { return cards_; }
 ostream &operator<<(ostream &sout, const Hand &hand) {
 	int size = hand.cards_.size();
 	for (int i=0; i<size; ++i) {
-		sout << hand.cards_[i] << " ";
+		sout << " " << hand.cards_[i];
 	}
 	return sout;
 }
