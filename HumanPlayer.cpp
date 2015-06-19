@@ -3,8 +3,8 @@
 #include "Hand.h"
 #include "Card.h"
 #include "Player.h"
-#include "HumanPlayer.h"
 #include "Game.h"
+#include "HumanPlayer.h"
 using namespace std;
 
 
