@@ -27,35 +27,34 @@ public:
 
 	virtual ~Player();
 
-	void setHand(Hand&);
-	Hand getHand() const;
-	void setLegalMoves(const std::vector<Card>&); // used to update the set of legal moves everytime someone make a play
-	void setListOfDiscards(const std::vector<Card>&); 
-	void clearListOfDiscards(); // used to clear the list of discards at the e nd of each roun
+	void setHand(Hand&);								// setter for hand
+	void setLegalMoves(const std::vector<Card>&);		// setter for updating the set of legal moves
+	void setListOfDiscards(const std::vector<Card>&); 	// setter for the list of discards
 
-	int getTotalScore() const;
-	int getScore() const;
-	int getNumber() const;
-	std::vector<Card> getListOfDiscards() const;
-	void outputRoundEndResult() const;
-	void updateScore();
+	Hand getHand() const;								// getter for hand
+	int getTotalScore() const;							// getter for total score
+	int getScore() const;								// getter for (round) score
+	int getNumber() const;								// getter for player number
+	std::vector<Card> getListOfDiscards() const;		// getter for list of discards card
 
-	bool isHuman() const;
-	bool has7S() const;
-
-	bool isLegalMoves(const Card&) const;
-	bool hasLegalMoves() const;
+	void clearListOfDiscards(); 						// clear the list of discards
+	void outputRoundEndResult() const;					// output the result at the end of the round
+	void updateScore();									// update total score and round score
+	bool isHuman() const;								// return true if the object is HumanPlayer
+	bool has7S() const;									// return true if the hand has 7S
+	bool isLegalMoves(const Card&) const;				// return true if card is in legal moves
+	bool hasLegalMoves() const;							// return true if the size of leagl moves is not 0
 
 protected:
 	Player(int, int, int, Game*, bool);
 
-	void removeFromHand(Card&); // used to remove a specific card from my hand
-	Card removeFirstFromHand(); // used to remove the first card from my hand
-	Card removeFirstFromLegalMove(); // used to remove the first card from my legal moves
+	void removeFromHand(Card&); 						// remove a specific card from my hand
+	Card removeFirstFromHand(); 						// remove the first card from my hand
+	Card removeFirstFromLegalMove(); 					// remove the first card from my legal moves
 
-	Game* getGame() const;
-	void setScore(int);
-	void addListOfDiscards(Card&);
+	Game* getGame() const;								// (internal) getter for the game pointer
+	void setScore(int);									// (internal) setter for the round score 
+	void addListOfDiscards(Card&);						// add card to the list of discards
 
 private:
 	Game* game_;
@@ -67,7 +66,5 @@ private:
 	std::vector<Card> legalMoves_;
 	std::vector<Card> listOfDiscards_;
 };
-
-std::ostream &operator<<(std::ostream &, const Player &);
 
 #endif
