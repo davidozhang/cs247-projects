@@ -146,9 +146,16 @@ void Game::round() {
 
 					delete players_[curPlayer];
 					players_[curPlayer] = new ComputerPlayer(curPlayer+1, score, totalScore, this);
-					players_[curPlayer]->setHand(hand);
-					players_[curPlayer]->setLegalMoves(legals);
+					players_[curPlayer]->setHand(hand);					
 					players_[curPlayer]->setListOfDiscards(listOfDiscards);
+
+					if (i != 0) {
+						players_[curPlayer]->setLegalMoves(legals);
+					} else {
+						vector<Card> sevenS;
+						sevenS.push_back(Card(SPADE, SEVEN));
+						players_[curPlayer]->setLegalMoves(sevenS);
+					}
 
 					Card dummy(SPADE,SEVEN);
 					players_[curPlayer]->play(dummy);

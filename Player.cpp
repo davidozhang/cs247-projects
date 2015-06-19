@@ -89,9 +89,9 @@ vector<Card> Player::getListOfDiscards() const {
 void Player::outputRoundEndResult() const {
 	int size = listOfDiscards_.size();
 
-	cout << "Player " << number_ << "'s discards: "; 
+	cout << "Player " << number_ << "'s discards:"; 
 	for (int i=0; i<size; ++i)
-		cout << listOfDiscards_[i] << " ";
+		cout << " " << listOfDiscards_[i];
 	cout << endl;
 
 	cout << "Player " << number_ << "'s score: "; 
@@ -126,12 +126,12 @@ bool Player::hasLegalMoves() const {
 
 
 ostream &operator<<(ostream & sout, const Player &player) {
-	sout << "Your hand: " << player.hand_ << endl;
-	sout << "Legal plays: ";
+	sout << "Your hand:" << player.hand_ << endl;
+	sout << "Legal plays:";
 
 	int size = player.legalMoves_.size();
 	for (int i=0; i<size; ++i)
-		sout << player.legalMoves_[i] << " ";
+		sout << " " << player.legalMoves_[i];
 	sout << endl;
 	return sout;
 }
