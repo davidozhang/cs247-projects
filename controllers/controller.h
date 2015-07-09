@@ -10,18 +10,23 @@
  */
 
 
-#include "controller.h"
-#include "model.h"
+#ifndef MVC_CONTROLLER_H
+#define MVC_CONTROLLER_H
 
 
-Controller::Controller(Model *m) : model_(m) {}
+#include <gtkmm.h>
+
+class Model;
+
+class Controller {
+public:
+   Controller( Model* );
+   void nextButtonClicked();
+   void resetButtonClicked();
+private:
+   Model *model_;
+}; // Controller
 
 
-void Controller::nextButtonClicked() {
-     model_->nextCard();
-} 
+#endif
 
-
-void Controller::resetButtonClicked() {
-     model_->resetCards();
-} 
