@@ -115,6 +115,7 @@ void View::startButtonClicked() {
 void View::endButtonClicked() {
 	for (int i=0; i<4; i++) {
 		this->player_buttons[i].set_label("Human");
+		human[i]=true;
 	}
 }
 
