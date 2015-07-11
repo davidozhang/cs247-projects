@@ -107,11 +107,15 @@ void View::update() {
 }
 
 void View::startButtonClicked() {
-  controller_->startButtonClicked();
+	for (int i=0; i<4; i++) {
+		this->player_buttons[i].set_label("Rage!");
+	}
 }
 
 void View::endButtonClicked() {
-  controller_->endButtonClicked();
+	for (int i=0; i<4; i++) {
+		this->player_buttons[i].set_label("Human");
+	}
 }
 
 void View::playerButtonClicked(int num) {
@@ -121,5 +125,7 @@ void View::playerButtonClicked(int num) {
 	} else if (this->player_buttons[num].get_label()=="Computer") {
 		this->player_buttons[num].set_label("Human");
 		human[num]=true;
+	} else if (this->player_buttons[num].get_label()=="Rage") {
+
 	}
 }
