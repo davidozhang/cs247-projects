@@ -15,7 +15,6 @@
 
 #include <set>
 
-
 class Observer;
 
 class Subject {
@@ -25,7 +24,14 @@ public:
 
 protected:
        void notify();
-
+       string state_;
+       /*
+		new round
+		end round
+		new turn
+		end game
+		invalid play
+       */
 private:
        typedef std::set< Observer* > Observers;
        Observers observers_;

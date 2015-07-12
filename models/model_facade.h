@@ -8,19 +8,44 @@
 #include "Player.h"
 #include "ComputerPlayer.h"
 #include "HumanPlayer.h"
-
 #include <vector>
+#include <string>
+
 
 class ModelFacade: public Subject {
 private:
 	vector<Player*> players_(4, NULL);
 	vector<int> scores_(4, 0);
-
 	Deck* deck_;
 	Table* table_;
+	int currentPlayer;
+	int currentTurnInTheRound;
+
+	void beginRound();
+	void endRound();
+	void clearPlayerScores();
+	void computerMakeMove();
+	void advancePlayer();
+	void setLegalMovesForCurrentPlayer();
+	bool hasWinner() const;
 public:
 	ModelFacade();
-	startGame(int); // start a game with seed
-	setPlayerType(int, string);
-	selectCard(int, Card); 
+
+	/*Game logic*/
+	void startGame(int); // start a game with seed
+	void endGame(); // end the current game
+	void setPlayerType(int, std::string);
+	void selectCard(Card); // current user select a card
+	void ragequit(int);
+	void addCardToTable(Card);
+
+	/*For views to update*/
+	std::vector<Card> getTableCards() const;
+	int getPoints(int) const;
+	int getDiscards(int) const;
+	int getCurrentPlayer() const;
+	std::vector<Card> getHand(int) const;
 };
+
+
+#endif
