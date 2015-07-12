@@ -13,7 +13,7 @@
 #include "observer.h"
 #include "view.h"
 #include "controller.h"
-#include "model.h"
+#include "./models/model_facade.h"
 #include "subject.h"
 #include "DeckGUI.h"
 #include "dialog.h"
@@ -22,7 +22,7 @@
 
 // Creates buttons with labels. Sets butBox elements to have the same size, 
 // with 10 pixels between widgets
-View::View(Controller *c, Model *m) : model_(m), controller_(c), main_box(false, 10), clubs(true, 5), diamonds(true, 5), hearts(true, 5), spades(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10){
+View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs(true, 5), diamonds(true, 5), hearts(true, 5), spades(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10){
 
 	// Sets some properties of the window.
 	set_title( "Straights UI - David & Jerry" );
@@ -100,12 +100,12 @@ View::~View() {}
 
 
 void View::update() {
-  Suits suit = model_->suit();
+  /**Suits suit = model_->suit();
   Faces face = model_->face();
   if ( suit == NOSUIT ) 
     cards[0].set( deck.null() );
   else
-    cards[1].set( deck.image(face, suit) );
+    cards[1].set( deck.image(face, suit) );**/
 }
 
 void View::startButtonClicked() {

@@ -19,18 +19,18 @@
 #include "observer.h"
 
 class Controller;
-class Model;
+class ModelFacade;
 
 
 class View : public Gtk::Window, public Observer {
 public:
-        View( Controller*, Model* );
+        View( Controller*, ModelFacade* );
 	virtual ~View();
 	virtual void update();	// Observer Pattern: concrete update() method
 
 private:
 	// Observer Pattern: to access Model accessors without having to downcast subject
-	Model *model_;
+	ModelFacade *model_;
 	
 	// Strategy Pattern member (plus signal handlers)
 	Controller *controller_;
