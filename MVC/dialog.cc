@@ -19,12 +19,6 @@ Dialog::Dialog( Gtk::Window & parentWindow, string message) : Gtk::MessageDialog
 	int result = run();
     switch (result) {
         case Gtk::RESPONSE_OK:
-            /**for ( int i = 0; i < messages.size(); i++ ) {
-				if ( buttons[i]->get_active() ) {
-					std::cout << "chose '" << messages[i] << "'" << std::endl;
-					break;
-				} // if
-			} // for**/
             break;
     }  	
 }
