@@ -111,6 +111,9 @@ void View::update() {
 void View::startButtonClicked() {
 	for (int i=0; i<4; i++) {
 		this->player_buttons[i].set_label("Rage!");
+		if (!human[i]) {
+			this->player_buttons[i].set_sensitive(false);
+		}
 	}
 	//get initial player number here
 	Dialog dialog(*this, "A new round begins. It's player 0's turn to play.");
