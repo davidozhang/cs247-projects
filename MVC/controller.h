@@ -16,15 +16,15 @@
 
 #include <gtkmm.h>
 
-class Model;
+class ModelFacade;
 
 class Controller {
 public:
-   Controller( Model* );
+   Controller(ModelFacade*);
    void startButtonClicked();
    void endButtonClicked();
 private:
-   Model *model_;
+   ModelFacade *model_;
 }; // Controller
 
 

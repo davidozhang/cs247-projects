@@ -11,10 +11,11 @@
 
 
 #include "controller.h"
-#include "model.h"
+#include "./models/model_facade.h"
 
+class ModelFacade;
 
-Controller::Controller(Model *m) : model_(m) {}
+Controller::Controller(ModelFacade *m) : model_(m) {}
 
 
 void Controller::startButtonClicked() {
