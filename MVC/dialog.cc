@@ -13,7 +13,6 @@
 Dialog::Dialog( Gtk::Window & parentWindow, string message) : Gtk::MessageDialog( parentWindow, message) {
 
 	// Add a standard "ok" buttons with the appropriate responses when clicked.
-    Gtk::Button * okButton = add_button( Gtk::Stock::OK, Gtk::RESPONSE_OK);
 	show_all_children();
 
     // Wait for a response from the dialog box.
