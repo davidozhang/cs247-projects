@@ -24,7 +24,7 @@ public:
 
 protected:
        void notify();
-       string state_;
+       std::string state_;
        /*
 		new round
 		end round

@@ -8,14 +8,14 @@
 #include "Player.h"
 #include "ComputerPlayer.h"
 #include "HumanPlayer.h"
+#include "subject.h"
 #include <vector>
 #include <string>
 
-
 class ModelFacade: public Subject {
 private:
-	vector<Player*> players_(4, NULL);
-	vector<int> scores_(4, 0);
+	std::vector<Player*> players_(4, NULL);
+	std::vector<int> scores_(4, 0);
 	Deck* deck_;
 	Table* table_;
 	int currentPlayer;
