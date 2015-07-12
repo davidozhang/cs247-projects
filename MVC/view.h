@@ -60,6 +60,7 @@ private:
 	Gtk::Label player_stats[4];
 	Gtk::Image cards [52];
 	Gtk::Image hand [13];
+	Gtk::Button hand_buttons [13];
 
 	bool human [4];
 

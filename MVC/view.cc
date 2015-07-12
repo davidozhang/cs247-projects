@@ -16,6 +16,7 @@
 #include "model.h"
 #include "subject.h"
 #include "DeckGUI.h"
+#include "dialog.h"
 #include <iostream>
 #include <string>
 
@@ -79,7 +80,8 @@ View::View(Controller *c, Model *m) : model_(m), controller_(c), main_box(false,
 
 	for (int i=0; i<13; i++) {
 		hand[i].set(deck.null());
-		player_hand_panel.add(hand[i]);
+		hand_buttons[i].set_image(hand[i]);
+		player_hand_panel.add(hand_buttons[i]);
 	}
 
 	// Associate button "clicked" events with local onButtonClicked() method defined below.
@@ -110,6 +112,8 @@ void View::startButtonClicked() {
 	for (int i=0; i<4; i++) {
 		this->player_buttons[i].set_label("Rage!");
 	}
+	//get initial player number here
+	Dialog dialog(*this, "A new round begins. It's player 0's turn to play.");
 }
 
 void View::endButtonClicked() {
