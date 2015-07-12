@@ -8,12 +8,12 @@
 using namespace std;
 
 
-HumanPlayer::HumanPlayer(int number, int score, int totalScore, Game* game): Player(number, score, totalScore, game, true) {}
+HumanPlayer::HumanPlayer(int number, ModelFacade* model): Player(number, model, true) {}
 
 void HumanPlayer::play(Card &card) {
 	removeFromHand(card);
 	cout << "Player " << getNumber() << " plays " << card << "." << endl;
-	getGame()->notify(card);
+	getModel()->addCardToTable(card);
 }
 
 void HumanPlayer::discard(Card &card) {

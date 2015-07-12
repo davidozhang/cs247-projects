@@ -6,8 +6,7 @@
 #include "Game.h"
 using namespace std;
 
-Player::Player(int number, int score, int totalScore, Game* game, bool isHuman): 
-	number_(number), score_(score), totalScore_(totalScore), game_(game), isHuman_(isHuman) {}
+Player::Player(int number, ModelFacade* model, bool isHuman): number_(number), model_(model), isHuman_(isHuman) {}
 
 Player::~Player() {
 	game_=NULL;
@@ -31,7 +30,7 @@ int Player::getTotalScore() const { return totalScore_; }
 
 int Player::getNumber() const { return number_; }
 
-Game* Player::getGame() const { return game_; }
+Game* Player::getModel() const { return model_; }
 
 vector<Card> Player::getListOfDiscards() const { return listOfDiscards_; }
 

@@ -37,6 +37,14 @@ void Deck::shuffle() {
 	}
 }
 
+void Deck::setSeed(int newseed) {
+	seed = newseed;
+}
+
+int Deck::getSeed() const {
+	return seed;
+}
+
 ostream &operator<<(std::ostream& sout, const Deck& d) {
 	for (int i=0; i<d.CARD_COUNT; i++) {
 		if (i!=0 && i!=d.CARD_COUNT-1 && i%13==0) {
