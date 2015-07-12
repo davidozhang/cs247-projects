@@ -27,5 +27,5 @@ void Subject::unsubscribe (Observer *formerView) {
 void Subject::notify() {
   Observers::iterator i;
   for (i = observers_.begin(); i != observers_.end(); ++i)
-    (*i)->update();
+    (*i)->update(state_);
 }

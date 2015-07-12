@@ -8,17 +8,16 @@
 using namespace std;
 
 
-ComputerPlayer::ComputerPlayer(int number, int score, int totalScore, Game* game): Player(number, score, totalScore, game, false) {}
+ComputerPlayer::ComputerPlayer(int number, ModelFacade* model): Player(number, model, false) {}
 
 void ComputerPlayer::play(Card &dummy) {
 	Card card = removeFirstFromLegalMove();
 	cout << "Player " << getNumber() << " plays " << card << "." << endl;
-	getGame()->notify(card);
+	getModel()->addCardToTable(card);
 }
 
 void ComputerPlayer::discard(Card &dummy) {
 	Card card = removeFirstFromHand();
 	cout << "Player " << getNumber() << " discards " << card << "." << endl;
-	setScore(getScore() + card.getRank() + 1);
 	addListOfDiscards(card);
 }

@@ -46,18 +46,18 @@ public:
 	bool hasLegalMoves() const;							// return true if the size of leagl moves is not 0
 
 protected:
-	Player(int, int, int, Game*, bool);
+	Player(int, ModelFacade*, bool);
 
 	void removeFromHand(Card&); 						// remove a specific card from my hand
 	Card removeFirstFromHand(); 						// remove the first card from my hand
 	Card removeFirstFromLegalMove(); 					// remove the first card from my legal moves
 
-	Game* getGame() const;								// (internal) getter for the game pointer
+	ModelFacade* getModel() const;								// (internal) getter for the game pointer
 	void setScore(int);									// (internal) setter for the round score 
 	void addListOfDiscards(Card&);						// add card to the list of discards
 
 private:
-	Game* game_;
+	ModelFacade* model_;
 	Hand hand_;
 	int number_;
 	int score_;
