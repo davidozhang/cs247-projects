@@ -14,8 +14,8 @@
 
 class ModelFacade: public Subject {
 private:
-	std::vector<Player*> players_(4, NULL);
-	std::vector<int> scores_(4, 0);
+	std::vector<Player*> players_(4);
+	std::vector<int> scores_(4);
 	Deck* deck_;
 	Table* table_;
 	int currentPlayer;
