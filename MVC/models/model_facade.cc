@@ -158,7 +158,7 @@ void ModelFacade::setPlayerType(int playerNumber, string playerType) {
 	if (players_[playerNumber] != NULL)
 		delete players_[playerNumber];
 
-	if (playerType == "human")
+	if (playerType == "h")
 		players_[playerNumber] = new HumanPlayer(playerNumber+1, this);
 	else
 		players_[playerNumber] = new ComputerPlayer(playerNumber+1, this);
