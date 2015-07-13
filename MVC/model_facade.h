@@ -6,11 +6,11 @@
 #include "Hand.h"
 #include "Table.h"
 #include "Player.h"
-#include "ComputerPlayer.h"
-#include "HumanPlayer.h"
 #include "subject.h"
 #include <vector>
 #include <string>
+
+class Player;
 
 class ModelFacade: public Subject {
 private:

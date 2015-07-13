@@ -14,7 +14,7 @@
 #define MVC_SUBJECT_H
 
 #include <set>
-
+#include <string>
 
 class Observer;
 
@@ -25,7 +25,14 @@ public:
 
 protected:
        void notify();
-
+       std::string state_;
+       /*
+		new round
+		end round
+		new turn
+		end game
+		invalid play
+       */
 private:
        typedef std::set< Observer* > Observers;
        Observers observers_;

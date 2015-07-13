@@ -15,7 +15,7 @@
 #include <vector>
 using std::vector;
 
-#include "./models/Card.h"
+#include "Card.h"
 
 
 

@@ -84,7 +84,7 @@ void ModelFacade::setLegalMovesForCurrentPlayer() {
 
 bool ModelFacade::hasWinner() const {
 	for (int i=0; i<4; i++)
-		if (scores_[i]-> >= 80)
+		if (scores_[i] >= 80)
 			return true;
 
 	return false;
@@ -92,7 +92,7 @@ bool ModelFacade::hasWinner() const {
 
 void ModelFacade::advancePlayer() {
 	while (!players_[currentPlayer]->isHuman() && currentTurnInTheRound < 52) {
-		computerMakeMove(currentPlayer);
+		computerMakeMove();
 		currentPlayer = (currentPlayer+1)%4;
 		currentTurnInTheRound++;
 	}
@@ -130,7 +130,7 @@ void ModelFacade::startGame(int newseed) {
 	if (NULL == table_)
 		table_ = new Table();
 	else
-		table_.clear();
+		table_->clear();
 
 	// initialize player scores
 	clearPlayerScores();
@@ -139,7 +139,7 @@ void ModelFacade::startGame(int newseed) {
 }
 
 void ModelFacade::endGame() {
-	table_.clear();
+	table_->clear();
 	clearPlayerScores();
 
 	state_ = "end game";
@@ -184,6 +184,13 @@ string ModelFacade::getRoundEndResult() const {
 	string result = "";
 
 	for (int i=0; i<4; ++i) {
+		int score = players_[i]->getRoundScore();
 		result += players_[i]->getListOfDiscardsString();
+
+		result += ("Player " + to_string(i+1) + "'s score: "); 
+		result += (scores_[i] + " + " +
+					to_string(score) + " = " +
+					to_string(scores_[i] + score) + "\n");
 	}
+	return result;
 }

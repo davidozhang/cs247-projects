@@ -3,12 +3,12 @@
 
 #include <vector>
 #include <iostream>
-#include "Game.h"
 #include "Hand.h"
 #include "Card.h"
+#include "model_facade.h"
 
 
-class Game;
+class ModelFacade;
 
 class Player {
 	friend std::ostream &operator<<(std::ostream &, const Player &);
@@ -32,14 +32,10 @@ public:
 	void setListOfDiscards(const std::vector<Card>&); 	// setter for the list of discards
 
 	Hand getHand() const;								// getter for hand
-	// int getTotalScore() const;							// getter for total score
-	// int getScore() const;								// getter for (round) score
 	int getNumber() const;								// getter for player number
 	std::vector<Card> getListOfDiscards() const;		// getter for list of discards card
 
 	void clearListOfDiscards(); 						// clear the list of discards
-	// void outputRoundEndResult() const;					// output the result at the end of the round
-	// void updateScore();									// update total score and round score
 	bool isHuman() const;								// return true if the object is HumanPlayer
 	bool has7S() const;									// return true if the hand has 7S
 	bool isLegalMoves(const Card&) const;				// return true if card is in legal moves
@@ -57,7 +53,6 @@ protected:
 	Card removeFirstFromLegalMove(); 					// remove the first card from my legal moves
 
 	ModelFacade* getModel() const;								// (internal) getter for the game pointer
-	// void setScore(int);									// (internal) setter for the round score 
 	void addListOfDiscards(Card&);						// add card to the list of discards
 
 private:

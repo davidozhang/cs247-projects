@@ -13,7 +13,7 @@
 #include "observer.h"
 #include "view.h"
 #include "controller.h"
-#include "./models/model_facade.h"
+#include "model_facade.h"
 #include "subject.h"
 #include "DeckGUI.h"
 #include "dialog.h"
@@ -99,7 +99,7 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 View::~View() {}
 
 
-void View::update() {
+void View::update(std::string) {
   /**Suits suit = model_->suit();
   Faces face = model_->face();
   if ( suit == NOSUIT ) 

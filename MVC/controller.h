@@ -15,6 +15,7 @@
 
 
 #include <gtkmm.h>
+#include "model_facade.h"
 
 class ModelFacade;
 
