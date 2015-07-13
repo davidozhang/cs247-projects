@@ -3,6 +3,7 @@
 #include "Hand.h"
 #include "Table.h"
 #include "Player.h"
+#include "../subject.h"
 #include "ComputerPlayer.h"
 #include "HumanPlayer.h"
 #include <vector>
@@ -104,10 +105,6 @@ void ModelFacade::advancePlayer() {
 		// in update(), get the discards string and scores from model then display
 	}
 	notify();
-	// if end round
-		// update the score with the player's current round discard
-	// if has winner
-		// notify the view with getWinner method
 
 	if (state_ == "end round") {
 		endRound();
@@ -181,6 +178,19 @@ void ModelFacade::selectCard(Card card) {
 	advancePlayer();
 }
 
+void ModelFacade::ragequit() {
+	Hand hand=players_[currentPlayer]->getHand();
+	vector<Card> listOfDiscards = players_[currentPlayer]->getListOfDiscards();
+	delete players_[currentPlayer];
+
+	// setting the parameters for the new computer player
+	players_[currentPlayer] = new ComputerPlayer(currentPlayer+1, this);
+	players_[currentPlayer]->setHand(hand);					
+	players_[currentPlayer]->setListOfDiscards(listOfDiscards);
+
+	advancePlayer();
+}
+
 void ModelFacade::addCardToTable(Card card) {
 	table_->addCard(card);
 }
@@ -194,19 +204,43 @@ string ModelFacade::getRoundEndResult() const {
 		result += players_[i]->getListOfDiscardsString();
 
 		result += ("Player " + to_string(i+1) + "'s score: "); 
-		result += (scores_[i] + " + " +
+		result += (to_string(scores_[i]) + " + " +
 					to_string(score) + " = " +
 					to_string(scores_[i] + score) + "\n");
 	}
 	return result;
 }
 
-
-
-void ModelFacade::ragequit(int playerNumber) {
-
+vector<Card> ModelFacade::getHand(int playerNumber) const {
+	return players_[playerNumber]->getHand().getCards();
 }
 
-std::vector<Card> ModelFacade::getTableCards() const {
-	return table_->getCardsOnTable();
+vector<Card> ModelFacade::getTableCardsBySuit(Suit suit) const {
+	return table_->getTableCardsBySuit(suit);
+}
+
+int ModelFacade::getPoints(int playerNumber) const {
+	return scores_[playerNumber];
+}
+
+int ModelFacade::getDiscards(int playerNumber) const {
+	return players_[playerNumber]->getListOfDiscards().size();
+}
+
+int ModelFacade::getCurrentPlayer() const {
+	return currentPlayer;
+}
+
+void ModelFacade::getWinners(vector<int>& winners) const {
+	int min = scores_[0];
+	for (int i=1; i<4; i++) {
+		if (scores_[i]<min) {
+			min=scores_[i];
+		}
+	}
+	for (int i=0; i<4; i++) {
+		if (scores_[i]==min) {
+			winners.push_back(i);
+		}
+	}
 }

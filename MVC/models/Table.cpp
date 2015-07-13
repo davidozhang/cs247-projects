@@ -66,10 +66,14 @@ string Table::listCards(const vector<Card>& v) const {
 
 
 
-/* Temp method */
-vector<Card> Table::getCardsOnTable() const {
-	vector<Card> result;
-	return result;
+vector<Card> Table::getTableCardsBySuit(Suit suit) const {
+	switch (suit) {
+		case CLUB: return clubs_;break;
+		case DIAMOND: return diamonds_;break;
+		case HEART: return hearts_;break;
+		case SPADE: return spades_;break;
+		default: return vector<Card>();
+	}
 }
 
 std::ostream &operator<<(std::ostream& sout, const Table& table) {
