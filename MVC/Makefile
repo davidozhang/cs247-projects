@@ -1,5 +1,5 @@
 CXX= g++
-CXXFLAGS = -Wall -O -g `pkg-config gtkmm-2.4 --cflags`
+CXXFLAGS = -std=c++0x -Wall -O -g `pkg-config gtkmm-2.4 --cflags`
 LDFLAGS=`pkg-config gtkmm-2.4 --libs`
 OBJS = subject.o model.o controller.o DeckGUI.o view.o main.o dialog.o
 EXEC = mvc

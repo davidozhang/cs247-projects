@@ -151,6 +151,31 @@ bool Player::hasLegalMoves() const {
 	return legalMoves_.size() != 0;
 }
 
+
+int Player::getRoundScore() const {
+	int score = 0;
+	int size = listOfDiscards_.size();
+	for (int i=0; i<size; ++i) {
+		score += (listOfDiscards_[i].getRank() + 1);
+	}
+	return score;
+}
+
+string Player::getListOfDiscardsString() const {
+	string result = "";
+	int size = listOfDiscards_.size();
+	string suits[SUIT_COUNT] = {"C", "D", "H", "S"};
+	string ranks[RANK_COUNT] = {"A", "2", "3", "4", "5", "6",
+		"7", "8", "9", "10", "J", "Q", "K"};
+
+	result += ("Player " + to_string(number_) + "'s discards:"); 
+	for (int i=0; i<size; ++i)
+		result += (" " + ranks[istOfDiscards_[i].getRank()] + suits[istOfDiscards_[i].getSuit()]);
+	result += "\n";
+
+	return result;
+}
+
 /*
 	Out stream operator
 */

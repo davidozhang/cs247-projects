@@ -16,6 +16,12 @@ ModelFacade::ModelFacade() {
 	table_ = NULL;
 	currentPlayer = -1;
 	currentTurnInTheRound = 0;
+	players_.resize(4);
+	scores_.resize(4);
+	for (int i=0; i<4; ++i) {
+		players_[i] = NULL;
+		scores_[i] = 0;
+	}
 }
 
 
@@ -44,7 +50,10 @@ void ModelFacade::beginRound() {
 }
 
 void ModelFacade::endRound() {
-
+	for (int i=0; i<4; ++i) {
+		scores_[i] += players_[i]->getRoundScore();
+		players_[i]->clearListOfDiscards();
+	}
 }
 
 void ModelFacade::clearPlayerScores() {
@@ -90,12 +99,18 @@ void ModelFacade::advancePlayer() {
 
 	if (currentTurnInTheRound < 52)
 		state_ = "new turn"; // update table
-	else
+	else {
 		state_ = "end round"; // output message
+		// in update(), get the discards string and scores from model then display
+	}
 	notify();
+	// if end round
+		// update the score with the player's current round discard
+	// if has winner
+		// notify the view with getWinner method
 
-	if (state_ == "end round" && hasWinner()) {
-		
+	if (state_ == "end round") {
+		endRound();
 	}
 }
 
@@ -162,4 +177,13 @@ void ModelFacade::selectCard(Card card) {
 
 void ModelFacade::addCardToTable(Card card) {
 	table_->addCard(card);
+}
+
+
+string ModelFacade::getRoundEndResult() const {
+	string result = "";
+
+	for (int i=0; i<4; ++i) {
+		result += players_[i]->getListOfDiscardsString();
+	}
 }

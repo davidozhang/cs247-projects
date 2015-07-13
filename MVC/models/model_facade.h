@@ -14,8 +14,8 @@
 
 class ModelFacade: public Subject {
 private:
-	std::vector<Player*> players_(4, NULL);
-	std::vector<int> scores_(4, 0);
+	std::vector<Player*> players_;
+	std::vector<int> scores_;
 	Deck* deck_;
 	Table* table_;
 	int currentPlayer;
@@ -45,6 +45,7 @@ public:
 	int getDiscards(int) const;
 	int getCurrentPlayer() const;
 	std::vector<Card> getHand(int) const;
+	std::string getRoundEndResult() const;
 };
 
 

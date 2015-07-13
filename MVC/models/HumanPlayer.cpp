@@ -19,6 +19,5 @@ void HumanPlayer::play(Card &card) {
 void HumanPlayer::discard(Card &card) {
 	removeFromHand(card);
 	cout << "Player " << getNumber() << " discards " << card << "." << endl;
-	setScore(getScore() + card.getRank() + 1);
 	addListOfDiscards(card);
 }
