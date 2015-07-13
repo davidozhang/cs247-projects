@@ -3,13 +3,13 @@
 #include "Hand.h"
 #include "Card.h"
 #include "Player.h"
-#include "Game.h"
+#include "model_facade.h"
 using namespace std;
 
 Player::Player(int number, ModelFacade* model, bool isHuman): number_(number), model_(model), isHuman_(isHuman) {}
 
 Player::~Player() {
-	game_=NULL;
+	model_=NULL;
 }
 
 /*----------------------------------------------
@@ -20,17 +20,11 @@ Hand Player::getHand() const { return hand_; }
 
 void Player::setHand(Hand &hand) { hand_ = hand; }
 
-void Player::setScore(int score) { score_ = score; }
-
 void Player::setListOfDiscards(const vector<Card> &discards) { listOfDiscards_ = discards; }
-
-int Player::getScore() const { return score_; }
-
-int Player::getTotalScore() const { return totalScore_; }
 
 int Player::getNumber() const { return number_; }
 
-Game* Player::getModel() const { return model_; }
+ModelFacade* Player::getModel() const { return model_; }
 
 vector<Card> Player::getListOfDiscards() const { return listOfDiscards_; }
 
@@ -95,29 +89,6 @@ Card Player::removeFirstFromLegalMove() {
 }
 
 /*
-	Output the result of the round at the end
-*/
-void Player::outputRoundEndResult() const {
-	int size = listOfDiscards_.size();
-
-	cout << "Player " << number_ << "'s discards:"; 
-	for (int i=0; i<size; ++i)
-		cout << " " << listOfDiscards_[i];
-	cout << endl;
-
-	cout << "Player " << number_ << "'s score: "; 
-	cout << totalScore_ << " + " << score_ << " = " << totalScore_+score_ << endl;
-}
-
-/*
-	Update the score and total score at the end of the round
-*/
-void Player::updateScore() {
-	totalScore_ += score_;
-	score_ = 0;
-}
-
-/*
 	Return true if this is human player
 */
 bool Player::isHuman() const { 
@@ -149,6 +120,31 @@ bool Player::isLegalMoves(const Card &card) const {
 */
 bool Player::hasLegalMoves() const {
 	return legalMoves_.size() != 0;
+}
+
+
+int Player::getRoundScore() const {
+	int score = 0;
+	int size = listOfDiscards_.size();
+	for (int i=0; i<size; ++i) {
+		score += (listOfDiscards_[i].getRank() + 1);
+	}
+	return score;
+}
+
+string Player::getListOfDiscardsString() const {
+	string result = "";
+	int size = listOfDiscards_.size();
+	string suits[SUIT_COUNT] = {"C", "D", "H", "S"};
+	string ranks[RANK_COUNT] = {"A", "2", "3", "4", "5", "6",
+		"7", "8", "9", "10", "J", "Q", "K"};
+
+	result += ("Player " + to_string(number_) + "'s discards:"); 
+	for (int i=0; i<size; ++i)
+		result += (" " + ranks[listOfDiscards_[i].getRank()] + suits[listOfDiscards_[i].getSuit()]);
+	result += "\n";
+
+	return result;
 }
 
 /*

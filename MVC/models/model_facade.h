@@ -6,16 +6,16 @@
 #include "Hand.h"
 #include "Table.h"
 #include "Player.h"
-#include "ComputerPlayer.h"
-#include "HumanPlayer.h"
-#include "subject.h"
+#include "../subject.h"
 #include <vector>
 #include <string>
 
+class Player;
+
 class ModelFacade: public Subject {
 private:
-	std::vector<Player*> players_(4);
-	std::vector<int> scores_(4);
+	std::vector<Player*> players_;
+	std::vector<int> scores_;
 	Deck* deck_;
 	Table* table_;
 	int currentPlayer;
@@ -41,10 +41,11 @@ public:
 
 	/*For views to update*/
 	std::vector<Card> getTableCards() const;
-	int getPoints(int) const;
-	int getDiscards(int) const;
-	int getCurrentPlayer() const;
-	std::vector<Card> getHand(int) const;
+	// int getPoints(int) const;
+	// int getDiscards(int) const;
+	// int getCurrentPlayer() const;
+	// std::vector<Card> getHand(int) const;
+	std::string getRoundEndResult() const;
 };
 
 

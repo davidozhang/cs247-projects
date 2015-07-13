@@ -16,6 +16,12 @@ ModelFacade::ModelFacade() {
 	table_ = NULL;
 	currentPlayer = -1;
 	currentTurnInTheRound = 0;
+	players_.resize(4);
+	scores_.resize(4);
+	for (int i=0; i<4; ++i) {
+		players_[i] = NULL;
+		scores_[i] = 0;
+	}
 }
 
 
@@ -44,7 +50,10 @@ void ModelFacade::beginRound() {
 }
 
 void ModelFacade::endRound() {
-
+	for (int i=0; i<4; ++i) {
+		scores_[i] += players_[i]->getRoundScore();
+		players_[i]->clearListOfDiscards();
+	}
 }
 
 void ModelFacade::clearPlayerScores() {
@@ -75,7 +84,7 @@ void ModelFacade::setLegalMovesForCurrentPlayer() {
 
 bool ModelFacade::hasWinner() const {
 	for (int i=0; i<4; i++)
-		if (scores_[i]-> >= 80)
+		if (scores_[i] >= 80)
 			return true;
 
 	return false;
@@ -83,19 +92,31 @@ bool ModelFacade::hasWinner() const {
 
 void ModelFacade::advancePlayer() {
 	while (!players_[currentPlayer]->isHuman() && currentTurnInTheRound < 52) {
-		computerMakeMove(currentPlayer);
+		computerMakeMove();
 		currentPlayer = (currentPlayer+1)%4;
 		currentTurnInTheRound++;
 	}
 
 	if (currentTurnInTheRound < 52)
 		state_ = "new turn"; // update table
-	else
+	else {
 		state_ = "end round"; // output message
+		// in update(), get the discards string and scores from model then display
+	}
 	notify();
+	// if end round
+		// update the score with the player's current round discard
+	// if has winner
+		// notify the view with getWinner method
 
-	if (state_ == "end round" && hasWinner()) {
-		
+	if (state_ == "end round") {
+		endRound();
+		if (!hasWinner())
+			beginRound();
+		else {
+			state_ = "has winner";
+			notify();
+		}
 	}
 }
 
@@ -115,7 +136,7 @@ void ModelFacade::startGame(int newseed) {
 	if (NULL == table_)
 		table_ = new Table();
 	else
-		table_.clear();
+		table_->clear();
 
 	// initialize player scores
 	clearPlayerScores();
@@ -124,7 +145,7 @@ void ModelFacade::startGame(int newseed) {
 }
 
 void ModelFacade::endGame() {
-	table_.clear();
+	table_->clear();
 	clearPlayerScores();
 
 	state_ = "end game";
@@ -162,4 +183,30 @@ void ModelFacade::selectCard(Card card) {
 
 void ModelFacade::addCardToTable(Card card) {
 	table_->addCard(card);
+}
+
+
+string ModelFacade::getRoundEndResult() const {
+	string result = "";
+
+	for (int i=0; i<4; ++i) {
+		int score = players_[i]->getRoundScore();
+		result += players_[i]->getListOfDiscardsString();
+
+		result += ("Player " + to_string(i+1) + "'s score: "); 
+		result += (scores_[i] + " + " +
+					to_string(score) + " = " +
+					to_string(scores_[i] + score) + "\n");
+	}
+	return result;
+}
+
+
+
+void ModelFacade::ragequit(int playerNumber) {
+
+}
+
+std::vector<Card> ModelFacade::getTableCards() const {
+	return table_->getCardsOnTable();
 }

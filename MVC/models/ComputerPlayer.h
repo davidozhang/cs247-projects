@@ -3,8 +3,10 @@
 
 #include "Player.h"
 #include "Card.h"
-#include "Game.h"
+#include "model_facade.h"
 #include <vector>
+
+class ModelFacade;
 
 class ComputerPlayer: public Player {
 public:
