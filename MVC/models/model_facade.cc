@@ -54,6 +54,10 @@ void ModelFacade::beginRound() {
 
 void ModelFacade::endRound() {
 	for (int i=0; i<4; ++i) {
+		players_[i]->outputRoundEndResult();
+		cout << "Player " << i+1 << "'s score: "; 
+		cout << scores_[i] << " + " << players_[i]->getRoundScore() << " = " << scores_[i] + players_[i]->getRoundScore() << endl;
+
 		scores_[i] += players_[i]->getRoundScore();
 		players_[i]->clearListOfDiscards();
 	}
@@ -100,8 +104,11 @@ void ModelFacade::advancePlayer() {
 		currentTurnInTheRound++;
 	}
 
-	if (currentTurnInTheRound < 52)
+	if (currentTurnInTheRound < 52) {
 		state_ = "new turn"; // update table
+		cout << *table_;
+		cout << *players_[currentPlayer];
+	}
 	else {
 		state_ = "end round"; // output message
 		// in update(), get the discards string and scores from model then display
@@ -173,6 +180,7 @@ void ModelFacade::selectCard(Card card) {
 	setLegalMovesForCurrentPlayer();
 
 	if (players_[currentPlayer]->hasLegalMoves() && !players_[currentPlayer]->isLegalMoves(card)) {
+		cout << "This play is illegal." << endl;
 		state_ = "invalid play";
 		notify();
 		return;
@@ -189,6 +197,8 @@ void ModelFacade::selectCard(Card card) {
 }
 
 void ModelFacade::rageQuit() {
+	cout<<"Player "<< currentPlayer+1 <<" ragequits. A computer will now take over."<<endl;
+
 	Hand hand=players_[currentPlayer]->getHand();
 	vector<Card> listOfDiscards = players_[currentPlayer]->getListOfDiscards();
 	delete players_[currentPlayer];
