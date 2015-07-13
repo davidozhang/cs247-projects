@@ -200,7 +200,6 @@ void ModelFacade::addCardToTable(Card card) {
 	table_->addCard(card);
 }
 
-
 string ModelFacade::getRoundEndResult() const {
 	string result = "";
 

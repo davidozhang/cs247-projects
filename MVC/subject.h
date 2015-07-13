@@ -29,12 +29,13 @@ protected:
        /*
 		new round
                      output "A new round has begin, its " model->getCurrentPlayer()+1 " 's turn"
+                     update points for all players
+                     update discards for all players (to 0)
 		end round
                      output getRoundResult()
-                     update points for all players
 		new turn
                      update hand
-                     update discards (better for all players)
+                     update discards for all players
                      update cards on the table
                      update who is current player (ie the rage button)
 		end game
