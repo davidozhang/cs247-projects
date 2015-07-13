@@ -183,7 +183,7 @@ void ModelFacade::selectCard(Card card) {
 	advancePlayer();
 }
 
-void ModelFacade::ragequit() {
+void ModelFacade::rageQuit() {
 	Hand hand=players_[currentPlayer]->getHand();
 	vector<Card> listOfDiscards = players_[currentPlayer]->getListOfDiscards();
 	delete players_[currentPlayer];
