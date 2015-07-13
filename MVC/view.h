@@ -44,10 +44,10 @@ private:
 	Gtk::HBox top_panel;
 	Gtk::Label cards_panel_label;
 	Gtk::VBox cards_panel;
-	Gtk::HBox clubs;
-	Gtk::HBox diamonds;
-	Gtk::HBox hearts;
-	Gtk::HBox spades;
+	Gtk::HBox clubs_on_table;
+	Gtk::HBox diamonds_on_table;
+	Gtk::HBox hearts_on_table;
+	Gtk::HBox spades_on_table;
 	Gtk::HBox players_panel_labels;
 	Gtk::Label player_panel_label [4];
 	Gtk::HBox players_panel;
@@ -59,15 +59,19 @@ private:
 	Gtk::Button end_button;
 	Gtk::Button player_buttons[4];
 	Gtk::Label player_stats[4];
-	Gtk::Image cards [52];
+	Gtk::Image clubs [13];
+	Gtk::Image diamonds [13];
+	Gtk::Image hearts [13];
+	Gtk::Image spades [13];
 	Gtk::Image hand [13];
 	Gtk::Button hand_buttons [13];
 
-	bool human [4];
+	std::vector<std::string> human;
 
 	// Signal handlers:
 	void startButtonClicked();
 	void endButtonClicked();
+	void setActivePlayerButton(int);
 	void playerButtonClicked(int);
 
 }; // View

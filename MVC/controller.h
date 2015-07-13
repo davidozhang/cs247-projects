@@ -15,6 +15,8 @@
 
 
 #include <gtkmm.h>
+#include <vector>
+#include <string>
 #include "models/model_facade.h"
 
 class ModelFacade;
@@ -22,8 +24,9 @@ class ModelFacade;
 class Controller {
 public:
    Controller(ModelFacade*);
-   void startButtonClicked();
+   void startButtonClicked(int, std::vector<std::string>);
    void endButtonClicked();
+   void rageButtonClicked();
 private:
    ModelFacade *model_;
 }; // Controller

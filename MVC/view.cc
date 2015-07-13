@@ -22,7 +22,7 @@
 
 // Creates buttons with labels. Sets butBox elements to have the same size, 
 // with 10 pixels between widgets
-View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs(true, 5), diamonds(true, 5), hearts(true, 5), spades(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10){
+View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs_on_table(true, 5), diamonds_on_table(true, 5), hearts_on_table(true, 5), spades_on_table(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10){
 
 	// Sets some properties of the window.
 	set_title( "Straights UI - David & Jerry" );
@@ -43,25 +43,27 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 
 	start_button.set_label("Start new game with seed: ");
 	top_panel.add(start_button);
+	text_field.set_text("0");
+	text_field.set_alignment(0.5);
 	top_panel.add(text_field);
 	end_button.set_label("End current game");
 	top_panel.add(end_button);
 
-	for (int i=0; i<52; i++) {
-		cards[i].set(deck.null());
-	}
-
 	for (int i=0; i<13; i++) {
-		clubs.add(cards[i]);
-		diamonds.add(cards[i+13]);
-		hearts.add(cards[i+26]);
-		spades.add(cards[i+39]);
+		hand[i].set(deck.null());
+		clubs[i].set(deck.null());
+		diamonds[i].set(deck.null());
+		hearts[i].set(deck.null());
+		spades[i].set(deck.null());
+		clubs_on_table.add(clubs[i]);
+		diamonds_on_table.add(diamonds[i]);
+		hearts_on_table.add(hearts[i]);
+		spades_on_table.add(spades[i]);
 	}
-
-	cards_panel.add(clubs);
-	cards_panel.add(diamonds);
-	cards_panel.add(hearts);
-	cards_panel.add(spades);
+	cards_panel.add(clubs_on_table);
+	cards_panel.add(diamonds_on_table);
+	cards_panel.add(hearts_on_table);
+	cards_panel.add(spades_on_table);
 
 	for (int i=0; i<4; i++) {
 		player_panel_label[i].set_label("Player "+std::to_string(i+1));
@@ -79,9 +81,12 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 	}
 
 	for (int i=0; i<13; i++) {
-		hand[i].set(deck.null());
 		hand_buttons[i].set_image(hand[i]);
 		player_hand_panel.add(hand_buttons[i]);
+	}
+
+	for (int i=0; i<4; i++) {
+		human.push_back("h");
 	}
 
 	// Associate button "clicked" events with local onButtonClicked() method defined below.
@@ -111,29 +116,40 @@ void View::update(std::string) {
 void View::startButtonClicked() {
 	for (int i=0; i<4; i++) {
 		this->player_buttons[i].set_label("Rage!");
-		if (!human[i]) {
-			this->player_buttons[i].set_sensitive(false);
-		}
 	}
-	//get initial player number here
-	Dialog dialog(*this, "A new round begins. It's player 0's turn to play.");
+	int seed = std::stoi(text_field.get_text());
+	//int initial_player = model_->getCurrentPlayer();
+	//setActivePlayerButton(initial_player);
+	//Dialog dialog(*this, "A new round begins. It's player "+std::to_string(initial_player+1)+"'s turn to play.");
+	controller_->startButtonClicked(seed, human);
 }
 
 void View::endButtonClicked() {
 	for (int i=0; i<4; i++) {
 		this->player_buttons[i].set_label("Human");
-		human[i]=true;
+		human[i]="h";
+	}
+	controller_->endButtonClicked();
+}
+
+void View::setActivePlayerButton(int active) {
+	for (int i=0; i<4; i++) {
+		if (i==active) {
+			this->player_buttons[i].set_sensitive(true);
+		} else {
+			this->player_buttons[i].set_sensitive(false);
+		}
 	}
 }
 
 void View::playerButtonClicked(int num) {
 	if (this->player_buttons[num].get_label()=="Human") {
 		this->player_buttons[num].set_label("Computer");
-		human[num]=false;
+		human[num]="c";
 	} else if (this->player_buttons[num].get_label()=="Computer") {
 		this->player_buttons[num].set_label("Human");
-		human[num]=true;
+		human[num]="h";
 	} else if (this->player_buttons[num].get_label()=="Rage") {
-
+		controller_->rageButtonClicked();
 	}
 }
