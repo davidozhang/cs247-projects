@@ -32,6 +32,7 @@ ModelFacade::ModelFacade() {
 */
 
 void ModelFacade::beginRound() {
+	currentTurnInTheRound = 0;
 	table_->clear();	// clear the table
 	deck_->shuffle();	// shuffle the deck
 
@@ -46,7 +47,7 @@ void ModelFacade::beginRound() {
 
 	state_ = "new round";
 	notify();
-	// cout << "A new round begins. It's player " << currentPlayer+1 << "'s turn to play." << endl;
+	cout << "A new round begins. It's player " << currentPlayer+1 << "'s turn to play." << endl;
 
 	advancePlayer();
 }
@@ -113,6 +114,10 @@ void ModelFacade::advancePlayer() {
 			beginRound();
 		else {
 			state_ = "has winner";
+			vector<int> winners;
+			getWinners(winners);
+			for (int i=0; i<winners.size(); ++i)
+				cout << "Player " <<winners[i]+1<<" wins!" << endl;
 			notify();
 		}
 	}
