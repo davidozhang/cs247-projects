@@ -43,6 +43,8 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 
 	start_button.set_label("Start new game with seed: ");
 	top_panel.add(start_button);
+	text_field.set_text("0");
+	text_field.set_alignment(0.5);
 	top_panel.add(text_field);
 	end_button.set_label("End current game");
 	top_panel.add(end_button);
@@ -83,6 +85,10 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 		player_hand_panel.add(hand_buttons[i]);
 	}
 
+	for (int i=0; i<4; i++) {
+		human.push_back("h");
+	}
+
 	// Associate button "clicked" events with local onButtonClicked() method defined below.
 	start_button.signal_clicked().connect( sigc::mem_fun( *this, &View::startButtonClicked ) );
 	end_button.signal_clicked().connect( sigc::mem_fun( *this, &View::endButtonClicked ) );
@@ -110,29 +116,40 @@ void View::update(std::string) {
 void View::startButtonClicked() {
 	for (int i=0; i<4; i++) {
 		this->player_buttons[i].set_label("Rage!");
-		if (!human[i]) {
-			this->player_buttons[i].set_sensitive(false);
-		}
 	}
-	//get initial player number here
-	Dialog dialog(*this, "A new round begins. It's player 0's turn to play.");
+	int seed = std::stoi(text_field.get_text());
+	//int initial_player = model_->getCurrentPlayer();
+	//setActivePlayerButton(initial_player);
+	//Dialog dialog(*this, "A new round begins. It's player "+std::to_string(initial_player+1)+"'s turn to play.");
+	controller_->startButtonClicked(seed, human);
 }
 
 void View::endButtonClicked() {
 	for (int i=0; i<4; i++) {
 		this->player_buttons[i].set_label("Human");
-		human[i]=true;
+		human[i]="h";
+	}
+	controller_->endButtonClicked();
+}
+
+void View::setActivePlayerButton(int active) {
+	for (int i=0; i<4; i++) {
+		if (i==active) {
+			this->player_buttons[i].set_sensitive(true);
+		} else {
+			this->player_buttons[i].set_sensitive(false);
+		}
 	}
 }
 
 void View::playerButtonClicked(int num) {
 	if (this->player_buttons[num].get_label()=="Human") {
 		this->player_buttons[num].set_label("Computer");
-		human[num]=false;
+		human[num]="c";
 	} else if (this->player_buttons[num].get_label()=="Computer") {
 		this->player_buttons[num].set_label("Human");
-		human[num]=true;
+		human[num]="h";
 	} else if (this->player_buttons[num].get_label()=="Rage") {
-
+		controller_->rageButtonClicked();
 	}
 }

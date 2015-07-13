@@ -66,11 +66,12 @@ private:
 	Gtk::Image hand [13];
 	Gtk::Button hand_buttons [13];
 
-	bool human [4];
+	std::vector<std::string> human;
 
 	// Signal handlers:
 	void startButtonClicked();
 	void endButtonClicked();
+	void setActivePlayerButton(int);
 	void playerButtonClicked(int);
 
 }; // View
