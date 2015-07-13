@@ -13,7 +13,7 @@ public:
 	std::vector<Card> getLegalCards();	// get legal cards set based on the cards on the table
 	void clear();						// clear the table
 
-	std::vector<Card> getCardsOnTable() const;
+	std::vector<Card> getTableCardsBySuit(Suit) const;
 private:
 	void getLegalCardsHelper(std::vector<Card>&, std::vector<Card>&, Suit);
 	std::string listCards(const std::vector<Card>&) const;

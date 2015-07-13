@@ -36,16 +36,17 @@ public:
 	void endGame(); // end the current game
 	void setPlayerType(int, std::string);
 	void selectCard(Card); // current user select a card
-	void ragequit(int);
+	void ragequit();
 	void addCardToTable(Card);
 
 	/*For views to update*/
-	std::vector<Card> getTableCards() const;
-	// int getPoints(int) const;
-	// int getDiscards(int) const;
-	// int getCurrentPlayer() const;
-	// std::vector<Card> getHand(int) const;
+	std::vector<Card> getTableCardsBySuit(Suit) const;
+	int getPoints(int) const;
+	int getDiscards(int) const;
+	int getCurrentPlayer() const;
+	std::vector<Card> getHand(int) const;
 	std::string getRoundEndResult() const;
+	void getWinners(std::vector<int>&) const; // pass in an empty int vector, return a vector of winner numbers
 };
 
 
