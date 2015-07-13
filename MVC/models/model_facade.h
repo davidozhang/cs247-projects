@@ -18,7 +18,7 @@ private:
 	std::vector<int> scores_;
 	Deck* deck_;
 	Table* table_;
-	std::string gameState_;
+	bool gameState_;
 	int currentPlayer;
 	int currentTurnInTheRound;
 
@@ -42,7 +42,7 @@ public:
 
 	/*For views to update*/
 	std::vector<Card> getTableCardsBySuit(Suit) const;
-	std::string getGameState() const;
+	bool getGameState() const;
 	int getPoints(int) const;
 	int getDiscards(int) const;
 	int getCurrentPlayer() const;

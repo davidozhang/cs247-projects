@@ -17,7 +17,7 @@ ModelFacade::ModelFacade() {
 	table_ = NULL;
 	currentPlayer = -1;
 	currentTurnInTheRound = 0;
-	gameState_ = "off";
+	gameState_ = false;
 	players_.resize(4);
 	scores_.resize(4);
 	for (int i=0; i<4; ++i) {
@@ -136,7 +136,7 @@ void ModelFacade::startGame(int newseed) {
 	else
 		table_->clear();
 
-	gameState_ = "on";
+	gameState_ = true;
 
 	// initialize player scores
 	clearPlayerScores();
@@ -148,7 +148,7 @@ void ModelFacade::endGame() {
 	table_->clear();
 	clearPlayerScores();
 
-	gameState_ = "off";
+	gameState_ = false;
 
 	state_ = "end game";
 	notify();
@@ -236,7 +236,7 @@ int ModelFacade::getCurrentPlayer() const {
 	return currentPlayer;
 }
 
-std::string ModelFacade::getGameState() const {
+bool ModelFacade::getGameState() const {
 	return gameState_;
 }
 
