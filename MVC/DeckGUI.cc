@@ -41,7 +41,7 @@ DeckGUI::~DeckGUI() {
 } // DeckGUI::~DeckGUI
 
 // Returns the image for the specified card.
-Glib::RefPtr<Gdk::Pixbuf> DeckGUI::image( Faces f, Suits s ) {
+Glib::RefPtr<Gdk::Pixbuf> DeckGUI::image( Rank f, Suit s ) {
 	int index = ((int) f)*4 + ((int) s );
 	return deck[ index ];
 } // DeckGUI::getCardImage 
