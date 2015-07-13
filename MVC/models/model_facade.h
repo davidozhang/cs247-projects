@@ -37,7 +37,7 @@ public:
 	void endGame(); // end the current game
 	void setPlayerType(int, std::string);
 	void selectCard(Card); // current user select a card
-	void ragequit();
+	void rageQuit();
 	void addCardToTable(Card);
 
 	/*For views to update*/
