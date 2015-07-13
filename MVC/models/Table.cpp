@@ -64,6 +64,14 @@ string Table::listCards(const vector<Card>& v) const {
 	return output;
 }
 
+
+
+/* Temp method */
+vector<Card> Table::getCardsOnTable() const {
+	vector<Card> result;
+	return result;
+}
+
 std::ostream &operator<<(std::ostream& sout, const Table& table) {
 	sout<<"Cards on the table:"<<endl;
 	sout<<"Clubs:"<< table.listCards(table.clubs_)<<endl;

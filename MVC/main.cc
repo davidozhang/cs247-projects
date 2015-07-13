@@ -12,7 +12,7 @@
 
 
 #include <gtkmm/main.h>
-#include "model_facade.h"
+#include "models/model_facade.h"
 #include "controller.h"
 #include "view.h"
 

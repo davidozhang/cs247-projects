@@ -111,6 +111,12 @@ void ModelFacade::advancePlayer() {
 
 	if (state_ == "end round") {
 		endRound();
+		if (!hasWinner())
+			beginRound();
+		else {
+			state_ = "has winner";
+			notify();
+		}
 	}
 }
 
@@ -193,4 +199,14 @@ string ModelFacade::getRoundEndResult() const {
 					to_string(scores_[i] + score) + "\n");
 	}
 	return result;
+}
+
+
+
+void ModelFacade::ragequit(int playerNumber) {
+
+}
+
+std::vector<Card> ModelFacade::getTableCards() const {
+	return table_->getCardsOnTable();
 }

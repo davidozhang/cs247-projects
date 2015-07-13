@@ -13,7 +13,7 @@
 #include "observer.h"
 #include "view.h"
 #include "controller.h"
-#include "model_facade.h"
+#include "models/model_facade.h"
 #include "subject.h"
 #include "DeckGUI.h"
 #include "dialog.h"

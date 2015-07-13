@@ -6,7 +6,7 @@
 #include "Hand.h"
 #include "Table.h"
 #include "Player.h"
-#include "subject.h"
+#include "../subject.h"
 #include <vector>
 #include <string>
 
@@ -41,10 +41,10 @@ public:
 
 	/*For views to update*/
 	std::vector<Card> getTableCards() const;
-	int getPoints(int) const;
-	int getDiscards(int) const;
-	int getCurrentPlayer() const;
-	std::vector<Card> getHand(int) const;
+	// int getPoints(int) const;
+	// int getDiscards(int) const;
+	// int getCurrentPlayer() const;
+	// std::vector<Card> getHand(int) const;
 	std::string getRoundEndResult() const;
 };
 
