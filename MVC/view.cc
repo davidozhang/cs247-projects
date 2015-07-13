@@ -22,7 +22,7 @@
 
 // Creates buttons with labels. Sets butBox elements to have the same size, 
 // with 10 pixels between widgets
-View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs(true, 5), diamonds(true, 5), hearts(true, 5), spades(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10){
+View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs_on_table(true, 5), diamonds_on_table(true, 5), hearts_on_table(true, 5), spades_on_table(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10){
 
 	// Sets some properties of the window.
 	set_title( "Straights UI - David & Jerry" );
@@ -47,21 +47,21 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 	end_button.set_label("End current game");
 	top_panel.add(end_button);
 
-	for (int i=0; i<52; i++) {
-		cards[i].set(deck.null());
-	}
-
 	for (int i=0; i<13; i++) {
-		clubs.add(cards[i]);
-		diamonds.add(cards[i+13]);
-		hearts.add(cards[i+26]);
-		spades.add(cards[i+39]);
+		hand[i].set(deck.null());
+		clubs[i].set(deck.null());
+		diamonds[i].set(deck.null());
+		hearts[i].set(deck.null());
+		spades[i].set(deck.null());
+		clubs_on_table.add(clubs[i]);
+		diamonds_on_table.add(diamonds[i]);
+		hearts_on_table.add(hearts[i]);
+		spades_on_table.add(spades[i]);
 	}
-
-	cards_panel.add(clubs);
-	cards_panel.add(diamonds);
-	cards_panel.add(hearts);
-	cards_panel.add(spades);
+	cards_panel.add(clubs_on_table);
+	cards_panel.add(diamonds_on_table);
+	cards_panel.add(hearts_on_table);
+	cards_panel.add(spades_on_table);
 
 	for (int i=0; i<4; i++) {
 		player_panel_label[i].set_label("Player "+std::to_string(i+1));
@@ -79,7 +79,6 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 	}
 
 	for (int i=0; i<13; i++) {
-		hand[i].set(deck.null());
 		hand_buttons[i].set_image(hand[i]);
 		player_hand_panel.add(hand_buttons[i]);
 	}
