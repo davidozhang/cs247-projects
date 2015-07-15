@@ -122,7 +122,7 @@ void View::update(std::string state) {
 		diamonds=model_->getTableCardsBySuit(DIAMOND);
 		hearts=model_->getTableCardsBySuit(HEART);
 		spades=model_->getTableCardsBySuit(SPADE);
-		cardVectorToImages(hand_images, hand);
+		cardVectorToImages(hand_images, hand, true);
 		cardVectorToImages(club_images, clubs);
 		cardVectorToImages(diamond_images, diamonds);
 		cardVectorToImages(heart_images, hearts);
@@ -131,11 +131,16 @@ void View::update(std::string state) {
 		Dialog dialog(*this, model_->getRoundEndResult());
 	} else if (state=="new turn") {
 		setActivePlayerButton(current_player);
-		cardVectorToImages(hand_images, model_->getHand(current_player));
-		cardVectorToImages(club_images, model_->getTableCardsBySuit(CLUB));
-		cardVectorToImages(diamond_images, model_->getTableCardsBySuit(DIAMOND));
-		cardVectorToImages(heart_images, model_->getTableCardsBySuit(HEART));
-		cardVectorToImages(spade_images, model_->getTableCardsBySuit(SPADE));
+		hand=model_->getHand(current_player);
+		clubs=model_->getTableCardsBySuit(CLUB);
+		diamonds=model_->getTableCardsBySuit(DIAMOND);
+		hearts=model_->getTableCardsBySuit(HEART);
+		spades=model_->getTableCardsBySuit(SPADE);
+		cardVectorToImages(hand_images, hand, true);
+		cardVectorToImages(club_images, clubs);
+		cardVectorToImages(diamond_images, diamonds);
+		cardVectorToImages(heart_images, hearts);
+		cardVectorToImages(spade_images, spades);
 	} else if (state=="end game") {
 		hand.clear();
 		setToEmpty(hand_images);
@@ -156,9 +161,13 @@ void View::update(std::string state) {
 	}
 }
 
-void View::cardVectorToImages(Gtk::Image* images, std::vector<Card> cards) {
+void View::cardVectorToImages(Gtk::Image* images, std::vector<Card> cards, bool hand) {
 	for (int i=0; i<cards.size(); i++) {
-		images[i].set(deck.image(cards[i].getRank(), cards[i].getSuit()));
+		if (hand) {
+			images[i].set(deck.image(cards[i].getRank(), cards[i].getSuit()));
+		} else {
+			images[cards[i].getRank()].set(deck.image(cards[i].getRank(), cards[i].getSuit()));
+		}
 	}
 }
 
@@ -173,6 +182,7 @@ void View::startButtonClicked() {
 void View::endButtonClicked() {
 	for (int i=0; i<4; i++) {
 		this->player_buttons[i].set_label("Human");
+		this->player_buttons[i].set_sensitive(true);
 		human[i]="h";
 	}
 	controller_->endButtonClicked();
