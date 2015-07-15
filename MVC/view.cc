@@ -163,7 +163,11 @@ void View::update(std::string state) {
 	} else if (state=="invalid play") {
 		Dialog dialog(*this, "Invalid Move, There are still legal moves.");
 	} else if (state=="has winner") {
-
+		std::vector<int> winners;
+		model_->getWinners(winners);
+		for (int i=0; i<winners.size(); i++) {
+			Dialog dialog(*this, "Player "+ std::to_string(winners[i]+1) +" wins!");
+		}
 	} else {
 		//invalid state
 	}
