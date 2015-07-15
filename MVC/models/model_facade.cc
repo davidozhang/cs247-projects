@@ -112,7 +112,6 @@ void ModelFacade::advancePlayer() {
 	}
 	else {
 		state_ = "end round"; // output message
-		// in update(), get the discards string and scores from model then display
 	}
 	notify();
 

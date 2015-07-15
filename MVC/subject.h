@@ -29,12 +29,13 @@ protected:
        /*
 		new round
                      output "A new round has begin, its " model->getCurrentPlayer()+1 " 's turn"
-                     update points for all players
+                     !!!!update points for all players
                      update discards for all players (to 0)
+                     update table (to be empty)
 		end round
                      output getRoundResult()
 		new turn
-                     update hand
+                     !!!!update hand (put empty cards)
                      update discards for all players
                      update cards on the table
                      update who is current player (ie the rage button)
@@ -46,6 +47,10 @@ protected:
                      message dialogue: the player has selected a card not in legal play, and there are some legal plays
               has winner
                      initialize an empty vector<int>, call getWinners(vector), then iterate this vector to output message dialogue
+                     !!!!change rage buttons to h/c
+                     !!!!clear hand (to empty)
+                     !!!!clear table (to empty)
+
        */
 private:
        typedef std::set< Observer* > Observers;
