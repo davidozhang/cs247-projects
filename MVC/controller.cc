@@ -35,3 +35,7 @@ void Controller::endButtonClicked() {
 void Controller::rageButtonClicked() {
 	model_->rageQuit();
 }
+
+void Controller::handButtonClicked(Card card) {
+	model_->selectCard(card);
+}

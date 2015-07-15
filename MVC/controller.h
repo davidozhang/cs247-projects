@@ -27,6 +27,7 @@ public:
    void startButtonClicked(int, std::vector<std::string>);
    void endButtonClicked();
    void rageButtonClicked();
+   void handButtonClicked(Card);
 private:
    ModelFacade *model_;
 }; // Controller

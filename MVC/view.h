@@ -16,7 +16,9 @@
 #include <gtkmm.h>
 #include <vector>
 #include <string>
+#include <map>
 #include "DeckGUI.h"
+#include "models/Card.h"
 #include "observer.h"
 
 class Controller;
@@ -25,7 +27,7 @@ class ModelFacade;
 
 class View : public Gtk::Window, public Observer {
 public:
-        View( Controller*, ModelFacade* );
+	View( Controller*, ModelFacade* );
 	virtual ~View();
 	virtual void update(std::string);	// Observer Pattern: concrete update() method
 
@@ -38,6 +40,12 @@ private:
 
 	// Card Images
 	DeckGUI deck;
+
+	std::vector<Card> clubs;
+	std::vector<Card> diamonds;
+	std::vector<Card> hearts;
+	std::vector<Card> spades;
+	std::vector<Card> hand;
 
 	// Member widgets:
 	Gtk::VBox main_box;
@@ -59,11 +67,11 @@ private:
 	Gtk::Button end_button;
 	Gtk::Button player_buttons[4];
 	Gtk::Label player_stats[4];
-	Gtk::Image clubs [13];
-	Gtk::Image diamonds [13];
-	Gtk::Image hearts [13];
-	Gtk::Image spades [13];
-	Gtk::Image hand [13];
+	Gtk::Image club_images [13];
+	Gtk::Image diamond_images [13];
+	Gtk::Image heart_images [13];
+	Gtk::Image spade_images [13];
+	Gtk::Image hand_images [13];
 	Gtk::Button hand_buttons [13];
 
 	std::vector<std::string> human;
@@ -72,7 +80,10 @@ private:
 	void startButtonClicked();
 	void endButtonClicked();
 	void setActivePlayerButton(int);
+	void cardVectorToImages(Gtk::Image*, std::vector<Card>);
+	void setToEmpty(Gtk::Image*);
 	void playerButtonClicked(int);
+	void handButtonClicked(int);
 
 }; // View
 
