@@ -106,6 +106,7 @@ void ModelFacade::advancePlayer() {
 
 	if (currentTurnInTheRound < 52) {
 		state_ = "new turn"; // update table
+		setLegalMovesForCurrentPlayer();
 		cout << *table_;
 		cout << *players_[currentPlayer];
 	}
@@ -179,10 +180,10 @@ void ModelFacade::setPlayerType(int playerNumber, string playerType) {
 }
 
 void ModelFacade::selectCard(Card card) {
-	setLegalMovesForCurrentPlayer();
+	// setLegalMovesForCurrentPlayer();
 
 	if (players_[currentPlayer]->hasLegalMoves() && !players_[currentPlayer]->isLegalMoves(card)) {
-		cout << "This play is illegal." << endl;
+		cout << card << " This play is illegal." << endl;
 		state_ = "invalid play";
 		notify();
 		return;
