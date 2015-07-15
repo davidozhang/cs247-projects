@@ -80,7 +80,7 @@ private:
 	void startButtonClicked();
 	void endButtonClicked();
 	void setActivePlayerButton(int);
-	void cardVectorToImages(Gtk::Image*, std::vector<Card>);
+	void cardVectorToImages(Gtk::Image*, std::vector<Card>, bool hand=false);
 	void setToEmpty(Gtk::Image*);
 	void playerButtonClicked(int);
 	void handButtonClicked(int);

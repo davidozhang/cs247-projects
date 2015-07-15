@@ -122,7 +122,7 @@ void View::update(std::string state) {
 		diamonds=model_->getTableCardsBySuit(DIAMOND);
 		hearts=model_->getTableCardsBySuit(HEART);
 		spades=model_->getTableCardsBySuit(SPADE);
-		cardVectorToImages(hand_images, hand);
+		cardVectorToImages(hand_images, hand, true);
 		cardVectorToImages(club_images, clubs);
 		cardVectorToImages(diamond_images, diamonds);
 		cardVectorToImages(heart_images, hearts);
@@ -136,7 +136,7 @@ void View::update(std::string state) {
 		diamonds=model_->getTableCardsBySuit(DIAMOND);
 		hearts=model_->getTableCardsBySuit(HEART);
 		spades=model_->getTableCardsBySuit(SPADE);
-		cardVectorToImages(hand_images, hand);
+		cardVectorToImages(hand_images, hand, true);
 		cardVectorToImages(club_images, clubs);
 		cardVectorToImages(diamond_images, diamonds);
 		cardVectorToImages(heart_images, hearts);
@@ -161,9 +161,13 @@ void View::update(std::string state) {
 	}
 }
 
-void View::cardVectorToImages(Gtk::Image* images, std::vector<Card> cards) {
+void View::cardVectorToImages(Gtk::Image* images, std::vector<Card> cards, bool hand) {
 	for (int i=0; i<cards.size(); i++) {
-		images[i].set(deck.image(cards[i].getRank(), cards[i].getSuit()));
+		if (hand) {
+			images[i].set(deck.image(cards[i].getRank(), cards[i].getSuit()));
+		} else {
+			images[cards[i].getRank()].set(deck.image(cards[i].getRank(), cards[i].getSuit()));
+		}
 	}
 }
 
