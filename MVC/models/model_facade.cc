@@ -233,7 +233,12 @@ string ModelFacade::getRoundEndResult() const {
 }
 
 vector<Card> ModelFacade::getHand(int playerNumber) const {
-	return players_[playerNumber]->getHand().getCards();
+	vector<Card> hand = players_[playerNumber]->getHand().getCards();
+	int size = 13 - hand.size();
+	while (size-- > 0)
+		hand.push_back(Card(NOSUIT, NORANK));
+
+	return hand;
 }
 
 vector<Card> ModelFacade::getTableCardsBySuit(Suit suit) const {
