@@ -43,6 +43,8 @@ protected:
                      update hand (to become empty)
                      update table (to become empty)
                      update rage buttons (to become h/c)
+                     !!!!clear points
+                     !!!!clear discards
 		invalid play
                      message dialogue: the player has selected a card not in legal play, and there are some legal plays
               has winner
@@ -50,6 +52,8 @@ protected:
                      !!!!change rage buttons to h/c
                      !!!!clear hand (to empty)
                      !!!!clear table (to empty)
+                     !!!!clear points
+                     !!!!clear discards
 
        */
 private:
