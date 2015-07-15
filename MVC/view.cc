@@ -124,11 +124,22 @@ void View::update(std::string state) {
 		diamonds=model_->getTableCardsBySuit(DIAMOND);
 		hearts=model_->getTableCardsBySuit(HEART);
 		spades=model_->getTableCardsBySuit(SPADE);
+		for (int i=0; i<4; i++) {
+			discards[i]=0;
+			points[i]=model_->getPoints(i);
+		}
+		for (int i=0; i<4; i++) {
+			player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
+		}
 		cardVectorToImages(hand_images, hand, true);
 		cardVectorToImages(club_images, clubs);
 		cardVectorToImages(diamond_images, diamonds);
 		cardVectorToImages(heart_images, hearts);
 		cardVectorToImages(spade_images, spades);
+		setToEmpty(club_images);
+		setToEmpty(diamond_images);
+		setToEmpty(heart_images);
+		setToEmpty(spade_images);
 	} else if (state=="end round") {
 		Dialog dialog(*this, model_->getRoundEndResult());
 	} else if (state=="new turn") {
@@ -160,6 +171,13 @@ void View::update(std::string state) {
 		setToEmpty(diamond_images);
 		setToEmpty(heart_images);
 		setToEmpty(spade_images);
+		for (int i=0; i<4; i++) {
+			discards[i]=0;
+			points[i]=0;
+		}
+		for (int i=0; i<4; i++) {
+			player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
+		}
 	} else if (state=="invalid play") {
 		Dialog dialog(*this, "Invalid Move, There are still legal moves.");
 	} else if (state=="has winner") {
@@ -167,6 +185,25 @@ void View::update(std::string state) {
 		model_->getWinners(winners);
 		for (int i=0; i<winners.size(); i++) {
 			Dialog dialog(*this, "Player "+ std::to_string(winners[i]+1) +" wins!");
+		}
+		for (int i=0; i<4; i++) {
+			this->player_buttons[i].set_label("Human");
+			this->player_buttons[i].set_sensitive(true);
+			human[i]="h";
+		}
+		for (int i=0; i<13; i++) {
+			hand_images[i].set(deck.null());
+		}
+		setToEmpty(club_images);
+		setToEmpty(diamond_images);
+		setToEmpty(heart_images);
+		setToEmpty(spade_images);
+		for (int i=0; i<4; i++) {
+			discards[i]=0;
+			points[i]=0;
+		}
+		for (int i=0; i<4; i++) {
+			player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
 		}
 	} else {
 		//invalid state
@@ -176,7 +213,11 @@ void View::update(std::string state) {
 void View::cardVectorToImages(Gtk::Image* images, std::vector<Card> cards, bool hand) {
 	for (int i=0; i<cards.size(); i++) {
 		if (hand) {
-			images[i].set(deck.image(cards[i].getRank(), cards[i].getSuit()));
+			if (cards[i].getSuit()==NOSUIT) {
+				images[i].set(deck.null());
+			} else {
+				images[i].set(deck.image(cards[i].getRank(), cards[i].getSuit()));
+			}
 		} else {
 			images[cards[i].getRank()].set(deck.image(cards[i].getRank(), cards[i].getSuit()));
 		}
@@ -217,7 +258,7 @@ void View::playerButtonClicked(int num) {
 	} else if (this->player_buttons[num].get_label()=="Computer") {
 		this->player_buttons[num].set_label("Human");
 		human[num]="h";
-	} else if (this->player_buttons[num].get_label()=="Rage") {
+	} else if (this->player_buttons[num].get_label()=="Rage!") {
 		controller_->rageButtonClicked();
 	}
 }
