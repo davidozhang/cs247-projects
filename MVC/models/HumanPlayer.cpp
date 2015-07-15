@@ -12,12 +12,12 @@ HumanPlayer::HumanPlayer(int number, ModelFacade* model): Player(number, model, 
 
 void HumanPlayer::play(Card &card) {
 	removeFromHand(card);
-	// cout << "Player " << getNumber() << " plays " << card << "." << endl;
+	cout << "Player " << getNumber() << " plays " << card << "." << endl;
 	getModel()->addCardToTable(card);
 }
 
 void HumanPlayer::discard(Card &card) {
 	removeFromHand(card);
-	// cout << "Player " << getNumber() << " discards " << card << "." << endl;
+	cout << "Player " << getNumber() << " discards " << card << "." << endl;
 	addListOfDiscards(card);
 }

@@ -44,6 +44,7 @@ public:
 
 	int getRoundScore() const;
 	std::string getListOfDiscardsString() const;
+	void outputRoundEndResult() const;
 
 protected:
 	Player(int, ModelFacade*, bool);

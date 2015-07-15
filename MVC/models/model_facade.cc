@@ -32,6 +32,7 @@ ModelFacade::ModelFacade() {
 */
 
 void ModelFacade::beginRound() {
+	currentTurnInTheRound = 0;
 	table_->clear();	// clear the table
 	deck_->shuffle();	// shuffle the deck
 
@@ -46,13 +47,17 @@ void ModelFacade::beginRound() {
 
 	state_ = "new round";
 	notify();
-	// cout << "A new round begins. It's player " << currentPlayer+1 << "'s turn to play." << endl;
+	cout << "A new round begins. It's player " << currentPlayer+1 << "'s turn to play." << endl;
 
 	advancePlayer();
 }
 
 void ModelFacade::endRound() {
 	for (int i=0; i<4; ++i) {
+		players_[i]->outputRoundEndResult();
+		cout << "Player " << i+1 << "'s score: "; 
+		cout << scores_[i] << " + " << players_[i]->getRoundScore() << " = " << scores_[i] + players_[i]->getRoundScore() << endl;
+
 		scores_[i] += players_[i]->getRoundScore();
 		players_[i]->clearListOfDiscards();
 	}
@@ -99,11 +104,14 @@ void ModelFacade::advancePlayer() {
 		currentTurnInTheRound++;
 	}
 
-	if (currentTurnInTheRound < 52)
+	if (currentTurnInTheRound < 52) {
 		state_ = "new turn"; // update table
+		setLegalMovesForCurrentPlayer();
+		cout << *table_;
+		cout << *players_[currentPlayer];
+	}
 	else {
 		state_ = "end round"; // output message
-		// in update(), get the discards string and scores from model then display
 	}
 	notify();
 
@@ -113,6 +121,10 @@ void ModelFacade::advancePlayer() {
 			beginRound();
 		else {
 			state_ = "has winner";
+			vector<int> winners;
+			getWinners(winners);
+			for (int i=0; i<winners.size(); ++i)
+				cout << "Player " <<winners[i]+1<<" wins!" << endl;
 			notify();
 		}
 	}
@@ -145,7 +157,9 @@ void ModelFacade::startGame(int newseed) {
 }
 
 void ModelFacade::endGame() {
-	table_->clear();
+	if (NULL != table_)
+		table_->clear();
+	
 	clearPlayerScores();
 
 	gameState_ = false;
@@ -158,16 +172,17 @@ void ModelFacade::setPlayerType(int playerNumber, string playerType) {
 	if (players_[playerNumber] != NULL)
 		delete players_[playerNumber];
 
-	if (playerType == "human")
+	if (playerType == "h")
 		players_[playerNumber] = new HumanPlayer(playerNumber+1, this);
 	else
 		players_[playerNumber] = new ComputerPlayer(playerNumber+1, this);
 }
 
 void ModelFacade::selectCard(Card card) {
-	setLegalMovesForCurrentPlayer();
+	// setLegalMovesForCurrentPlayer();
 
 	if (players_[currentPlayer]->hasLegalMoves() && !players_[currentPlayer]->isLegalMoves(card)) {
+		cout << card << " This play is illegal." << endl;
 		state_ = "invalid play";
 		notify();
 		return;
@@ -184,6 +199,8 @@ void ModelFacade::selectCard(Card card) {
 }
 
 void ModelFacade::rageQuit() {
+	cout<<"Player "<< currentPlayer+1 <<" ragequits. A computer will now take over."<<endl;
+
 	Hand hand=players_[currentPlayer]->getHand();
 	vector<Card> listOfDiscards = players_[currentPlayer]->getListOfDiscards();
 	delete players_[currentPlayer];
@@ -199,7 +216,6 @@ void ModelFacade::rageQuit() {
 void ModelFacade::addCardToTable(Card card) {
 	table_->addCard(card);
 }
-
 
 string ModelFacade::getRoundEndResult() const {
 	string result = "";
@@ -217,7 +233,12 @@ string ModelFacade::getRoundEndResult() const {
 }
 
 vector<Card> ModelFacade::getHand(int playerNumber) const {
-	return players_[playerNumber]->getHand().getCards();
+	vector<Card> hand = players_[playerNumber]->getHand().getCards();
+	int size = 13 - hand.size();
+	while (size-- > 0)
+		hand.push_back(Card(NOSUIT, NORANK));
+
+	return hand;
 }
 
 vector<Card> ModelFacade::getTableCardsBySuit(Suit suit) const {

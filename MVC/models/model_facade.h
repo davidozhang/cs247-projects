@@ -38,6 +38,8 @@ public:
 	void setPlayerType(int, std::string);
 	void selectCard(Card); // current user select a card
 	void rageQuit();
+
+	/*For player*/
 	void addCardToTable(Card);
 
 	/*For views to update*/

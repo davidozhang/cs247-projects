@@ -42,7 +42,7 @@ DeckGUI::~DeckGUI() {
 
 // Returns the image for the specified card.
 Glib::RefPtr<Gdk::Pixbuf> DeckGUI::image( Rank f, Suit s ) {
-	int index = ((int) s)*4 + ((int) f );
+	int index = ((int) s)*13 + ((int) f );
 	return deck[ index ];
 } // DeckGUI::getCardImage 
 

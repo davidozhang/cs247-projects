@@ -4,9 +4,9 @@
 #include <ostream>
 #include <istream>
 
-enum Suit { CLUB, DIAMOND, HEART, SPADE, SUIT_COUNT };
+enum Suit { CLUB, DIAMOND, HEART, SPADE, SUIT_COUNT, NOSUIT };
 enum Rank { ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN,
-			EIGHT, NINE, TEN, JACK, QUEEN, KING, RANK_COUNT };
+			EIGHT, NINE, TEN, JACK, QUEEN, KING, RANK_COUNT, NORANK };
 
 class Card{
 	friend std::istream &operator>>(std::istream &, Card &);

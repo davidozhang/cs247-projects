@@ -147,6 +147,18 @@ string Player::getListOfDiscardsString() const {
 	return result;
 }
 
+void Player::outputRoundEndResult() const {
+	int size = listOfDiscards_.size();
+
+	cout << "Player " << number_ << "'s discards:"; 
+	for (int i=0; i<size; ++i)
+		cout << " " << listOfDiscards_[i];
+	cout << endl;
+
+	// cout << "Player " << number_ << "'s score: "; 
+	// cout << totalScore_ << " + " << score_ << " = " << totalScore_+score_ << endl;
+}
+
 /*
 	Out stream operator
 */

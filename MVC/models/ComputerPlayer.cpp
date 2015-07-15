@@ -11,12 +11,12 @@ ComputerPlayer::ComputerPlayer(int number, ModelFacade* model): Player(number, m
 
 void ComputerPlayer::play(Card &dummy) {
 	Card card = removeFirstFromLegalMove();
-	// cout << "Player " << getNumber() << " plays " << card << "." << endl;
+	cout << "Player " << getNumber() << " plays " << card << "." << endl;
 	getModel()->addCardToTable(card);
 }
 
 void ComputerPlayer::discard(Card &dummy) {
 	Card card = removeFirstFromHand();
-	// cout << "Player " << getNumber() << " discards " << card << "." << endl;
+	cout << "Player " << getNumber() << " discards " << card << "." << endl;
 	addListOfDiscards(card);
 }
