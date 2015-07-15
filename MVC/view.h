@@ -46,6 +46,8 @@ private:
 	std::vector<Card> hearts;
 	std::vector<Card> spades;
 	std::vector<Card> hand;
+	int discards [4];
+	int points [4];
 
 	// Member widgets:
 	Gtk::VBox main_box;

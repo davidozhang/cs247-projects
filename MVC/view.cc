@@ -73,8 +73,10 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 		player_buttons[i].signal_clicked().connect( sigc::bind<int>(sigc::mem_fun(*this, &View::playerButtonClicked), i));
 	}
 	for (int i=0; i<4; i++) {
+		points[i]=0;
+		discards[i]=0;
 		player_buttons[i].set_label("Human");
-		player_stats[i].set_label("0 points\n0 discards");
+		player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
 		players[i].add(player_buttons[i]);
 		players[i].add(player_stats[i]);
 		players_panel.add(players[i]);
@@ -136,6 +138,12 @@ void View::update(std::string state) {
 		diamonds=model_->getTableCardsBySuit(DIAMOND);
 		hearts=model_->getTableCardsBySuit(HEART);
 		spades=model_->getTableCardsBySuit(SPADE);
+		for (int i=0; i<4; i++) {
+			discards[i]=model_->getDiscards(i);
+		}
+		for (int i=0; i<4; i++) {
+			player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
+		}
 		cardVectorToImages(hand_images, hand, true);
 		cardVectorToImages(club_images, clubs);
 		cardVectorToImages(diamond_images, diamonds);
