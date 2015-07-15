@@ -117,11 +117,16 @@ void View::update(std::string state) {
 	if (state=="new round") {
 		Dialog dialog(*this, "A new round begins. It's player "+std::to_string(current_player+1)+"'s turn to play.");
 		setActivePlayerButton(current_player);
-		cardVectorToImages(hand_images, model_->getHand(current_player));
-		cardVectorToImages(club_images, model_->getTableCardsBySuit(CLUB));
-		cardVectorToImages(diamond_images, model_->getTableCardsBySuit(DIAMOND));
-		cardVectorToImages(heart_images, model_->getTableCardsBySuit(HEART));
-		cardVectorToImages(spade_images, model_->getTableCardsBySuit(SPADE));
+		hand=model_->getHand(current_player);
+		clubs=model_->getTableCardsBySuit(CLUB);
+		diamonds=model_->getTableCardsBySuit(DIAMOND);
+		hearts=model_->getTableCardsBySuit(HEART);
+		spades=model_->getTableCardsBySuit(SPADE);
+		cardVectorToImages(hand_images, hand);
+		cardVectorToImages(club_images, clubs);
+		cardVectorToImages(diamond_images, diamonds);
+		cardVectorToImages(heart_images, hearts);
+		cardVectorToImages(spade_images, spades);
 	} else if (state=="end round") {
 		Dialog dialog(*this, model_->getRoundEndResult());
 	} else if (state=="new turn") {
