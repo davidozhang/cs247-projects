@@ -157,7 +157,9 @@ void ModelFacade::startGame(int newseed) {
 }
 
 void ModelFacade::endGame() {
-	table_->clear();
+	if (NULL != table_)
+		table_->clear();
+	
 	clearPlayerScores();
 
 	gameState_ = false;
