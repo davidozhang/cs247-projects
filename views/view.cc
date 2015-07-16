@@ -178,7 +178,7 @@ void View::playerButtonClicked(int num) {
 }
 
 void View::handButtonClicked(int num) {
-	if (num<hand.size()) {
+	if (hand_images[num].get_pixbuf()!=deck.null()) {
 		controller_->handButtonClicked(hand[num]);
 	}
 }
