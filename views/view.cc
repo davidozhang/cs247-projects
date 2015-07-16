@@ -43,10 +43,15 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 		diamond_images[i].set(deck.null());
 		heart_images[i].set(deck.null());
 		spade_images[i].set(deck.null());
+		legal_images[i].set(deck.null());
+		hand_buttons[i].set_image(hand_images[i]);
+		hand_buttons[i].signal_clicked().connect( sigc::bind<int>(sigc::mem_fun(*this, &View::handButtonClicked), i));
 		clubs_on_table.add(club_images[i]);
 		diamonds_on_table.add(diamond_images[i]);
 		hearts_on_table.add(heart_images[i]);
 		spades_on_table.add(spade_images[i]);
+		legal_panel.add(legal_images[i]);
+		player_hand_panel.add(hand_buttons[i]);
 	}
 	cards_panel.add(clubs_on_table);
 	cards_panel.add(diamonds_on_table);
@@ -54,36 +59,17 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 	cards_panel.add(spades_on_table);
 
 	for (int i=0; i<4; i++) {
-		player_panel_label[i].set_label("Player "+std::to_string(i+1));
-		players_panel_labels.add(player_panel_label[i]);
-	}
-	for (int i=0; i<4; i++) {
-		player_buttons[i].signal_clicked().connect( sigc::bind<int>(sigc::mem_fun(*this, &View::playerButtonClicked), i));
-	}
-	for (int i=0; i<4; i++) {
+		human.push_back("h");
 		points[i]=0;
 		discards[i]=0;
 		player_buttons[i].set_label("Human");
+		player_buttons[i].signal_clicked().connect( sigc::bind<int>(sigc::mem_fun(*this, &View::playerButtonClicked), i));
 		player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
 		players[i].add(player_buttons[i]);
 		players[i].add(player_stats[i]);
 		players_panel.add(players[i]);
-	}
-	for (int i=0; i<13; i++) {
-		hand_buttons[i].signal_clicked().connect( sigc::bind<int>(sigc::mem_fun(*this, &View::handButtonClicked), i));
-	}
-	for (int i=0; i<13; i++) {
-		hand_buttons[i].set_image(hand_images[i]);
-		player_hand_panel.add(hand_buttons[i]);
-	}
-
-	for (int i=0; i<13; i++) {
-		legal_images[i].set(deck.null());
-		legal_panel.add(legal_images[i]);
-	}
-
-	for (int i=0; i<4; i++) {
-		human.push_back("h");
+		player_panel_label[i].set_label("Player "+std::to_string(i+1));
+		players_panel_labels.add(player_panel_label[i]);
 	}
 
 	start_button.signal_clicked().connect( sigc::mem_fun( *this, &View::startButtonClicked ) );
