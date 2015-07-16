@@ -28,6 +28,7 @@ private:
 	std::vector<Card> hearts;
 	std::vector<Card> spades;
 	std::vector<Card> hand;
+	std::vector<Card> legal;
 	std::vector<std::string> human;
 	int discards [4];
 	int points [4];
@@ -46,6 +47,8 @@ private:
 	Gtk::VBox players [4];
 	Gtk::Label player_hand_panel_label;
 	Gtk::HBox player_hand_panel;
+	Gtk::Label legal_panel_label;
+	Gtk::HBox legal_panel;
 	Gtk::Entry text_field;
 	Gtk::Button start_button;
 	Gtk::Button end_button;
@@ -56,6 +59,7 @@ private:
 	Gtk::Image heart_images [13];
 	Gtk::Image spade_images [13];
 	Gtk::Image hand_images [13];
+	Gtk::Image legal_images [13];
 	Gtk::Button hand_buttons [13];
 
 	void startButtonClicked();
@@ -67,6 +71,7 @@ private:
 	void updateAllCards(int);
 	void clearTable();
 	void clearHand();
+	void clearLegal();
 	void resetPlayerButtons();
 	void resetDiscardsAndPoints();
 	void playerButtonClicked(int);

@@ -12,8 +12,8 @@ OBJS =  subject.o \
 		models/model_facade.o \
 		controllers/controller.o \
 		views/DeckGUI.o \
-		views/view.o \
 		views/dialog.o \
+		views/view.o \
 		main.o
 EXEC = mvc
 

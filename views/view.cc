@@ -8,10 +8,10 @@
 #include <iostream>
 #include <string>
 
-View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs_on_table(true, 5), diamonds_on_table(true, 5), hearts_on_table(true, 5), spades_on_table(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10) {
+View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs_on_table(true, 5), diamonds_on_table(true, 5), hearts_on_table(true, 5), spades_on_table(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10), legal_panel(false, 10) {
 	set_title( "Straights UI - David & Jerry" );
 	set_border_width( 10 );
-	
+	//
 	add(main_box);
 	main_box.pack_start(top_panel);
 	cards_panel_label.set_label("Cards on the table");
@@ -24,6 +24,10 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 	player_hand_panel_label.set_alignment(0,0);
 	main_box.pack_start(player_hand_panel_label);
 	main_box.pack_start(player_hand_panel);
+	legal_panel_label.set_label("Legal moves");
+	legal_panel_label.set_alignment(0,0);
+	main_box.pack_start(legal_panel_label);
+	main_box.pack_start(legal_panel);
 
 	start_button.set_label("Start new game with seed: ");
 	top_panel.add(start_button);
@@ -73,6 +77,11 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 		player_hand_panel.add(hand_buttons[i]);
 	}
 
+	for (int i=0; i<13; i++) {
+		legal_images[i].set(deck.null());
+		legal_panel.add(legal_images[i]);
+	}
+
 	for (int i=0; i<4; i++) {
 		human.push_back("h");
 	}
@@ -110,6 +119,7 @@ void View::update(std::string state) {
 	} else if (state=="end game") {
 		clearHand();
 		clearTable();
+		clearLegal();
 		resetDiscardsAndPoints();
 	} else if (state=="invalid play") {
 		Dialog dialog(*this, "Invalid Move, There are still legal moves.");
@@ -122,6 +132,7 @@ void View::update(std::string state) {
 		resetPlayerButtons();
 		clearHand();
 		clearTable();
+		clearLegal();
 		resetDiscardsAndPoints();
 	} else {
 		//invalid state, should never reach here
@@ -201,16 +212,23 @@ void View::updateAllCards(int current_player) {
 	diamonds=model_->getTableCardsBySuit(DIAMOND);
 	hearts=model_->getTableCardsBySuit(HEART);
 	spades=model_->getTableCardsBySuit(SPADE);
+	legal=model_->getLegalPlays();
 	cardVectorToImages(hand_images, hand, true);
 	cardVectorToImages(club_images, clubs);
 	cardVectorToImages(diamond_images, diamonds);
 	cardVectorToImages(heart_images, hearts);
 	cardVectorToImages(spade_images, spades);
+	cardVectorToImages(legal_images, legal);
 }
 
 void View::clearHand() {
 	hand.clear();
 	setToEmpty(hand_images);
+}
+
+void View::clearLegal() {
+	legal.clear();
+	setToEmpty(legal_images);
 }
 
 void View::clearTable() {
