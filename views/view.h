@@ -6,8 +6,8 @@
 #include <string>
 #include <map>
 #include "DeckGUI.h"
-#include "models/Card.h"
-#include "observer.h"
+#include "../models/Card.h"
+#include "../observer.h"
 
 class Controller;
 class ModelFacade;

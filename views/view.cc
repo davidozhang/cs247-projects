@@ -1,8 +1,8 @@
-#include "observer.h"
+#include "../observer.h"
 #include "view.h"
-#include "controller.h"
-#include "models/model_facade.h"
-#include "subject.h"
+#include "../controllers/controller.h"
+#include "../models/model_facade.h"
+#include "../subject.h"
 #include "DeckGUI.h"
 #include "dialog.h"
 #include <iostream>

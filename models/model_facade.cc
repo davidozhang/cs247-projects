@@ -11,7 +11,6 @@
 #include <string>
 using namespace std;
 
-
 /* Constructor */
 ModelFacade::ModelFacade() {
 	deck_ = NULL;

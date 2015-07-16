@@ -17,7 +17,7 @@
 #include <gtkmm.h>
 #include <vector>
 #include <string>
-#include "models/model_facade.h"
+#include "../models/model_facade.h"
 
 class ModelFacade;
 

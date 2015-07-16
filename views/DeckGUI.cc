@@ -25,7 +25,7 @@ const char * image_names[] = {
 
 // Loads the image from the specified file name into a pixel buffer.
 Glib::RefPtr<Gdk::Pixbuf> createPixbuf(const string & name) {
-	return Gdk::Pixbuf::create_from_file( name );
+	return Gdk::Pixbuf::create_from_file( "views/" + name );
 } // createPixbuf
 
 DeckGUI::DeckGUI()  {
