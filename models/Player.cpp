@@ -6,6 +6,13 @@
 #include "Table.h"
 using namespace std;
 
+namespace {
+	string suits[SUIT_COUNT] = {"C", "D", "H", "S"};
+	string ranks[RANK_COUNT] = {"A", "2", "3", "4", "5", "6",
+		"7", "8", "9", "10", "J", "Q", "K"};
+}
+
+
 Player::Player(int number, Table* table, bool isHuman): number_(number), table_(table), isHuman_(isHuman) {}
 
 
@@ -21,7 +28,11 @@ void Player::setTable(Table* table) {table_ = table; }
 
 void Player::setListOfDiscards(const vector<Card> &discards) { listOfDiscards_ = discards; }
 
+void Player::setListOfPlayedCards(const vector<Card> &cards) { playedCards_ = cards; }
+
 vector<Card> Player::getListOfDiscards() const { return listOfDiscards_; }
+
+vector<Card> Player::getListOfPlayedCards() const { return playedCards_; }
 
 vector<Card> Player::getLegalMoves() const {return legalMoves_; }
 
@@ -33,6 +44,7 @@ vector<Card> Player::getLegalMoves() const {return legalMoves_; }
 void Player::play(Card& card) {
 	cout << "Player " << number_ << " plays " << card << "." << endl;
 	table_->addCard(card);
+	playedCards_.push_back(card);
 }
 
 void Player::discard(Card& card) {
@@ -64,6 +76,10 @@ void Player::setLegalMoves(const vector<Card> &legalSet) {
 */
 void Player::clearListOfDiscards() {
 	listOfDiscards_.clear();
+}
+
+void Player::clearListOfPlayedCards() {
+	playedCards_.clear();
 }
 
 /*
@@ -134,13 +150,22 @@ int Player::getRoundScore() const {
 string Player::getListOfDiscardsString() const {
 	string result = "";
 	int size = listOfDiscards_.size();
-	string suits[SUIT_COUNT] = {"C", "D", "H", "S"};
-	string ranks[RANK_COUNT] = {"A", "2", "3", "4", "5", "6",
-		"7", "8", "9", "10", "J", "Q", "K"};
 
 	result += ("Player " + to_string(number_) + "'s discards:"); 
 	for (int i=0; i<size; ++i)
 		result += (" " + ranks[listOfDiscards_[i].getRank()] + suits[listOfDiscards_[i].getSuit()]);
+	result += "\n";
+
+	return result;
+}
+
+string Player::getListOfPlayedCardsString() const {
+	string result = "";
+	int size = playedCards_.size();
+
+	result += ("Player " + to_string(number_) + "'s played cards:"); 
+	for (int i=0; i<size; ++i)
+		result += (" " + ranks[playedCards_[i].getRank()] + suits[playedCards_[i].getSuit()]);
 	result += "\n";
 
 	return result;

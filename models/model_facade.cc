@@ -40,6 +40,7 @@ void ModelFacade::beginRound() {
 		Hand hand(*deck_, i+1);
 		players_[i]->setHand(hand);
 		players_[i]->clearListOfDiscards();
+		players_[i]->clearListOfPlayedCards();
 		if (players_[i]->has7S())
 			currentPlayer = i; // if the player has 7S, set the startPlayer to be this index
 	}
@@ -61,6 +62,7 @@ void ModelFacade::endRound() {
 
 		scores_[i] += score;
 		players_[i]->clearListOfDiscards();
+		players_[i]->clearListOfPlayedCards();
 	}
 }
 
@@ -131,6 +133,7 @@ void ModelFacade::automateUntilNextHumanPlayer() {
 				cout << "Player " <<winners[i]+1<<" wins!" << endl;
 			notify();
 			gameState_ = false;
+			endGame();
 		}
 	}
 }
@@ -207,12 +210,14 @@ void ModelFacade::rageQuit() {
 
 	Hand hand=players_[currentPlayer]->getHand();
 	vector<Card> listOfDiscards = players_[currentPlayer]->getListOfDiscards();
+	vector<Card> playedCards = players_[currentPlayer]->getListOfPlayedCards();
 	delete players_[currentPlayer];
 
 	// setting the parameters for the new computer player
 	players_[currentPlayer] = new ComputerPlayer(currentPlayer+1, table_);
 	players_[currentPlayer]->setHand(hand);					
 	players_[currentPlayer]->setListOfDiscards(listOfDiscards);
+	players_[currentPlayer]->setListOfPlayedCards(playedCards);
 
 	automateUntilNextHumanPlayer();
 }
@@ -229,6 +234,14 @@ string ModelFacade::getRoundEndResult() const {
 					to_string(score) + " = " +
 					to_string(scores_[i] + score) + "\n");
 	}
+	return result;
+}
+
+string ModelFacade::getPlayedCardsString() const {
+	string result = "";
+
+	for (int i=0; i<4; ++i) 
+		result += players_[i]->getListOfPlayedCardsString();
 	return result;
 }
 

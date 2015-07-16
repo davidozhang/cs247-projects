@@ -47,6 +47,7 @@ public:
 	int getDiscards(int) const;
 	int getCurrentPlayer() const;
 	std::string getRoundEndResult() const;
+	std::string getPlayedCardsString() const;
 	void getWinners(std::vector<int>&) const; // pass in an empty int vector, return a vector of winner numbers
 };
 

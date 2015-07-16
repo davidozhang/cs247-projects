@@ -23,14 +23,18 @@ public:
 	void setTable(Table*);
 	void setLegalMoves(const std::vector<Card>&);		// setter for updating the set of legal moves
 	void setListOfDiscards(const std::vector<Card>&); 	// setter for the list of discards
+	void setListOfPlayedCards(const std::vector<Card>&);
 
 	Hand getHand() const;								// getter for hand
 	std::vector<Card> getListOfDiscards() const;		// getter for list of discards card
+	std::vector<Card> getListOfPlayedCards() const;
 	std::vector<Card> getLegalMoves() const;
-	int getRoundScore() const;
 	std::string getListOfDiscardsString() const;
+	std::string getListOfPlayedCardsString() const;
+	int getRoundScore() const;
 
 	void clearListOfDiscards(); 						// clear the list of discards
+	void clearListOfPlayedCards();
 	bool isHuman() const;								// return true if the object is HumanPlayer
 	bool has7S() const;									// return true if the hand has 7S
 	bool isLegalMoves(const Card&) const;				// return true if card is in legal moves
@@ -51,6 +55,7 @@ private:
 	bool isHuman_;
 	std::vector<Card> legalMoves_;
 	std::vector<Card> listOfDiscards_;
+	std::vector<Card> playedCards_;
 };
 
 #endif
