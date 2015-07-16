@@ -5,63 +5,48 @@
 #include <iostream>
 #include "Hand.h"
 #include "Card.h"
-#include "model_facade.h"
+#include "Table.h"
 
 
-class ModelFacade;
+// class Table;
 
 class Player {
 	friend std::ostream &operator<<(std::ostream &, const Player &);
 
 public:
 
-	// do validation before the play
-	// card has to be in legalMoves
-	// essentially, call isLegalMoves(card)
-	virtual void play(Card&) =0;
-
-	// do validation before the discard
-	// assume there is no legal play
-	// essentially, call hasLegalMoves()
-	virtual void discard(Card&) =0;
-
-	virtual ~Player();
+	virtual void play(Card&);
+	virtual void discard(Card&);
+	virtual ~Player() {}
 
 	void setHand(Hand&);								// setter for hand
+	void setTable(Table*);
 	void setLegalMoves(const std::vector<Card>&);		// setter for updating the set of legal moves
 	void setListOfDiscards(const std::vector<Card>&); 	// setter for the list of discards
 
 	Hand getHand() const;								// getter for hand
-	int getNumber() const;								// getter for player number
 	std::vector<Card> getListOfDiscards() const;		// getter for list of discards card
+	int getRoundScore() const;
+	std::string getListOfDiscardsString() const;
 
 	void clearListOfDiscards(); 						// clear the list of discards
 	bool isHuman() const;								// return true if the object is HumanPlayer
 	bool has7S() const;									// return true if the hand has 7S
 	bool isLegalMoves(const Card&) const;				// return true if card is in legal moves
 	bool hasLegalMoves() const;							// return true if the size of leagl moves is not 0
-
-
-	int getRoundScore() const;
-	std::string getListOfDiscardsString() const;
-	void outputRoundEndResult() const;
+	void outputRoundDiscards() const;
 
 protected:
-	Player(int, ModelFacade*, bool);
+	Player(int, Table*, bool);
 
 	void removeFromHand(Card&); 						// remove a specific card from my hand
 	Card removeFirstFromHand(); 						// remove the first card from my hand
 	Card removeFirstFromLegalMove(); 					// remove the first card from my legal moves
 
-	ModelFacade* getModel() const;								// (internal) getter for the game pointer
-	void addListOfDiscards(Card&);						// add card to the list of discards
-
 private:
-	ModelFacade* model_;
+	Table* table_;
 	Hand hand_;
 	int number_;
-	int score_;
-	int totalScore_;
 	bool isHuman_;
 	std::vector<Card> legalMoves_;
 	std::vector<Card> listOfDiscards_;

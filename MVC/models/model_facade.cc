@@ -6,6 +6,7 @@
 #include "../subject.h"
 #include "ComputerPlayer.h"
 #include "HumanPlayer.h"
+#include "model_facade.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -25,7 +26,6 @@ ModelFacade::ModelFacade() {
 		scores_[i] = 0;
 	}
 }
-
 
 /* 
 * Private methods
@@ -49,16 +49,18 @@ void ModelFacade::beginRound() {
 	notify();
 	cout << "A new round begins. It's player " << currentPlayer+1 << "'s turn to play." << endl;
 
-	advancePlayer();
+	automateUntilNextHumanPlayer();
 }
 
 void ModelFacade::endRound() {
 	for (int i=0; i<4; ++i) {
-		players_[i]->outputRoundEndResult();
-		cout << "Player " << i+1 << "'s score: "; 
-		cout << scores_[i] << " + " << players_[i]->getRoundScore() << " = " << scores_[i] + players_[i]->getRoundScore() << endl;
+		players_[i]->outputRoundDiscards();
+		int score = players_[i]->getRoundScore();
 
-		scores_[i] += players_[i]->getRoundScore();
+		cout << "Player " << i+1 << "'s score: "; 
+		cout << scores_[i] << " + " << score << " = " << scores_[i] + score << endl;
+
+		scores_[i] += score;
 		players_[i]->clearListOfDiscards();
 	}
 }
@@ -70,11 +72,11 @@ void ModelFacade::clearPlayerScores() {
 
 void ModelFacade::computerMakeMove() {
 	setLegalMovesForCurrentPlayer();
-	Card dummy(SPADE,SEVEN);
+	Card empty(NOSUIT,NORANK);
 	if (players_[currentPlayer]->hasLegalMoves())
-		players_[currentPlayer]->play(dummy);
+		players_[currentPlayer]->play(empty);
 	else
-		players_[currentPlayer]->discard(dummy);
+		players_[currentPlayer]->discard(empty);
 }
 
 void ModelFacade::setLegalMovesForCurrentPlayer() {
@@ -97,21 +99,24 @@ bool ModelFacade::hasWinner() const {
 	return false;
 }
 
-void ModelFacade::advancePlayer() {
+void ModelFacade::moveToNextPlayerAndTurn() {
+	currentPlayer = (currentPlayer+1)%4;
+	currentTurnInTheRound++;
+}
+
+void ModelFacade::automateUntilNextHumanPlayer() {
 	while (!players_[currentPlayer]->isHuman() && currentTurnInTheRound < 52) {
 		computerMakeMove();
-		currentPlayer = (currentPlayer+1)%4;
-		currentTurnInTheRound++;
+		moveToNextPlayerAndTurn();
 	}
 
 	if (currentTurnInTheRound < 52) {
-		state_ = "new turn"; // update table
+		state_ = "new turn";
 		setLegalMovesForCurrentPlayer();
 		cout << *table_;
 		cout << *players_[currentPlayer];
-	}
-	else {
-		state_ = "end round"; // output message
+	} else {
+		state_ = "end round";
 	}
 	notify();
 
@@ -126,6 +131,7 @@ void ModelFacade::advancePlayer() {
 			for (int i=0; i<winners.size(); ++i)
 				cout << "Player " <<winners[i]+1<<" wins!" << endl;
 			notify();
+			gameState_ = false;
 		}
 	}
 }
@@ -147,6 +153,9 @@ void ModelFacade::startGame(int newseed) {
 		table_ = new Table();
 	else
 		table_->clear();
+
+	for (int i=0; i<4; ++i)
+		players_[i]->setTable(table_);
 
 	gameState_ = true;
 
@@ -170,17 +179,15 @@ void ModelFacade::endGame() {
 
 void ModelFacade::setPlayerType(int playerNumber, string playerType) {
 	if (players_[playerNumber] != NULL)
-		delete players_[playerNumber];
+		delete players_[playerNumber]; 
 
 	if (playerType == "h")
-		players_[playerNumber] = new HumanPlayer(playerNumber+1, this);
+		players_[playerNumber] = new HumanPlayer(playerNumber+1, table_);
 	else
-		players_[playerNumber] = new ComputerPlayer(playerNumber+1, this);
+		players_[playerNumber] = new ComputerPlayer(playerNumber+1, table_);
 }
 
 void ModelFacade::selectCard(Card card) {
-	// setLegalMovesForCurrentPlayer();
-
 	if (players_[currentPlayer]->hasLegalMoves() && !players_[currentPlayer]->isLegalMoves(card)) {
 		cout << card << " This play is illegal." << endl;
 		state_ = "invalid play";
@@ -188,14 +195,12 @@ void ModelFacade::selectCard(Card card) {
 		return;
 	} else if (players_[currentPlayer]->isLegalMoves(card)) {
 		players_[currentPlayer]->play(card);
-	} else {
+	} else { // if legal move is empty
 		players_[currentPlayer]->discard(card);
 	}
 
-	currentPlayer = (currentPlayer+1)%4;
-	currentTurnInTheRound++;
-
-	advancePlayer();
+	moveToNextPlayerAndTurn();
+	automateUntilNextHumanPlayer();
 }
 
 void ModelFacade::rageQuit() {
@@ -206,15 +211,11 @@ void ModelFacade::rageQuit() {
 	delete players_[currentPlayer];
 
 	// setting the parameters for the new computer player
-	players_[currentPlayer] = new ComputerPlayer(currentPlayer+1, this);
+	players_[currentPlayer] = new ComputerPlayer(currentPlayer+1, table_);
 	players_[currentPlayer]->setHand(hand);					
 	players_[currentPlayer]->setListOfDiscards(listOfDiscards);
 
-	advancePlayer();
-}
-
-void ModelFacade::addCardToTable(Card card) {
-	table_->addCard(card);
+	automateUntilNextHumanPlayer();
 }
 
 string ModelFacade::getRoundEndResult() const {

@@ -10,8 +10,6 @@
 #include <vector>
 #include <string>
 
-class Player;
-
 class ModelFacade: public Subject {
 private:
 	std::vector<Player*> players_;
@@ -26,7 +24,8 @@ private:
 	void endRound();
 	void clearPlayerScores();
 	void computerMakeMove();
-	void advancePlayer();
+	void moveToNextPlayerAndTurn();
+	void automateUntilNextHumanPlayer();
 	void setLegalMovesForCurrentPlayer();
 	bool hasWinner() const;
 public:
@@ -39,16 +38,13 @@ public:
 	void selectCard(Card); // current user select a card
 	void rageQuit();
 
-	/*For player*/
-	void addCardToTable(Card);
-
 	/*For views to update*/
 	std::vector<Card> getTableCardsBySuit(Suit) const;
+	std::vector<Card> getHand(int) const;
 	bool getGameState() const;
 	int getPoints(int) const;
 	int getDiscards(int) const;
 	int getCurrentPlayer() const;
-	std::vector<Card> getHand(int) const;
 	std::string getRoundEndResult() const;
 	void getWinners(std::vector<int>&) const; // pass in an empty int vector, return a vector of winner numbers
 };

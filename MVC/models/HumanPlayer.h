@@ -3,14 +3,14 @@
 
 #include "Player.h"
 #include "Card.h"
-#include "model_facade.h"
+#include "Table.h"
 #include <vector>
 
-class ModelFacade;
+// class Tbale;
 
 class HumanPlayer: public Player {
 public:
-	HumanPlayer(int, ModelFacade*);
+	HumanPlayer(int, Table*);
 	virtual void play(Card&);
 	virtual void discard(Card&);
 };

@@ -64,8 +64,6 @@ string Table::listCards(const vector<Card>& v) const {
 	return output;
 }
 
-
-
 vector<Card> Table::getTableCardsBySuit(Suit suit) const {
 	switch (suit) {
 		case CLUB: return clubs_;break;

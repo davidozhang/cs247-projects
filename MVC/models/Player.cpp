@@ -3,14 +3,11 @@
 #include "Hand.h"
 #include "Card.h"
 #include "Player.h"
-#include "model_facade.h"
+#include "Table.h"
 using namespace std;
 
-Player::Player(int number, ModelFacade* model, bool isHuman): number_(number), model_(model), isHuman_(isHuman) {}
+Player::Player(int number, Table* table, bool isHuman): number_(number), table_(table), isHuman_(isHuman) {}
 
-Player::~Player() {
-	model_=NULL;
-}
 
 /*----------------------------------------------
 	Getters and Setters
@@ -20,11 +17,9 @@ Hand Player::getHand() const { return hand_; }
 
 void Player::setHand(Hand &hand) { hand_ = hand; }
 
+void Player::setTable(Table* table) {table_ = table; }
+
 void Player::setListOfDiscards(const vector<Card> &discards) { listOfDiscards_ = discards; }
-
-int Player::getNumber() const { return number_; }
-
-ModelFacade* Player::getModel() const { return model_; }
 
 vector<Card> Player::getListOfDiscards() const { return listOfDiscards_; }
 
@@ -32,6 +27,16 @@ vector<Card> Player::getListOfDiscards() const { return listOfDiscards_; }
 /*----------------------------------------------
 	Main methods
 ----------------------------------------------*/
+
+void Player::play(Card& card) {
+	cout << "Player " << number_ << " plays " << card << "." << endl;
+	table_->addCard(card);
+}
+
+void Player::discard(Card& card) {
+	cout << "Player " << number_ << " discards " << card << "." << endl;
+	listOfDiscards_.push_back(card);
+}
 
 /*
 	Set the legal moves based on the lagel set passed from Table
@@ -50,13 +55,6 @@ void Player::setLegalMoves(const vector<Card> &legalSet) {
 			}
 		}
 	}
-}
-
-/*
-	Add the card to the list of discards
-*/
-void Player::addListOfDiscards(Card &card) {
-	listOfDiscards_.push_back(card);
 }
 
 /*
@@ -122,7 +120,6 @@ bool Player::hasLegalMoves() const {
 	return legalMoves_.size() != 0;
 }
 
-
 int Player::getRoundScore() const {
 	int score = 0;
 	int size = listOfDiscards_.size();
@@ -147,16 +144,13 @@ string Player::getListOfDiscardsString() const {
 	return result;
 }
 
-void Player::outputRoundEndResult() const {
+void Player::outputRoundDiscards() const {
 	int size = listOfDiscards_.size();
 
 	cout << "Player " << number_ << "'s discards:"; 
 	for (int i=0; i<size; ++i)
 		cout << " " << listOfDiscards_[i];
 	cout << endl;
-
-	// cout << "Player " << number_ << "'s score: "; 
-	// cout << totalScore_ << " + " << score_ << " = " << totalScore_+score_ << endl;
 }
 
 /*
