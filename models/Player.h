@@ -26,6 +26,7 @@ public:
 
 	Hand getHand() const;								// getter for hand
 	std::vector<Card> getListOfDiscards() const;		// getter for list of discards card
+	std::vector<Card> getLegalMoves() const;
 	int getRoundScore() const;
 	std::string getListOfDiscardsString() const;
 

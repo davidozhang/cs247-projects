@@ -39,10 +39,12 @@ protected:
                      update discards for all players
                      update cards on the table
                      update who is current player (ie the rage button)
+                     !!!! update legal plays
 		end game
                      update hand (to become empty)
                      update table (to become empty)
                      update rage buttons (to become h/c)
+                     !!!! update legal plays (to become empty)
 		invalid play
                      message dialogue: the player has selected a card not in legal play, and there are some legal plays
               has winner
@@ -50,6 +52,7 @@ protected:
                      change rage buttons to h/c
                      clear hand (to empty)
                      clear table (to empty)
+                     !!!! clear legal plays (to empty)
 
        */
 private:

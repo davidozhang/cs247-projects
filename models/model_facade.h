@@ -41,6 +41,7 @@ public:
 	/*For views to update*/
 	std::vector<Card> getTableCardsBySuit(Suit) const;
 	std::vector<Card> getHand(int) const;
+	std::vector<Card> getLegalPlays() const;
 	bool getGameState() const;
 	int getPoints(int) const;
 	int getDiscards(int) const;

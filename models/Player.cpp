@@ -23,6 +23,8 @@ void Player::setListOfDiscards(const vector<Card> &discards) { listOfDiscards_ =
 
 vector<Card> Player::getListOfDiscards() const { return listOfDiscards_; }
 
+vector<Card> Player::getLegalMoves() const {return legalMoves_; }
+
 
 /*----------------------------------------------
 	Main methods

@@ -245,6 +245,15 @@ vector<Card> ModelFacade::getTableCardsBySuit(Suit suit) const {
 	return table_->getTableCardsBySuit(suit);
 }
 
+vector<Card> ModelFacade::getLegalPlays() const {
+	vector<Card> legals = players_[currentPlayer]->getLegalMoves();
+	int size = 13 - legals.size();
+	while (size-- > 0)
+		legals.push_back(Card(NOSUIT, NORANK));
+
+	return legals;
+}
+
 int ModelFacade::getPoints(int playerNumber) const {
 	return scores_[playerNumber];
 }
