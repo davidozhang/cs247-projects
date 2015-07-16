@@ -1,0 +1,15 @@
+In our straights game, we implemented two bonus features, which are:
+
+1) Providing visual cues for cards that are legal plays
+2) Textual Record of Player's Plays
+
+We implemented 1) by adding an additional panel to the game UI to display the images of the legal cards in the current player's hand. There are no necessary seed values or input sequences needed to demonstrate this bonus feature.
+
+We implemented 2) by adding an additional panel to the game UI to display a textual record of each player's played cards. It looks like the following:
+
+Player 1: ...played cards by Player 1...
+Player 2: ...played cards by Player 2...
+Player 3: ...played cards by Player 3...
+Player 4: ...played cards by Player 4...
+
+There are no necessary seed values or input sequences needed to demonstrate this bonus feature.
