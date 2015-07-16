@@ -1,15 +1,3 @@
-/*
- * MVC example of GTKmm program
- *
- * View class.  Is responsible for buttons (that user clicks) and for displaying
- * the top card of the deck.
- *
- *  Created by Jo Atlee on 06/07/09.
- *  Copyright 2009 UW. All rights reserved.
- *
- */
-
-
 #include "observer.h"
 #include "view.h"
 #include "controller.h"
@@ -20,11 +8,7 @@
 #include <iostream>
 #include <string>
 
-// Creates buttons with labels. Sets butBox elements to have the same size, 
-// with 10 pixels between widgets
-View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs_on_table(true, 5), diamonds_on_table(true, 5), hearts_on_table(true, 5), spades_on_table(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10){
-
-	// Sets some properties of the window.
+View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs_on_table(true, 5), diamonds_on_table(true, 5), hearts_on_table(true, 5), spades_on_table(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10) {
 	set_title( "Straights UI - David & Jerry" );
 	set_border_width( 10 );
 	
@@ -93,91 +77,40 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 		human.push_back("h");
 	}
 
-	// Associate button "clicked" events with local onButtonClicked() method defined below.
 	start_button.signal_clicked().connect( sigc::mem_fun( *this, &View::startButtonClicked ) );
 	end_button.signal_clicked().connect( sigc::mem_fun( *this, &View::endButtonClicked ) );
-	
-	// The final step is to display the buttons (they display themselves)
 	show_all();
-
-	// Register view as observer of model
 	model_->subscribe(this);
 
 } // View::View
 
 View::~View() {}
 
-
 void View::update(std::string state) {
-  /**Suits suit = model_->suit();
-  Faces face = model_->face();
-  if ( suit == NOSUIT ) 
-	cards[0].set( deck.null() );
-  else
-	cards[1].set( deck.image(face, suit) );**/
 	int current_player = model_->getCurrentPlayer();
 	if (state=="new round") {
 		Dialog dialog(*this, "A new round begins. It's player "+std::to_string(current_player+1)+"'s turn to play.");
 		setActivePlayerButton(current_player);
-		hand=model_->getHand(current_player);
-		clubs=model_->getTableCardsBySuit(CLUB);
-		diamonds=model_->getTableCardsBySuit(DIAMOND);
-		hearts=model_->getTableCardsBySuit(HEART);
-		spades=model_->getTableCardsBySuit(SPADE);
+		updateAllCards(current_player);
 		for (int i=0; i<4; i++) {
 			discards[i]=0;
 			points[i]=model_->getPoints(i);
 		}
-		for (int i=0; i<4; i++) {
-			player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
-		}
-		cardVectorToImages(hand_images, hand, true);
-		cardVectorToImages(club_images, clubs);
-		cardVectorToImages(diamond_images, diamonds);
-		cardVectorToImages(heart_images, hearts);
-		cardVectorToImages(spade_images, spades);
-		setToEmpty(club_images);
-		setToEmpty(diamond_images);
-		setToEmpty(heart_images);
-		setToEmpty(spade_images);
+		updatePlayerStatsLabels();
+		clearTable();
 	} else if (state=="end round") {
 		Dialog dialog(*this, model_->getRoundEndResult());
 	} else if (state=="new turn") {
 		setActivePlayerButton(current_player);
-		hand=model_->getHand(current_player);
-		clubs=model_->getTableCardsBySuit(CLUB);
-		diamonds=model_->getTableCardsBySuit(DIAMOND);
-		hearts=model_->getTableCardsBySuit(HEART);
-		spades=model_->getTableCardsBySuit(SPADE);
+		updateAllCards(current_player);
 		for (int i=0; i<4; i++) {
 			discards[i]=model_->getDiscards(i);
 		}
-		for (int i=0; i<4; i++) {
-			player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
-		}
-		cardVectorToImages(hand_images, hand, true);
-		cardVectorToImages(club_images, clubs);
-		cardVectorToImages(diamond_images, diamonds);
-		cardVectorToImages(heart_images, hearts);
-		cardVectorToImages(spade_images, spades);
+		updatePlayerStatsLabels();
 	} else if (state=="end game") {
-		hand.clear();
-		setToEmpty(hand_images);
-		clubs.clear();
-		diamonds.clear();
-		hearts.clear();
-		spades.clear();
-		setToEmpty(club_images);
-		setToEmpty(diamond_images);
-		setToEmpty(heart_images);
-		setToEmpty(spade_images);
-		for (int i=0; i<4; i++) {
-			discards[i]=0;
-			points[i]=0;
-		}
-		for (int i=0; i<4; i++) {
-			player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
-		}
+		clearHand();
+		clearTable();
+		resetDiscardsAndPoints();
 	} else if (state=="invalid play") {
 		Dialog dialog(*this, "Invalid Move, There are still legal moves.");
 	} else if (state=="has winner") {
@@ -186,33 +119,18 @@ void View::update(std::string state) {
 		for (int i=0; i<winners.size(); i++) {
 			Dialog dialog(*this, "Player "+ std::to_string(winners[i]+1) +" wins!");
 		}
-		for (int i=0; i<4; i++) {
-			this->player_buttons[i].set_label("Human");
-			this->player_buttons[i].set_sensitive(true);
-			human[i]="h";
-		}
-		for (int i=0; i<13; i++) {
-			hand_images[i].set(deck.null());
-		}
-		setToEmpty(club_images);
-		setToEmpty(diamond_images);
-		setToEmpty(heart_images);
-		setToEmpty(spade_images);
-		for (int i=0; i<4; i++) {
-			discards[i]=0;
-			points[i]=0;
-		}
-		for (int i=0; i<4; i++) {
-			player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
-		}
+		resetPlayerButtons();
+		clearHand();
+		clearTable();
+		resetDiscardsAndPoints();
 	} else {
-		//invalid state
+		//invalid state, should never reach here
 	}
 }
 
 void View::cardVectorToImages(Gtk::Image* images, std::vector<Card> cards, bool hand) {
 	for (int i=0; i<cards.size(); i++) {
-		if (hand) {
+		if (hand) {		//hand doesn't require to be sorted
 			if (cards[i].getSuit()==NOSUIT) {
 				images[i].set(deck.null());
 			} else {
@@ -233,11 +151,7 @@ void View::startButtonClicked() {
 }
 
 void View::endButtonClicked() {
-	for (int i=0; i<4; i++) {
-		this->player_buttons[i].set_label("Human");
-		this->player_buttons[i].set_sensitive(true);
-		human[i]="h";
-	}
+	resetPlayerButtons();
 	controller_->endButtonClicked();
 }
 
@@ -273,4 +187,55 @@ void View::setToEmpty(Gtk::Image* images) {
 	for (int i=0; i<13; i++) {
 		images[i].set(deck.null());
 	}
+}
+
+void View::updatePlayerStatsLabels() {
+	for (int i=0; i<4; i++) {
+		player_stats[i].set_label(std::to_string(points[i])+" points\n"+std::to_string(discards[i])+" discards");
+	}
+}
+
+void View::updateAllCards(int current_player) {
+	hand=model_->getHand(current_player);
+	clubs=model_->getTableCardsBySuit(CLUB);
+	diamonds=model_->getTableCardsBySuit(DIAMOND);
+	hearts=model_->getTableCardsBySuit(HEART);
+	spades=model_->getTableCardsBySuit(SPADE);
+	cardVectorToImages(hand_images, hand, true);
+	cardVectorToImages(club_images, clubs);
+	cardVectorToImages(diamond_images, diamonds);
+	cardVectorToImages(heart_images, hearts);
+	cardVectorToImages(spade_images, spades);
+}
+
+void View::clearHand() {
+	hand.clear();
+	setToEmpty(hand_images);
+}
+
+void View::clearTable() {
+	clubs.clear();
+	diamonds.clear();
+	hearts.clear();
+	spades.clear();
+	setToEmpty(club_images);
+	setToEmpty(diamond_images);
+	setToEmpty(heart_images);
+	setToEmpty(spade_images);
+}
+
+void View::resetPlayerButtons() {
+	for (int i=0; i<4; i++) {
+		this->player_buttons[i].set_label("Human");
+		this->player_buttons[i].set_sensitive(true);
+		human[i]="h";
+	}
+}
+
+void View::resetDiscardsAndPoints() {
+	for (int i=0; i<4; i++) {
+		discards[i]=0;
+		points[i]=0;
+	}
+	updatePlayerStatsLabels();
 }

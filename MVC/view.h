@@ -84,6 +84,12 @@ private:
 	void setActivePlayerButton(int);
 	void cardVectorToImages(Gtk::Image*, std::vector<Card>, bool hand=false);
 	void setToEmpty(Gtk::Image*);
+	void updatePlayerStatsLabels();
+	void updateAllCards(int);
+	void clearTable();
+	void clearHand();
+	void resetPlayerButtons();
+	void resetDiscardsAndPoints();
 	void playerButtonClicked(int);
 	void handButtonClicked(int);
 
