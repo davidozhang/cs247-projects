@@ -139,9 +139,9 @@ void View::update(std::string state) {
 	}
 }
 
-void View::cardVectorToImages(Gtk::Image* images, std::vector<Card> cards, bool hand) {
+void View::cardVectorToImages(Gtk::Image* images, std::vector<Card> cards, bool unsorted) {
 	for (int i=0; i<cards.size(); i++) {
-		if (hand) {		//hand doesn't require to be sorted
+		if (unsorted) {		//hand doesn't require to be sorted
 			if (cards[i].getSuit()==NOSUIT) {
 				images[i].set(deck.null());
 			} else {
@@ -218,7 +218,7 @@ void View::updateAllCards(int current_player) {
 	cardVectorToImages(diamond_images, diamonds);
 	cardVectorToImages(heart_images, hearts);
 	cardVectorToImages(spade_images, spades);
-	cardVectorToImages(legal_images, legal);
+	cardVectorToImages(legal_images, legal, true);
 }
 
 void View::clearHand() {
