@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 
-View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 10), clubs_on_table(true, 5), diamonds_on_table(true, 5), hearts_on_table(true, 5), spades_on_table(true, 5), top_panel(false, 10), cards_panel(false, 10), players_panel(false, 10), player_hand_panel(false, 10), legal_panel(false, 10) {
+View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(false, 5), clubs_on_table(true, 2), diamonds_on_table(true, 2), hearts_on_table(true, 2), spades_on_table(true, 2), top_panel(false, 10), cards_panel(false, 5), players_panel(false, 5), player_hand_panel(false, 5), legal_panel(false, 5) {
 	set_title( "Straights UI - David & Jerry" );
 	set_border_width( 10 );
 	//
@@ -24,6 +24,13 @@ View::View(Controller *c, ModelFacade *m) : model_(m), controller_(c), main_box(
 	player_hand_panel_label.set_alignment(0,0);
 	main_box.pack_start(player_hand_panel_label);
 	main_box.pack_start(player_hand_panel);
+	std::string played_cards_label;
+	for (int i=0; i<4; i++) {
+		played_cards_label+="Player "+std::to_string(i+1)+"'s played cards:\n";
+	}
+	played_cards_panel.set_label(played_cards_label);
+	played_cards_panel.set_alignment(0,0);
+	main_box.pack_start(played_cards_panel);
 	legal_panel_label.set_label("Legal moves");
 	legal_panel_label.set_alignment(0,0);
 	main_box.pack_start(legal_panel_label);
@@ -93,6 +100,7 @@ void View::update(std::string state) {
 		}
 		updatePlayerStatsLabels();
 		clearTable();
+		setPlayedCards(model_->getPlayedCardsString());
 	} else if (state=="end round") {
 		Dialog dialog(*this, model_->getRoundEndResult());
 	} else if (state=="new turn") {
@@ -102,11 +110,14 @@ void View::update(std::string state) {
 			discards[i]=model_->getDiscards(i);
 		}
 		updatePlayerStatsLabels();
+		setPlayedCards(model_->getPlayedCardsString());
 	} else if (state=="end game") {
 		clearHand();
 		clearTable();
 		clearLegal();
 		resetDiscardsAndPoints();
+		resetPlayerButtons();
+		setPlayedCards(model_->getPlayedCardsString());
 	} else if (state=="invalid play") {
 		Dialog dialog(*this, "Invalid Move, There are still legal moves.");
 	} else if (state=="has winner") {
@@ -115,11 +126,6 @@ void View::update(std::string state) {
 		for (int i=0; i<winners.size(); i++) {
 			Dialog dialog(*this, "Player "+ std::to_string(winners[i]+1) +" wins!");
 		}
-		resetPlayerButtons();
-		clearHand();
-		clearTable();
-		clearLegal();
-		resetDiscardsAndPoints();
 	} else {
 		//invalid state, should never reach here
 	}
@@ -242,4 +248,9 @@ void View::resetDiscardsAndPoints() {
 		points[i]=0;
 	}
 	updatePlayerStatsLabels();
+}
+
+void View::setPlayedCards(std::string played) {
+	played_cards_panel.set_label(played);
+	played_cards_panel.set_alignment(0,0);
 }

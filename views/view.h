@@ -47,6 +47,7 @@ private:
 	Gtk::VBox players [4];
 	Gtk::Label player_hand_panel_label;
 	Gtk::HBox player_hand_panel;
+	Gtk::Label played_cards_panel;
 	Gtk::Label legal_panel_label;
 	Gtk::HBox legal_panel;
 	Gtk::Entry text_field;
@@ -67,6 +68,7 @@ private:
 	void setActivePlayerButton(int);
 	void cardVectorToImages(Gtk::Image*, std::vector<Card>, bool hand=false);
 	void setToEmpty(Gtk::Image*);
+	void setPlayedCards(std::string);
 	void updatePlayerStatsLabels();
 	void updateAllCards(int);
 	void clearTable();
