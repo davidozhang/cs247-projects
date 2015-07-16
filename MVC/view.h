@@ -1,15 +1,3 @@
-/*
- * MVC example of GTKmm program
- *
- * View class.  Is responsible for buttons (that user clicks) and for displaying
- * the top card of the deck.
- *
- *  Created by Jo Atlee on 06/07/09.
- *  Copyright 2009 UW. All rights reserved.
- *
- */
-
-
 #ifndef MVC_VIEW_H
 #define MVC_VIEW_H
 
@@ -29,16 +17,10 @@ class View : public Gtk::Window, public Observer {
 public:
 	View( Controller*, ModelFacade* );
 	virtual ~View();
-	virtual void update(std::string);	// Observer Pattern: concrete update() method
-
+	virtual void update(std::string);
 private:
-	// Observer Pattern: to access Model accessors without having to downcast subject
 	ModelFacade *model_;
-	
-	// Strategy Pattern member (plus signal handlers)
 	Controller *controller_;
-
-	// Card Images
 	DeckGUI deck;
 
 	std::vector<Card> clubs;
@@ -46,10 +28,10 @@ private:
 	std::vector<Card> hearts;
 	std::vector<Card> spades;
 	std::vector<Card> hand;
+	std::vector<std::string> human;
 	int discards [4];
 	int points [4];
 
-	// Member widgets:
 	Gtk::VBox main_box;
 	Gtk::HBox top_panel;
 	Gtk::Label cards_panel_label;
@@ -76,17 +58,19 @@ private:
 	Gtk::Image hand_images [13];
 	Gtk::Button hand_buttons [13];
 
-	std::vector<std::string> human;
-
-	// Signal handlers:
 	void startButtonClicked();
 	void endButtonClicked();
 	void setActivePlayerButton(int);
 	void cardVectorToImages(Gtk::Image*, std::vector<Card>, bool hand=false);
 	void setToEmpty(Gtk::Image*);
+	void updatePlayerStatsLabels();
+	void updateAllCards(int);
+	void clearTable();
+	void clearHand();
+	void resetPlayerButtons();
+	void resetDiscardsAndPoints();
 	void playerButtonClicked(int);
 	void handButtonClicked(int);
-
 }; // View
 
 #endif
