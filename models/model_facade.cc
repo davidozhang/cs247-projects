@@ -172,6 +172,8 @@ void ModelFacade::endGame() {
 		table_->clear();
 	
 	clearPlayerScores();
+	for (int i=0; i<4; ++i)
+		players_[i]->clearListOfPlayedCards();
 
 	gameState_ = false;
 
