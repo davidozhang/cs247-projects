@@ -11,8 +11,8 @@
 class HumanPlayer: public Player {
 public:
 	HumanPlayer(int, Table*);
-	virtual void play(Card&);
-	virtual void discard(Card&);
+	virtual void play(Card&);		// human plays card
+	virtual void discard(Card&);	// human discards card
 };
 
 #endif

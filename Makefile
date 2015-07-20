@@ -15,7 +15,7 @@ OBJS =  subject.o \
 		views/dialog.o \
 		views/view.o \
 		main.o
-EXEC = straights_ui
+EXEC = straights
 
 $(EXEC): $(OBJS)
 	$(CXX) $(OBJS) $(CXXFLAGS) $(LDFLAGS) -o $(EXEC)

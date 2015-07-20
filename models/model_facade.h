@@ -20,35 +20,35 @@ private:
 	int currentPlayer;
 	int currentTurnInTheRound;
 
-	void beginRound();
-	void endRound();
-	void clearPlayerScores();
-	void computerMakeMove();
-	void moveToNextPlayerAndTurn();
-	void automateUntilNextHumanPlayer();
-	void setLegalMovesForCurrentPlayer();
-	bool hasWinner() const;
+	void beginRound();						// begin a round
+	void endRound();						// end a round
+	void clearPlayerScores();				// clear all players' scores
+	void computerMakeMove();				// computer makes the move
+	void moveToNextPlayerAndTurn();			// increment current player counter and turn counter
+	void automateUntilNextHumanPlayer();	// IMPORTANT: advance to the next human player, game logic for winning the game and move to next round
+	void setLegalMovesForCurrentPlayer();	// set the legal moves for the current player
+	bool hasWinner() const;					// return true if there is at least a winner
 public:
 	ModelFacade();
 
-	/*Game logic*/
-	void startGame(int); // start a game with seed
-	void endGame(); // end the current game
-	void setPlayerType(int, std::string);
-	void selectCard(Card); // current user select a card
-	void rageQuit();
+	/*Game logic, called by controller*/
+	void startGame(int); 					// start a game with seed
+	void endGame(); 						// end the current game
+	void setPlayerType(int, std::string);	// set the player type
+	void selectCard(Card); 					// current user select a card
+	void rageQuit();						// rage quit
 
 	/*For views to update*/
-	std::vector<Card> getTableCardsBySuit(Suit) const;
-	std::vector<Card> getHand(int) const;
-	std::vector<Card> getLegalPlays() const;
-	bool getGameState() const;
-	int getPoints(int) const;
-	int getDiscards(int) const;
-	int getCurrentPlayer() const;
-	std::string getRoundEndResult() const;
-	std::string getPlayedCardsString() const;
-	void getWinners(std::vector<int>&) const; // pass in an empty int vector, return a vector of winner numbers
+	std::vector<Card> getTableCardsBySuit(Suit) const;	// get the cards on the table by suit
+	std::vector<Card> getHand(int) const;				// get the hand of the player
+	std::vector<Card> getLegalPlays() const;			// get the legal plays for the current player
+	bool getGameState() const;							// get the current game state: true as "on" and false as "off"
+	int getPoints(int) const;							// get the points by player number
+	int getDiscards(int) const;							// get the number of discards by player number
+	int getCurrentPlayer() const;						// get the current player number
+	std::string getRoundEndResult() const;				// get the round end result string to display
+	std::string getPlayedCardsString() const;			// get the played cards string to display
+	void getWinners(std::vector<int>&) const; 			// get the winners by passing in an empty int vector, return a vector of winner numbers
 };
 
 

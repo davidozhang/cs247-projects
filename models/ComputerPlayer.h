@@ -11,8 +11,8 @@
 class ComputerPlayer: public Player {
 public:
 	ComputerPlayer(int, Table*);
-	virtual void play(Card&);
-	virtual void discard(Card&);
+	virtual void play(Card&);		// computer plays card
+	virtual void discard(Card&);	// computer discards card
 };
 
 #endif

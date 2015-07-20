@@ -1,15 +1,3 @@
-/*
- * MVC example of GTKmm program
- *
- * Subject class.  Abstract class for Observer Pattern
- *
- *
- *  Created by Jo Atlee on 06/07/09.
- *  Copyright 2009 UW. All rights reserved.
- *
- */
-
-
 #include <set>
 #include "subject.h"
 #include "observer.h"
